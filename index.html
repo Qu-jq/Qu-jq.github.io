@@ -230,7 +230,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/11/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/11/JavaAlgsSelectionSort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu-jq">
@@ -249,7 +249,171 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/12/11/hello-world/" itemprop="url">JAVA Algorithms:Quick Sort</a></h1>
+                <a class="post-title-link" href="/2019/12/11/JavaAlgsSelectionSort/" itemprop="url">JAVA Algorithms:Selection Sort</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-11T16:12:45+08:00">
+                2019-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to my Blog! This is my very first post. If you get any problems when looking after my Blog, you can contact me on <a href="https://github.com/Qu-jq/Qu-jq.github.io" target="_blank" rel="noopener">GitHub</a>.</p>
+<p>##选择排序算法</p>
+<h3 id="The-description-of-algorithms"><a href="#The-description-of-algorithms" class="headerlink" title="The description of algorithms"></a>The description of algorithms</h3><ol>
+<li><p>假设数组第一个数为最小</p>
+</li>
+<li><p>查找整个数组，看是否有比这个数更小的，<br>如果有，则互相调换数据，循坏过后，找到的数据即为整个数组最小的数</p>
+</li>
+<li><p>再假设第二个数据为最小的，此时从第二个数据开始查找最小的数</p>
+</li>
+<li><p>依次循环</p>
+<h4 id="核心思想："><a href="#核心思想：" class="headerlink" title="核心思想："></a>核心思想：</h4><p>先找到n个元素中最小的数，再找n-1个元素中最小的数，依次往下……</p>
+</li>
+</ol>
+<p>时间复杂度为O(n^2)</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><pre><code>import java.util.Arrays;
+
+public class SelectionSort {
+
+    /*
+     * 从小到大排序
+     */
+    public static void selectionSort(int[] Arr) {
+
+        int flush;//中间缓存数据
+        for(int i=0;i&lt;Arr.length-1;i++) {
+            int minIndex = i ;//最小数的索引
+            for(int j=i+1; j&lt;Arr.length; j++) {
+                if(Arr[j]&lt;=Arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            //如果有比Arr[minIndex]更小的数，互相替换
+            if(minIndex != i) {
+                flush = Arr[minIndex];
+                Arr[minIndex] = Arr[i];
+                Arr[i] = flush;
+            }
+        }
+    }
+    //测试
+    public static void main(String[] args) {
+        int[] Arr = {4,3,2,5,67,342,23,234,65,3};
+        selectionSort(Arr) ;
+        System.out.println(Arrays.toString(Arr));//[2, 3, 3, 4, 5, 23, 65, 67, 234, 342]
+    }
+}</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/11/JavaAlgsQuickSort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qu-jq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qu-jq’s Bolg">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/11/JavaAlgsQuickSort/" itemprop="url">Java Algorithms:Quick Sort</a></h1>
         
 
         <div class="post-meta">
@@ -463,7 +627,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
