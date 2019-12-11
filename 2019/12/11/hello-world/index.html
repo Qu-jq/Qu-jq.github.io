@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="Welcome to my Blog! This is my very first post. If you get any problems when looking after my Blog, you can contact me on GitHub. Quick StartThe description of algorithms快速排序    —分而治之的思想 以第一个元素为基准pivo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
+<meta property="og:title" content="JAVA Algorithms:Quick Sort">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;11&#x2F;hello-world&#x2F;index.html">
 <meta property="og:site_name" content="Qu-jq’s Bolg">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="Welcome to my Blog! This is my very first post. If you get any problems when looking after my Blog, you can contact me on GitHub. Quick StartThe description of algorithms快速排序    —分而治之的思想 以第一个元素为基准pivo">
 <meta property="article:published_time" content="2019-12-11T02:52:28.411Z">
-<meta property="article:modified_time" content="2019-12-11T02:52:28.412Z">
+<meta property="article:modified_time" content="2019-12-11T08:07:18.860Z">
 <meta property="article:author" content="Qu-jq">
 <meta name="twitter:card" content="summary">
 
@@ -124,7 +124,7 @@
 
 
 
-  <title>Hello World | Qu-jq’s Bolg</title>
+  <title>JAVA Algorithms:Quick Sort | Qu-jq’s Bolg</title>
   
 
 
@@ -248,7 +248,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">JAVA Algorithms:Quick Sort</h1>
         
 
         <div class="post-meta">
@@ -298,20 +298,88 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <p>Welcome to my Blog! This is my very first post. If you get any problems when looking after my Blog, you can contact me on <a href="https://github.com/Qu-jq/Qu-jq.github.io" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="The-description-of-algorithms"><a href="#The-description-of-algorithms" class="headerlink" title="The description of algorithms"></a>The description of algorithms</h3><h4 id="快速排序-—分而治之的思想"><a href="#快速排序-—分而治之的思想" class="headerlink" title="快速排序    —分而治之的思想"></a>快速排序    —分而治之的思想</h4><ol>
+<li><p>以第一个元素为基准pivot，小于基准的在数组左边left，大于的在数组右边right，分成两个部分left–pivot–right ,这样就找到pivot所在位置；</p>
+</li>
+<li><p>再对上一步得到的两个区间分别使用第一步；</p>
+</li>
+<li><p>知道划分到只剩一个元素为止，此时排序也就结束。</p>
+</li>
+</ol>
+<h4 id="核心思想："><a href="#核心思想：" class="headerlink" title="核心思想："></a>核心思想：</h4><p>每划分一个确定一次元素的位置，一共需要划分logn次，而确定位置需要n个操作,<br>所以算法的复杂度为O(nlogn)</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><pre><code>public class QuickSort {
+    /**
+     * 快速排序API
+     * @param Arr
+     * @return
+     */
+    public static int[] quikSort(int[] Arr) {
+        doSort(Arr,0,Arr.length-1);
+        return Arr;
+    }
+    /**
+     * 递归调用自身，不断划分  ----分而治之
+     * 每划分一次，确定一个元素的位置
+     * @param Arr
+     * @param start
+     * @param end
+     */
+    public static void doSort(int[] Arr,int start,int end) {
+        if (start &lt; end) {
+            int correctIndex = partition(Arr, start, end);//每次调用次函数，就将索引correctIndex上放置正确的数据
+            doSort(Arr, start, correctIndex - 1);
+            doSort(Arr, correctIndex+1, end);
+        }
+    }
+    /**
+     * 找到基准数所在的正确位置
+     * @param Arr
+     * @param start
+     * @param end
+     * @return
+     */
+    public static int partition(int[] Arr,int start,int end) {
+        int pivot = Arr[start];//取第一个数为基准
+        int pivotIndex = start;
+        while(start&lt;end) {
+            //start和end移动的顺序不能改变，如果反过来，就会把大于基准数的数交换到第一个数的位置
+            while(Arr[end]&gt;=pivot &amp;&amp; end&gt;start) {
+                end--;//当满足右边的数大于基准的数时，指针往左偏移
+            }
+            while(Arr[start]&lt;=pivot &amp;&amp; end&gt;start) {
+                start++;//当满足左边的数小于基准的数时，指针往左偏移
+            }
+            //将不满足左右两边的大小的数据交换位置
+            swap(Arr,start, end);
+        }
+        //start=end时，将start或者end处的数据与基准处的数据交换，这样就得到基准数据的正确位置
+        swap(Arr,start, pivotIndex);
+        return start;
+    }
+    /**
+     * 数据交换
+     * @param Arr
+     * @param idx
+     * @param idy
+     * @return
+     */
+    static boolean swap(int[] Arr, int idx, int idy) {
+        int swap = Arr[idx];
+        Arr[idx] = Arr[idy];
+        Arr[idy] = swap;
+        return true;
+    }
+    //测试
+    public static void main(String[] args) {
+        int[] Arr = {3, 4, 1, 32, 0, 1, 5, 12, 2, 5, 7, 8, 9, 2, 44, 111, 5};
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+        QuickSort quickSort = new QuickSort();
+        int[] sortedArr = quickSort.quikSort(Arr);
+        System.out.println(Arrays.toString(sortedArr));
+    }
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+}</code></pre>
       
     </div>
     
@@ -441,7 +509,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-description-of-algorithms"><span class="nav-number">1.1.</span> <span class="nav-text">The description of algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快速排序-—分而治之的思想"><span class="nav-number">1.1.1.</span> <span class="nav-text">快速排序    —分而治之的思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#核心思想："><span class="nav-number">1.1.2.</span> <span class="nav-text">核心思想：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code"><span class="nav-number">1.2.</span> <span class="nav-text">Code</span></a></li></ol></li></ol></div>
             
 
           </div>
