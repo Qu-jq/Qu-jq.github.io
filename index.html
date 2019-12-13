@@ -313,7 +313,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/12/13/%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url">JAVA Algorithms:Selection Sort</a></h1>
+                <a class="post-title-link" href="/2019/12/13/%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url">第一章初识数据库</a></h1>
         
 
         <div class="post-meta">
@@ -348,8 +348,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
                   </a>
                 </span>
 
@@ -387,21 +387,8 @@
       
         
           
-            <p>Welcome to my Blog! If you get any problems when looking after my Blog, you can contact me on <a href="https://github.com/Qu-jq/Qu-jq.github.io" target="_blank" rel="noopener">GitHub</a>.</p>
-<p>##选择排序算法</p>
-<h3 id="The-description-of-algorithms"><a href="#The-description-of-algorithms" class="headerlink" title="The description of algorithms"></a>The description of algorithms</h3><ol>
-<li><p>假设数组第一个数为最小</p>
-</li>
-<li><p>查找整个数组，看是否有比这个数更小的，<br>如果有，则互相调换数据，循坏过后，找到的数据即为整个数组最小的数</p>
-</li>
-<li><p>再假设第二个数据为最小的，此时从第二个数据开始查找最小的数</p>
-</li>
-<li><p>依次循环</p>
-<h4 id="核心思想："><a href="#核心思想：" class="headerlink" title="核心思想："></a>核心思想：</h4><p>先找到n个元素中最小的数，再找n-1个元素中最小的数，依次往下……</p>
-</li>
-</ol>
-<p>时间复杂度为O(n^2)</p>
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SelectionSort</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * 从小到大排序</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">selectionSort</span><span class="params">(<span class="keyword">int</span>[] Arr)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> flush;<span class="comment">//中间缓存数据</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;Arr.length-<span class="number">1</span>;i++) &#123;</span><br><span class="line">			<span class="keyword">int</span> minIndex = i ;<span class="comment">//最小数的索引</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>; j&lt;Arr.length; j++) &#123;</span><br><span class="line">				<span class="keyword">if</span>(Arr[j]&lt;=Arr[minIndex]) &#123;</span><br><span class="line">					minIndex = j;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//如果有比Arr[minIndex]更小的数，互相替换</span></span><br><span class="line">			<span class="keyword">if</span>(minIndex != i) &#123;</span><br><span class="line">				flush = Arr[minIndex];</span><br><span class="line">				Arr[minIndex] = Arr[i];</span><br><span class="line">				Arr[i] = flush;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//测试</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span>[] Arr = &#123;<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">67</span>,<span class="number">342</span>,<span class="number">23</span>,<span class="number">234</span>,<span class="number">65</span>,<span class="number">3</span>&#125;;</span><br><span class="line">		selectionSort(Arr) ;</span><br><span class="line">		System.out.println(Arrays.toString(Arr));<span class="comment">//[2, 3, 3, 4, 5, 23, 65, 67, 234, 342]</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p>后续更新</p>
+
           
         
       
@@ -805,7 +792,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -816,7 +803,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
