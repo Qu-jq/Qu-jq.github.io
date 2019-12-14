@@ -3,7 +3,9 @@
   <entry>
     <title>第三章 操作数据表中的记录</title>
     <url>/2019/12/14/%E7%AC%AC%E4%B8%89%E7%AB%A0%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h1 id="1-外键约束"><a href="#1-外键约束" class="headerlink" title="1.外键约束"></a>1.外键约束</h1><p><strong>目的</strong>：保持数据一致性，完整性；实现一对一或一对多关系。<br>约束保证数据的完整性和一致性<br>约束分为表级约束和列级约束（根据约束所针对的字段数目的多少决定）<br><strong>列级约束</strong>：只针对表中的一个字段进行约束；<br><strong>表级约束</strong>：针对表中的两个及以上字段进行约束。<br><strong>约束类型包括</strong>：（功能划分）<br>NOT NULL(非空约束)<br>PRIMARY KEY(主键约束)<br>UNIQUE KEY(唯一约束)<br>DEFAULT(默认约束)<br>FOREIGN KEY(外键约束)<br><strong>外键约束的要求</strong>：</p>
+    <content><![CDATA[<p>  本章主要讲解外键约束以及其他约束的增加删除操作，通过本章将会对数据表列的操作更加熟练。</p>
+<a id="more"></a> 
+<h1 id="1-外键约束"><a href="#1-外键约束" class="headerlink" title="1.外键约束"></a>1.外键约束</h1><p><strong>目的</strong>：保持数据一致性，完整性；实现一对一或一对多关系。<br>约束保证数据的完整性和一致性<br>约束分为表级约束和列级约束（根据约束所针对的字段数目的多少决定）<br><strong>列级约束</strong>：只针对表中的一个字段进行约束；<br><strong>表级约束</strong>：针对表中的两个及以上字段进行约束。<br><strong>约束类型包括</strong>：（功能划分）<br>NOT NULL(非空约束)<br>PRIMARY KEY(主键约束)<br>UNIQUE KEY(唯一约束)<br>DEFAULT(默认约束)<br>FOREIGN KEY(外键约束)<br><strong>外键约束的要求</strong>：</p>
 <ol>
 <li>父表和子表必须使用相同的存储引擎，而且禁止使用临时表<br>子表：具有外键列的表<br>父表：子表参照的表</li>
 <li>数据表的存储引擎只能为InnoDB</li>
@@ -161,7 +163,9 @@
   <entry>
     <title>第二章 数据类型和操作数据表</title>
     <url>/2019/12/14/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E8%A1%A8/</url>
-    <content><![CDATA[<h1 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="1. 数据类型"></a>1. 数据类型</h1><h2 id="1）定义："><a href="#1）定义：" class="headerlink" title="1）定义："></a>1）定义：</h2><p>  数据类型是指列、存储过程参数、表达式和局部变量的数据特征，它决定了数据的存储格式，代表了不同的信息类型。</p>
+    <content><![CDATA[<p>  本章介绍一些常用的数据类型以及如何操作数据表。</p>
+<a id="more"></a> 
+<h1 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="1. 数据类型"></a>1. 数据类型</h1><h2 id="1）定义："><a href="#1）定义：" class="headerlink" title="1）定义："></a>1）定义：</h2><p>  数据类型是指列、存储过程参数、表达式和局部变量的数据特征，它决定了数据的存储格式，代表了不同的信息类型。</p>
 <h2 id="2）整型"><a href="#2）整型" class="headerlink" title="2）整型"></a>2）整型</h2><p>五种整形数据类型：<br>TINYINT（一个字节）       有符号值： -128 – 127   无符号值：0 – 255<br>SMALLINT（两个字节）      有符号值： -32768 – 32767   无符号值：0 – 65536<br>MEDIUMINT（三个字节）     有符号值： -8388608 – 8388607   无符号值：0 – 16777215<br>INT（四个字节）                          更大<br>BIGINT（八个字节）                       最大<br>数据库的优化第一步是要选择合适的数据类型，避免不必要的浪费</p>
 <h2 id="3）浮点型"><a href="#3）浮点型" class="headerlink" title="3）浮点型"></a>3）浮点型</h2><p>FLOAT[(M,D)]:    单精度浮点型<br>DOUBLE[(M,D)]:   双精度浮点型<br>M是数字总位数，D是小数位数。</p>
 <h2 id="4）日期时间型"><a href="#4）日期时间型" class="headerlink" title="4）日期时间型"></a>4）日期时间型</h2><p>DATE:        支持1000年1月1号——9999年12月31号。<br>DATETIME：   支持1000年1月1号0点——9999年12月31号23点59分59秒。<br>TIMESTAMP（时间戳）:  1970年1月1号0点——2037年。<br>考虑到跨时区的问题，很多时候采用数字取代日期时间类型。</p>
@@ -274,7 +278,9 @@
   <entry>
     <title>第一章 初识数据库</title>
     <url>/2019/12/13/%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<h1 id="1-连接本地服务器"><a href="#1-连接本地服务器" class="headerlink" title="1.连接本地服务器"></a>1.连接本地服务器</h1><p>注意大小写： 密码是 -P       端口号是 -p<br>清屏：cls<br>mysql -V    (version)   –输出版本信息并且退出<br>mysql -u(用户名)root   -p（密码） -P(端口号) 3306   -h(服务器名称)172.0.0.1</p>
+    <content><![CDATA[<p>   本章节我们将初步的了解数据库，学习如何启动关闭服务器以及创建数据库的过程。</p>
+<a id="more"></a> 
+<h1 id="1-连接本地服务器"><a href="#1-连接本地服务器" class="headerlink" title="1.连接本地服务器"></a>1.连接本地服务器</h1><p>注意大小写： 密码是 -P       端口号是 -p<br>清屏：cls<br>mysql -V    (version)   –输出版本信息并且退出<br>mysql -u(用户名)root   -p（密码） -P(端口号) 3306   -h(服务器名称)172.0.0.1</p>
 <h3 id="启动服务器"><a href="#启动服务器" class="headerlink" title="启动服务器"></a>启动服务器</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">C:\Windows\system32&gt;net start mysql</span><br><span class="line">MySQL 服务正在启动 .</span><br><span class="line">MySQL 服务已经启动成功。</span><br></pre></td></tr></table></figure>
 <h3 id="再连接到本地服务器"><a href="#再连接到本地服务器" class="headerlink" title="再连接到本地服务器"></a>再连接到本地服务器</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">C:\Windows\system32&gt;mysql -uroot -p -P3306 -h127.0.0.1</span><br><span class="line">Enter password: ****</span><br><span class="line">Welcome to the MySQL monitor.  Commands <span class="keyword">end</span> <span class="keyword">with</span> ; or \g.</span><br><span class="line">Your MySQL connection id is 1</span><br><span class="line">Server version: 5.5.62 MySQL Community Server (GPL)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type '<span class="keyword">help</span>;' or '\h' for help. <span class="keyword">Type</span> <span class="string">'\c'</span> <span class="keyword">to</span> <span class="keyword">clear</span> the <span class="keyword">current</span> <span class="keyword">input</span> statement.</span><br></pre></td></tr></table></figure>
 <p>其中-u后面跟的是你的用户名，输入密码后即连接。当为连接本地服务器时，<br>-P与-h可以省略。</p>
@@ -329,11 +335,11 @@
       </tags>
   </entry>
   <entry>
-    <title>JAVA Algorithms:Selection Sort</title>
+    <title>选择排序</title>
     <url>/2019/12/11/JavaAlgsSelectionSort/</url>
     <content><![CDATA[<p>Welcome to my Blog! If you get any problems when looking after my Blog, you can contact me on <a href="https://github.com/Qu-jq/Qu-jq.github.io" target="_blank" rel="noopener">GitHub</a>.</p>
 <p>##选择排序算法</p>
-<h3 id="The-description-of-algorithms"><a href="#The-description-of-algorithms" class="headerlink" title="The description of algorithms"></a>The description of algorithms</h3><ol>
+<h3 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h3><ol>
 <li><p>假设数组第一个数为最小</p>
 </li>
 <li><p>查找整个数组，看是否有比这个数更小的，<br>如果有，则互相调换数据，循坏过后，找到的数据即为整个数组最小的数</p>
@@ -341,6 +347,7 @@
 <li><p>再假设第二个数据为最小的，此时从第二个数据开始查找最小的数</p>
 </li>
 <li><p>依次循环</p>
+<a id="more"></a> 
 <h4 id="核心思想："><a href="#核心思想：" class="headerlink" title="核心思想："></a>核心思想：</h4><p>先找到n个元素中最小的数，再找n-1个元素中最小的数，依次往下……</p>
 </li>
 </ol>
@@ -355,10 +362,10 @@
       </tags>
   </entry>
   <entry>
-    <title>Java Algorithms:Quick Sort</title>
+    <title>快速排序</title>
     <url>/2019/12/11/JavaAlgsQuickSort/</url>
     <content><![CDATA[<p>Welcome to my Blog! This is my very first post. If you get any problems when looking after my Blog, you can contact me on <a href="https://github.com/Qu-jq/Qu-jq.github.io" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="The-description-of-algorithms"><a href="#The-description-of-algorithms" class="headerlink" title="The description of algorithms"></a>The description of algorithms</h3><h4 id="快速排序-—分而治之的思想"><a href="#快速排序-—分而治之的思想" class="headerlink" title="快速排序    —分而治之的思想"></a>快速排序    —分而治之的思想</h4><ol>
+<h3 id="算法的描述"><a href="#算法的描述" class="headerlink" title="算法的描述"></a>算法的描述</h3><h4 id="快速排序-—分而治之的思想"><a href="#快速排序-—分而治之的思想" class="headerlink" title="快速排序    —分而治之的思想"></a>快速排序    —分而治之的思想</h4><ol>
 <li><p>以第一个元素为基准pivot，小于基准的在数组左边left，大于的在数组右边right，分成两个部分left–pivot–right ,这样就找到pivot所在位置；</p>
 </li>
 <li><p>再对上一步得到的两个区间分别使用第一步；</p>

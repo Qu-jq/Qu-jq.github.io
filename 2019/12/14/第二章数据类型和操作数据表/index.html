@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="1. 数据类型1）定义：  数据类型是指列、存储过程参数、表达式和局部变量的数据特征，它决定了数据的存储格式，代表了不同的信息类型。 2）整型五种整形数据类型：TINYINT（一个字节）       有符号值： -128 – 127   无符号值：0 – 255SMALLINT（两个字节）      有符号值： -32768 – 32767   无符号值：0 – 65536MEDIUMINT（三个">
+<meta name="description" content="本章介绍一些常用的数据类型以及如何操作数据表。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第二章 数据类型和操作数据表">
 <meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;2019&#x2F;12&#x2F;14&#x2F;%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E8%A1%A8&#x2F;index.html">
 <meta property="og:site_name" content="Qu-jq’s Blog">
-<meta property="og:description" content="1. 数据类型1）定义：  数据类型是指列、存储过程参数、表达式和局部变量的数据特征，它决定了数据的存储格式，代表了不同的信息类型。 2）整型五种整形数据类型：TINYINT（一个字节）       有符号值： -128 – 127   无符号值：0 – 255SMALLINT（两个字节）      有符号值： -32768 – 32767   无符号值：0 – 65536MEDIUMINT（三个">
+<meta property="og:description" content="本章介绍一些常用的数据类型以及如何操作数据表。">
 <meta property="article:published_time" content="2019-12-14T03:05:22.932Z">
-<meta property="article:modified_time" content="2019-12-14T03:25:32.374Z">
+<meta property="article:modified_time" content="2019-12-14T07:44:54.116Z">
 <meta property="article:author" content="Qu-jq">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -386,7 +386,9 @@
       
 
       
-        <h1 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="1. 数据类型"></a>1. 数据类型</h1><h2 id="1）定义："><a href="#1）定义：" class="headerlink" title="1）定义："></a>1）定义：</h2><p>  数据类型是指列、存储过程参数、表达式和局部变量的数据特征，它决定了数据的存储格式，代表了不同的信息类型。</p>
+        <p>  本章介绍一些常用的数据类型以及如何操作数据表。</p>
+<a id="more"></a> 
+<h1 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="1. 数据类型"></a>1. 数据类型</h1><h2 id="1）定义："><a href="#1）定义：" class="headerlink" title="1）定义："></a>1）定义：</h2><p>  数据类型是指列、存储过程参数、表达式和局部变量的数据特征，它决定了数据的存储格式，代表了不同的信息类型。</p>
 <h2 id="2）整型"><a href="#2）整型" class="headerlink" title="2）整型"></a>2）整型</h2><p>五种整形数据类型：<br>TINYINT（一个字节）       有符号值： -128 – 127   无符号值：0 – 255<br>SMALLINT（两个字节）      有符号值： -32768 – 32767   无符号值：0 – 65536<br>MEDIUMINT（三个字节）     有符号值： -8388608 – 8388607   无符号值：0 – 16777215<br>INT（四个字节）                          更大<br>BIGINT（八个字节）                       最大<br>数据库的优化第一步是要选择合适的数据类型，避免不必要的浪费</p>
 <h2 id="3）浮点型"><a href="#3）浮点型" class="headerlink" title="3）浮点型"></a>3）浮点型</h2><p>FLOAT[(M,D)]:    单精度浮点型<br>DOUBLE[(M,D)]:   双精度浮点型<br>M是数字总位数，D是小数位数。</p>
 <h2 id="4）日期时间型"><a href="#4）日期时间型" class="headerlink" title="4）日期时间型"></a>4）日期时间型</h2><p>DATE:        支持1000年1月1号——9999年12月31号。<br>DATETIME：   支持1000年1月1号0点——9999年12月31号23点59分59秒。<br>TIMESTAMP（时间戳）:  1970年1月1号0点——2037年。<br>考虑到跨时区的问题，很多时候采用数字取代日期时间类型。</p>
