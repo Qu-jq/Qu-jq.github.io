@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MySQL,数据库," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这章主要介绍子查询和连接，当然还涉及多表的删除以及多表的更新。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第五章 子查询和连接">
+<meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;2019&#x2F;12&#x2F;18&#x2F;%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%90%E6%9F%A5%E8%AF%A2%E5%92%8C%E8%BF%9E%E6%8E%A5&#x2F;index.html">
+<meta property="og:site_name" content="Qu-jq’s Blog">
+<meta property="og:description" content="这章主要介绍子查询和连接，当然还涉及多表的删除以及多表的更新。">
+<meta property="article:published_time" content="2019-12-18T08:20:34.016Z">
+<meta property="article:modified_time" content="2019-12-18T08:43:44.436Z">
+<meta property="article:author" content="Qu-jq">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://qu-jq.github.io/2019/12/18/第五章子查询和连接/"/>
+
+
+
+
+
+  <title>第五章 子查询和连接 | Qu-jq’s Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qu-jq’s Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录学习中的点点滴滴</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://qu-jq.github.io/2019/12/18/%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%90%E6%9F%A5%E8%AF%A2%E5%92%8C%E8%BF%9E%E6%8E%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qu-jq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qu-jq’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第五章 子查询和连接</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-18T16:20:34+08:00">
+                2019-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这章主要介绍子查询和连接，当然还涉及多表的删除以及多表的更新。</p>
+<a id="more"></a> 
+<h1 id="1-准备数据"><a href="#1-准备数据" class="headerlink" title="1. 准备数据"></a>1. 准备数据</h1><h2 id="1）首先创建一个新的数据库"><a href="#1）首先创建一个新的数据库" class="headerlink" title="1）首先创建一个新的数据库"></a>1）首先创建一个新的数据库</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE DATABASE goods CHARSET utf8;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>还记得第一章里讲过的，新建的数据库默认为utf-8.<br>检验一下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW CREATE DATABASE goods;</span><br><span class="line">+<span class="comment">----------+----------------------------------------------------------------+</span></span><br><span class="line">| Database | <span class="keyword">Create</span> <span class="keyword">Database</span>                                                |</span><br><span class="line">+<span class="comment">----------+----------------------------------------------------------------+</span></span><br><span class="line">| goods    | <span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="string">`goods`</span> <span class="comment">/*!40100 DEFAULT CHARACTER SET utf8 */</span> |</span><br><span class="line">+<span class="comment">----------+----------------------------------------------------------------+</span></span><br><span class="line"><span class="number">1</span> <span class="keyword">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h2 id="2）再创建一个数据表"><a href="#2）再创建一个数据表" class="headerlink" title="2）再创建一个数据表"></a>2）再创建一个数据表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; USE goods;</span><br><span class="line">Database changed</span><br><span class="line">mysql&gt;CREATE TABLE IF NOT EXISTS tdb_goods(</span><br><span class="line">    -&gt;goods_id    SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">    -&gt;goods_name  VARCHAR(150) NOT NULL,</span><br><span class="line">    -&gt;goods_cate  VARCHAR(40)  NOT NULL,</span><br><span class="line">    -&gt;brand_name  VARCHAR(40)  NOT NULL,</span><br><span class="line">    -&gt;goods_price DECIMAL(15,3) UNSIGNED NOT NULL DEFAULT 0,</span><br><span class="line">    -&gt;is_show     BOOLEAN NOT NULL DEFAULT 1,</span><br><span class="line">    -&gt;is_saleoff  BOOLEAN NOT NULL DEFAULT 0</span><br><span class="line">    -&gt;);</span><br><span class="line">Query OK, 0 rows affected (0.04 sec)</span><br></pre></td></tr></table></figure>
+
+<p>此数据表为商品的信息，包括：商品的id，名字，分类，品牌，价格，是否上架（默认为1，表示在架），是否售空（默认为0，表示没有售空）。</p>
+<h2 id="3）插入记录"><a href="#3）插入记录" class="headerlink" title="3）插入记录"></a>3）插入记录</h2><p>因为cmd的字符类型为gbk，所以当我们插入中文时总是出错，所以在插入记录前，先把mysql设置为gbk；再进行插入。<br>注意：此方法只是设置的客户端的编码，并不影响数据表tdb_goods，它还是utf8的编码方式。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set names gbk;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>直接复制下面语句到cmd即可插入记录：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'R510VC 15.6英寸笔记本'</span>,<span class="string">'笔记本'</span>,<span class="string">'华硕'</span>,<span class="string">'3399'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'Y400N 14.0英寸笔记本电脑'</span>,<span class="string">'笔记本'</span>,<span class="string">'联想'</span>,<span class="string">'4899'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'G150TH 15.6英寸游戏本'</span>,<span class="string">'游戏本'</span>,<span class="string">'雷神'</span>,<span class="string">'8499'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'X550CC 15.6英寸笔记本'</span>,<span class="string">'笔记本'</span>,<span class="string">'华硕'</span>,<span class="string">'2799'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'X240(20ALA0EYCD) 12.5英寸超极本'</span>,<span class="string">'超级本'</span>,<span class="string">'联想'</span>,<span class="string">'4999'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'U330P 13.3英寸超极本'</span>,<span class="string">'超级本'</span>,<span class="string">'联想'</span>,<span class="string">'4299'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'SVP13226SCB 13.3英寸触控超极本'</span>,<span class="string">'超级本'</span>,<span class="string">'索尼'</span>,<span class="string">'7999'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'iPad mini MD531CH/A 7.9英寸平板电脑'</span>,<span class="string">'平板电脑'</span>,<span class="string">'苹果'</span>,<span class="string">'1998'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'iPad Air MD788CH/A 9.7英寸平板电脑 （16G WiFi版）'</span>,<span class="string">'平板电脑'</span>,<span class="string">'苹果'</span>,<span class="string">'3388'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">' iPad mini ME279CH/A 配备 Retina 显示屏 7.9英寸平板电脑 （16G WiFi版）'</span>,<span class="string">'平板电脑'</span>,<span class="string">'苹果'</span>,<span class="string">'2788'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'IdeaCentre C340 20英寸一体电脑 '</span>,<span class="string">'台式机'</span>,<span class="string">'联想'</span>,<span class="string">'3499'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'Vostro 3800-R1206 台式电脑'</span>,<span class="string">'台式机'</span>,<span class="string">'戴尔'</span>,<span class="string">'2899'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'iMac ME086CH/A 21.5英寸一体电脑'</span>,<span class="string">'台式机'</span>,<span class="string">'苹果'</span>,<span class="string">'9188'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'AT7-7414LP 台式电脑 （i5-3450四核 4G 500G 2G独显 DVD 键鼠 Linux ）'</span>,<span class="string">'台式机'</span>,<span class="string">'宏碁'</span>,<span class="string">'3699'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'Z220SFF F4F06PA工作站'</span>,<span class="string">'服务器/工作站'</span>,<span class="string">'惠普'</span>,<span class="string">'4288'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'PowerEdge T110 II服务器'</span>,<span class="string">'服务器/工作站'</span>,<span class="string">'戴尔'</span>,<span class="string">'5388'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'Mac Pro MD878CH/A 专业级台式电脑'</span>,<span class="string">'服务器/工作站'</span>,<span class="string">'苹果'</span>,<span class="string">'28888'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">' HMZ-T3W 头戴显示设备'</span>,<span class="string">'笔记本配件'</span>,<span class="string">'索尼'</span>,<span class="string">'6999'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'商务双肩背包'</span>,<span class="string">'笔记本配件'</span>,<span class="string">'索尼'</span>,<span class="string">'99'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'X3250 M4机架式服务器 2583i14'</span>,<span class="string">'服务器/工作站'</span>,<span class="string">'IBM'</span>,<span class="string">'6888'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'玄龙精英版 笔记本散热器'</span>,<span class="string">'笔记本配件'</span>,<span class="string">'九州风神'</span>,<span class="string">''</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">' HMZ-T3W 头戴显示设备'</span>,<span class="string">'笔记本配件'</span>,<span class="string">'索尼'</span>,<span class="string">'6999'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">INSERT</span> tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) <span class="keyword">VALUES</span>(<span class="string">'商务双肩背包'</span>,<span class="string">'笔记本配件'</span>,<span class="string">'索尼'</span>,<span class="string">'99'</span>,<span class="keyword">DEFAULT</span>,<span class="keyword">DEFAULT</span>);</span><br></pre></td></tr></table></figure>
+
+<p>使用下面语句可以查看插入的记录，\G的作用是使显示成网格，更加方便查看。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tdb_goods/G;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-子查询"><a href="#2-子查询" class="headerlink" title="2. 子查询"></a>2. 子查询</h1><h2 id="1）简介"><a href="#1）简介" class="headerlink" title="1）简介"></a>1）简介</h2><p>子查询(Subquery)是指出现在其他SQL语句内的SELECT子句<br>例如：<br><strong>SELECT * FROM t1 WHERE col1= ( SELECT col2 FROM t2 );</strong></p>
+<p>其中SELECT * FROM t1，称为Outer Query/Outer Statement（外查询）<br>SELECT col2 FROM t2, 称为SubQuery（子查询）</p>
+<p>使用子查询时注意：<br>【a】子查询嵌套在查询内部，并且子查询必须出现在圆括号内。<br>【b】子查询可以包含多个关键字或条件，如DISTINCT、GROUT BY、ORDER BY、LIMIT,函数等。<br>【c】子查询的外层查询可以是：SELECT,INSERT，UPDATE，SET或DO。<br>【d】外查询这里指所有SQL命令的统称，因为SQL称为结构化查询语言<br>子查询返回值：可以是返回标量、一行、一列、或者子查询，并且可以通过该返回值进行增、删、改、查。</p>
+<h2 id="2）由比较运算符引发的子查询"><a href="#2）由比较运算符引发的子查询" class="headerlink" title="2）由比较运算符引发的子查询"></a>2）由比较运算符引发的子查询</h2><p>产生子查询的情况可以分为3类，首先来看下由比较运算符引发的子查询：<br>使用比较运算符的子查询<br>=、&gt;、&lt;、&gt;=、&lt;=、&lt;&gt;、!=、&lt;=&gt;<br>语法结构<br>operand comparison_operator subquery<br>下面做一个简单的演示，来看一下子查询到底怎么回事？<br>我们之前已经创建了许多电脑的商品，来看一下商品的平均价格是多少呢？</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT AVG(goods_price) FROM tdb_goods;</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">| AVG(goods_price) |</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">|     5636.3636364 |</span><br><span class="line">+<span class="comment">------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>AVG是用于求平均数的聚合函数，其返回一个值。<br>可以看到返回值得小数部分很小，显然我们不需要这么长，做一下处理：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT ROUND(AVG(goods_price),2) FROM tdb_goods;</span><br><span class="line">+<span class="comment">---------------------------+</span></span><br><span class="line">| ROUND(AVG(goods_price),2) |</span><br><span class="line">+<span class="comment">---------------------------+</span></span><br><span class="line">|                   5636.36 |</span><br><span class="line">+<span class="comment">---------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>使用ROUND 四舍五入并且保留两位小数。<br>接下来想看看哪些商品大于平均价格：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id, goods_name, goods_price FROM tdb_goods WHERE goods_price&gt;=5636.36;</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">| goods_id | goods_name                       | goods_price |</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">|        3 | G150TH 15.6英寸游戏本                    |    8499.000 |</span><br><span class="line">|        7 | SVP13226SCB 13.3英寸触控超极本             |    7999.000 |</span><br><span class="line">|       13 | iMac ME086CH/A 21.5英寸一体电脑            |    9188.000 |</span><br><span class="line">|       17 | Mac Pro MD878CH/A 专业级台式电脑           |   28888.000 |</span><br><span class="line">|       18 |  HMZ-T3W 头戴显示设备                    |    6999.000 |</span><br><span class="line">|       20 | X3250 M4机架式服务器 2583i14                |    6888.000 |</span><br><span class="line">|       21 |  HMZ-T3W 头戴显示设备                    |    6999.000 |</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">7 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>一共七条符合条件，再来看下命令语句，我是通过输入5636.36 来进行比较的，那么能不能和上个语句结合起来呢？<br>只需要将5636.36替换为（），里面放入之前求平均价格的语句即可：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id, goods_name, goods_price FROM tdb_goods WHERE goods_price&gt;=( SELECT ROUND(AVG(goods_price),2) FROM tdb_goods);</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">| goods_id | goods_name                       | goods_price |</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">|        3 | G150TH 15.6英寸游戏本                    |    8499.000 |</span><br><span class="line">|        7 | SVP13226SCB 13.3英寸触控超极本             |    7999.000 |</span><br><span class="line">|       13 | iMac ME086CH/A 21.5英寸一体电脑            |    9188.000 |</span><br><span class="line">|       17 | Mac Pro MD878CH/A 专业级台式电脑           |   28888.000 |</span><br><span class="line">|       18 |  HMZ-T3W 头戴显示设备                    |    6999.000 |</span><br><span class="line">|       20 | X3250 M4机架式服务器 2583i14                |    6888.000 |</span><br><span class="line">|       21 |  HMZ-T3W 头戴显示设备                    |    6999.000 |</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">7 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>这样我们就使用了比较运算符进行了子查询！！！<br>当然我们还可以查询其他的，下面来看看超级本的价格都是多少？</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_price FROM tdb_goods WHERE goods_cate = '超级本';</span><br><span class="line">+<span class="comment">-------------+</span></span><br><span class="line">| goods_price |</span><br><span class="line">+<span class="comment">-------------+</span></span><br><span class="line">|    4999.000 |</span><br><span class="line">|    4299.000 |</span><br><span class="line">|    7999.000 |</span><br><span class="line">+<span class="comment">-------------+</span></span><br><span class="line">3 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+<p>超级本一共有三个，下面来看看大于超极本价格的电脑有哪些？</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id,goods_name,goods_price FROM tdb_goods WHERE goods_price&gt;(SELECT goods_price FROM tdb_goods WHERE  goods_cate = '超级本');</span><br><span class="line">ERROR 1242 (21000): Subquery returns more than 1 row</span><br></pre></td></tr></table></figure>
+<p>超级本的价格有三个，大于这三个价格，到底大于哪个呢，肯定有错误。<br>所以这时候我们需要一些修饰符<br>用ANY、SOME或ALL修饰的比较运算符<br>operand comparison_operator ANY (subquery)<br>operand comparison_operator SOME (subquery)<br>operand comparison_operator ALL (subquery)<br>其中ANY跟SOME是等价的，满足其中一条就可以，ALL必须要满足所有条件</p>
+<p>我们修改一下上面的命令：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id,goods_name,goods_price FROM tdb_goods WHERE goods_price&gt;ANY(SELECT goods_price FROM tdb_goods WHERE  goods_cate = '超级本');</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">| goods_id | goods_name                       | goods_price |</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">|        2 | Y400N 14.0英寸笔记本电脑                    |    4899.000 |</span><br><span class="line">|        3 | G150TH 15.6英寸游戏本                    |    8499.000 |</span><br><span class="line">|        5 | X240(20ALA0EYCD) 12.5英寸超极本         |    4999.000 |</span><br><span class="line">|        7 | SVP13226SCB 13.3英寸触控超极本             |    7999.000 |</span><br><span class="line">|       13 | iMac ME086CH/A 21.5英寸一体电脑            |    9188.000 |</span><br><span class="line">|       16 | PowerEdge T110 II服务器                |    5388.000 |</span><br><span class="line">|       17 | Mac Pro MD878CH/A 专业级台式电脑           |   28888.000 |</span><br><span class="line">|       18 |  HMZ-T3W 头戴显示设备                    |    6999.000 |</span><br><span class="line">|       20 | X3250 M4机架式服务器 2583i14                |    6888.000 |</span><br><span class="line">|       21 |  HMZ-T3W 头戴显示设备                    |    6999.000 |</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">10 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>添加了ANY之后，返回了所有大于4299的电脑。<br>那么试试ALL：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id,goods_name,goods_price FROM tdb_goods WHERE goods_price&gt;ALL(SELECT goods_price FROM tdb_goods WHERE  goods_cate = '超级本');</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">| goods_id | goods_name                       | goods_price |</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">|        3 | G150TH 15.6英寸游戏本                    |    8499.000 |</span><br><span class="line">|       13 | iMac ME086CH/A 21.5英寸一体电脑            |    9188.000 |</span><br><span class="line">|       17 | Mac Pro MD878CH/A 专业级台式电脑           |   28888.000 |</span><br><span class="line">+<span class="comment">----------+----------------------------------+-------------+</span></span><br><span class="line">3 rows in <span class="keyword">set</span> (<span class="number">0.02</span> sec)</span><br></pre></td></tr></table></figure>
+<p>返回了大于7999的电脑</p>
+<h2 id="3）IN-NOT-IN-引发的子查询"><a href="#3）IN-NOT-IN-引发的子查询" class="headerlink" title="3）IN/NOT IN 引发的子查询"></a>3）IN/NOT IN 引发的子查询</h2><p>语法结构<br><strong>operand comparison_operator [ NOT ] IN (subquery)</strong><br>=ANY运算符与IN等效<br>!=ALL或&lt;&gt;ALL运算符与NOT IN等效<br>下面使用NOT IN</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id,goods_name,goods_price FROM tdb_goods WHERE goods_price NOT IN(SELECT goods_price FROM tdb_goods WHERE  goods_cate = '超级本');</span><br><span class="line">19 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>将会有19个商品返回。这是总共22个商品除去那3个超级本的。</p>
+<h2 id="4）-NOT-EXISTS的子查询"><a href="#4）-NOT-EXISTS的子查询" class="headerlink" title="4）[ NOT ] EXISTS的子查询"></a>4）[ NOT ] EXISTS的子查询</h2><p>使用[ NOT ] EXISTS的子查询<br>如果子查询返回任何行，EXISTS将返回TRUE；否则为FALSE<br>这个使用比较少。</p>
+<h1 id="3-多表更新"><a href="#3-多表更新" class="headerlink" title="3. 多表更新"></a>3. 多表更新</h1><h2 id="1）-使用INSERT…SELECT插入记录"><a href="#1）-使用INSERT…SELECT插入记录" class="headerlink" title="1） 使用INSERT…SELECT插入记录"></a>1） 使用INSERT…SELECT插入记录</h2><p> 语法：<br><strong>INSERT [INTO] tbl_name [(col_name,…)] SELECT …</strong><br>它是将查询的结果写入到数据表，列名省略也可以，否则列名之间用逗号隔开。<br>INSERT语句有两种形式：INSERT SET和INSERT VALUES,区别在于INSERT SET 可以使用子查询，因为一般这样写，INSERT SET A字段=多少，这里的=是比较运算符，可以引发子查询。接下来会验证。<br>如果一张表中存在很多记录，并且这张表中存在很多重复的信息，例如：上面课程中商品表中的品牌字段和商品类型，汉字占的字节数一定比数字占的字节数多，如果数据越来越多，那么数据表就会越来越庞大，查找的时候速度就会变得很慢，所以我们可以通过外键来解决这个问题，但是使用外键至少有两张数据表，而现在就有一张数据表，所以就要再创建两张数据表存储商品的分类和品牌。</p>
+<h2 id="2）新建一个数据表存储分类"><a href="#2）新建一个数据表存储分类" class="headerlink" title="2）新建一个数据表存储分类"></a>2）新建一个数据表存储分类</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE tdb_goods_cates(</span><br><span class="line">    -&gt; cate_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">    -&gt; cate_name VARCHAR(40) NOT NULL</span><br><span class="line">    -&gt; );</span><br><span class="line">Query OK, 0 rows affected (0.04 sec)</span><br></pre></td></tr></table></figure>
+<p>但是此时分类表里还没有数据信息，我们需要从商品表中查找所有的分类信息插入到分类表中，在查找的时候按分类来进行分组，并且插入时有两种方式，方式1录入7条INSERT语句，但这样太麻烦，方式2使用INSERT…SELECT将查询的结果直接写入数据表.</p>
+<h2 id="3-使用方式2插入记录"><a href="#3-使用方式2插入记录" class="headerlink" title="3) 使用方式2插入记录"></a>3) 使用方式2插入记录</h2><p>先看一下分类：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_cate FROM tdb_goods GROUP BY goods_cate;</span><br><span class="line">+<span class="comment">---------------+</span></span><br><span class="line">| goods_cate    |</span><br><span class="line">+<span class="comment">---------------+</span></span><br><span class="line">| 台式机            |</span><br><span class="line">| 平板电脑             |</span><br><span class="line">| 服务器/工作站            |</span><br><span class="line">| 游戏本             |</span><br><span class="line">| 笔记本            |</span><br><span class="line">| 笔记本配件            |</span><br><span class="line">| 超级本              |</span><br><span class="line">+<span class="comment">---------------+</span></span><br><span class="line">7 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>如果上面汉字显示异常：<br>可以使用：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">names</span> gbk;</span><br></pre></td></tr></table></figure>
+<p>下面将分类信息写入到tdb_goods_cates</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSERT tdb_goods_cates(cate_name) SELECT goods_cate FROM tdb_goods GROUP BY goods_cate;</span><br><span class="line">Query OK, 7 rows affected (0.03 sec)</span><br><span class="line">Records: 7  Duplicates: 0  Warnings: 0</span><br><span class="line">mysql&gt; SELECT * FROM tdb_goods_cates;</span><br><span class="line">+<span class="comment">---------+---------------+</span></span><br><span class="line">| cate_id | cate_name     |</span><br><span class="line">+<span class="comment">---------+---------------+</span></span><br><span class="line">|       1 | 台式机            |</span><br><span class="line">|       2 | 平板电脑             |</span><br><span class="line">|       3 | 服务器/工作站            |</span><br><span class="line">|       4 | 游戏本             |</span><br><span class="line">|       5 | 笔记本            |</span><br><span class="line">|       6 | 笔记本配件            |</span><br><span class="line">|       7 | 超级本              |</span><br><span class="line">+<span class="comment">---------+---------------+</span></span><br><span class="line">7 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>但是此时商品表还没有分类表的外键，需要参照分类表更新商品表，以前学习的是单表更新，但是现在商品表需要参照分类表进行更新，所以这就是多表更新。</p>
+<h2 id="4）-多表更新的实现"><a href="#4）-多表更新的实现" class="headerlink" title="4） 多表更新的实现"></a>4） 多表更新的实现</h2><p>语法：<br><strong>UPDATE table_references SET col_name1={expr1 | DEFAULT}<br>[,col_name2={expr2 | DEFAULT}] … [WHERE where_condition]</strong><br>需要表的参照关系，这就是将要讲的连接。</p>
+<p>表的参照关系：一张表通过INNER JOIN或者LEFT OUTER JOIN去连接另外的一张表并通过ON指定连接条件，也可以给表起别名。</p>
+<p>连接表的语法：<br><strong>table_reference<br> {[INNER | CROSS] JOIN | {LEFT | RIGHT} [OUTER] JOIN}<br>table_reference<br> ON conditional_expr</strong></p>
+<p>连接表处理使用表的名称以外，还需要使用连接类型。</p>
+<p>连接类型一共分为3中：在MySQL中，JOIN,CROSS JOIN和INNER JOIN是等价的。</p>
+<p>【1】INNER JOIN:内连接.</p>
+<p>【2】LEFT [OUTER] JOIN:左外连接。</p>
+<p>【3】RIGHT [OUTER] JOIN:右外连接。</p>
+<p>下面我们使用INNER JOIN连接两张表，并作为表的参照关系进行多表更新，个例：更新商品表id=22的商品分类属性，修改为6，因为商品分类的名称在商品分类表中对应的id为6。就是说将tdb_goods 中的商品属性，更改为了tdb_goods_cates 中属性名称对应的id。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE tdb_goods INNER JOIN tdb_goods_cates ON goods_cate = cate_name</span><br><span class="line">    -&gt; set goods_cate = cate_id;</span><br><span class="line">Query OK, 22 rows affected (0.04 sec)</span><br><span class="line">Rows matched: 22  Changed: 22  Warnings: 0</span><br></pre></td></tr></table></figure>
+
+<p>结果：数据信息被更新了<br>所以多表更新，就是参照另外的表更新本表。</p>
+<h1 id="4-多表更新之一步到位"><a href="#4-多表更新之一步到位" class="headerlink" title="4. 多表更新之一步到位"></a>4. 多表更新之一步到位</h1><p>上面我们创建多表更新时，一共分为三步：<br>[A] 创建表<br>[B] INSERT  SELECT 将记录写入数据表<br>[C] 多表的更新<br>下面可以减少操作：<br>CREATE……SELECT<br>创建数据表同时将查询结果写入到数据表<br><strong>CREATE TABLE [IF NOT EXISTS] tbl_name<br>[(create_definition,…..)]<br>select_statement</strong></p>
+<p>上一小节我们将商品的分类已经更新，还有商品的品牌，下面处理品牌。<br>看一下商品品牌都有哪些种类</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT brand_name FROM tdb_goods GROUP BY brand_name;</span><br><span class="line">+<span class="comment">------------+</span></span><br><span class="line">| brand_name |</span><br><span class="line">+<span class="comment">------------+</span></span><br><span class="line">| IBM        |</span><br><span class="line">| 华硕          |</span><br><span class="line">| 宏碁         |</span><br><span class="line">| 惠普           |</span><br><span class="line">| 戴尔           |</span><br><span class="line">| 索尼           |</span><br><span class="line">| 联想           |</span><br><span class="line">| 苹果          |</span><br><span class="line">| 雷神           |</span><br><span class="line">+<span class="comment">------------+</span></span><br><span class="line">9 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>一共有9个品牌。</p>
+<h2 id="1）创建表-写入记录"><a href="#1）创建表-写入记录" class="headerlink" title="1）创建表+写入记录"></a>1）创建表+写入记录</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE tdb_goods_brands</span><br><span class="line">    -&gt; (</span><br><span class="line">    -&gt; brand_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">    -&gt; brand_name varchar(40) NOT NULL</span><br><span class="line">    -&gt; )</span><br><span class="line">    -&gt; SELECT brand_name FROM tdb_goods GROUP BY brand_name;</span><br><span class="line">Query OK, 9 rows affected (0.01 sec)</span><br><span class="line">Records: 9  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure>
+
+<p>查看一下这张表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM tdb_goods_brands;</span><br><span class="line">+<span class="comment">----------+------------+</span></span><br><span class="line">| brand_id | brand_name |</span><br><span class="line">+<span class="comment">----------+------------+</span></span><br><span class="line">|        1 | IBM        |</span><br><span class="line">|        2 | 华硕          |</span><br><span class="line">|        3 | 宏碁         |</span><br><span class="line">|        4 | 惠普           |</span><br><span class="line">|        5 | 戴尔           |</span><br><span class="line">|        6 | 索尼           |</span><br><span class="line">|        7 | 联想           |</span><br><span class="line">|        8 | 苹果          |</span><br><span class="line">|        9 | 雷神           |</span><br><span class="line">+<span class="comment">----------+------------+</span></span><br><span class="line">9 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>都已经插入好啦。现在一步既可完成。</p>
+<h2 id="2）实现多表更新"><a href="#2）实现多表更新" class="headerlink" title="2）实现多表更新"></a>2）实现多表更新</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE tdb_goods INNER JOIN tdb_goods_brands ON brand_name = brand_name</span><br><span class="line">    -&gt; SET brand_name = brand_id;</span><br><span class="line">ERROR 1052 (23000): Column 'brand_name' in field list is ambiguous</span><br></pre></td></tr></table></figure>
+<p>出现错误，原因是两张表中都含brand_name,系统不知道如何区分啦，这时候就需要使用别名。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE tdb_goods AS g INNER JOIN tdb_goods_brands AS b ON g.brand_name = b.brand_name</span><br><span class="line">    -&gt; SET g.brand_name = b.brand_id;</span><br><span class="line">Query OK, 22 rows affected (0.03 sec)</span><br><span class="line">Rows matched: 22  Changed: 22  Warnings: 0</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以啦。</p>
+<h2 id="3）数据表减肥"><a href="#3）数据表减肥" class="headerlink" title="3）数据表减肥"></a>3）数据表减肥</h2><p>下面我们再来看一下tdb_goods这张表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW COLUMNS FROM tdb_goods;</span><br><span class="line">+<span class="comment">-------------+------------------------+------+-----+---------+----------------+</span></span><br><span class="line">| Field       | Type                   | Null | Key | Default | Extra          |</span><br><span class="line">+<span class="comment">-------------+------------------------+------+-----+---------+----------------+</span></span><br><span class="line">| goods_id    | smallint(5) unsigned   | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| goods_name  | varchar(150)           | NO   |     | NULL    |                |</span><br><span class="line">| goods_cate  | varchar(40)            | NO   |     | NULL    |                |</span><br><span class="line">| brand_name  | varchar(40)            | NO   |     | NULL    |                |</span><br><span class="line">| goods_price | decimal(15,3) unsigned | NO   |     | 0.000   |                |</span><br><span class="line">| is_show     | tinyint(1)             | NO   |     | 1       |                |</span><br><span class="line">| is_saleoff  | tinyint(1)             | NO   |     | 0       |                |</span><br><span class="line">+<span class="comment">-------------+------------------------+------+-----+---------+----------------+</span></span><br><span class="line">7 rows in <span class="keyword">set</span> (<span class="number">0.04</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>我们已经将goods_cate和brand_name改为了编号，然而他的数据类型还为字符型，一般我们不这样存储，可以将其改为brand_id和cate_id</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE tdb_goods</span><br><span class="line">    -&gt; CHANGE goods_cate cate_id SMALLINT UNSIGNED NOT NULL,</span><br><span class="line">    -&gt; CHANGE brand_name brand_id SMALLINT UNSIGNED NOT NULL;</span><br><span class="line">Query OK, 22 rows affected (0.04 sec)</span><br><span class="line">Records: 22  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure>
+
+<p>这就是数据表减肥。<br>现在分别在tdb_goods_cates和tdb_goods_brands表插入记录：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> tdb_goods_cates(cate_name) <span class="keyword">VALUES</span>(<span class="string">'路由器'</span>),(<span class="string">'交换机'</span>),(<span class="string">'网卡'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_brands(brand_name) <span class="keyword">VALUES</span>(<span class="string">'海尔'</span>),(<span class="string">'清华同方'</span>),(<span class="string">'神舟'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在tdb_goods数据表写入任意记录：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> tdb_goods(goods_name,cate_id,brand_id,goods_price) <span class="keyword">VALUES</span>(<span class="string">' LaserJet Pro P1606dn 黑白激光打印机'</span>,<span class="string">'12'</span>,<span class="string">'4'</span>,<span class="string">'1849'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上面这条记录的种类是12，然而tdb_goods_cates中并没有12，但是也没有报错。因为我们没有设置物理约束。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM tdb_goods_cates;</span><br><span class="line">+<span class="comment">---------+---------------+</span></span><br><span class="line">| cate_id | cate_name     |</span><br><span class="line">+<span class="comment">---------+---------------+</span></span><br><span class="line">|       1 | 台式机            |</span><br><span class="line">|       2 | 平板电脑             |</span><br><span class="line">|       3 | 服务器/工作站            |</span><br><span class="line">|       4 | 游戏本             |</span><br><span class="line">|       5 | 笔记本            |</span><br><span class="line">|       6 | 笔记本配件            |</span><br><span class="line">|       7 | 超级本              |</span><br><span class="line">|       8 | 路由器             |</span><br><span class="line">|       9 | 交换机              |</span><br><span class="line">|      10 | 网卡              |</span><br><span class="line">+<span class="comment">---------+---------------+</span></span><br><span class="line">10 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>在实际使用过程中，我们不可能种类和品牌只显示数字，应该给用户提供具体的名称，这时候就需要连接来实现。</p>
+<h1 id="5-连接的语法结构"><a href="#5-连接的语法结构" class="headerlink" title="5. 连接的语法结构"></a>5. 连接的语法结构</h1><p>MySQL 在SELECT 语句 多表更新 多表删除语句中支持JOIN 操作<br>语法结构<br><strong>table_reference<br>{[INNER|CROSS] JOIN {LEFT|RIGHT} [OUTER] JOIN}<br>table_reference<br>ON conditional_expr</strong><br>基本类型：A表 链接类型 B表 两张表的链接条<br>数据表参照<br><strong>table_reference<br>tbl_name [[AS] alias] | table_sabquery [AS] alias</strong><br>数据表可以使用tbl_name AS alias_name<br>   或tbl_name alias_name 赋予别名<br>table_subquery可以作为子查询使用在FROM子句中<br>   这样的子查询必须为其赋予别名</p>
+<h2 id="1-内连接INNER-JOIN"><a href="#1-内连接INNER-JOIN" class="headerlink" title="1) 内连接INNER JOIN"></a>1) 内连接INNER JOIN</h2><p>使用ON关键字来设定连接条件，也可以使用WHERE来代替<br>通常使用ON关键字来设定连接条件，<br>使用WHERE关键字进行结果集记录的过滤</p>
+<p>INNER JOIN连接表示两个表的交集。<br>下面来个示例;<br>现在我们的商品一共有23个，并且第23个商品的cate_id为12，在tdb_goods_cates中是不存在的，下面使用内连接将这两个表连接在一起查询</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id,goods_name,cate_name FROM tdb_goods INNER JOIN tdb_goods_cates</span><br><span class="line">    -&gt; ON tdb_goods.cate_id = tdb_goods_cates.cate_id\G;</span><br></pre></td></tr></table></figure>
+<p>运行上述语句之后，会有22条商品信息返回，缺失第23条<br>来看一下其中一条商品的信息：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  goods_id: 5</span><br><span class="line">goods_name: X240(20ALA0EYCD) 12.5英寸超极本</span><br><span class="line"> cate_name: 超级本</span><br></pre></td></tr></table></figure>
+
+<p>通过连接，我们就把商品的种类名称也就显示出来啦，而不是数字。</p>
+<h2 id="2）外连接OUTER-JOIN"><a href="#2）外连接OUTER-JOIN" class="headerlink" title="2）外连接OUTER JOIN"></a>2）外连接OUTER JOIN</h2><p>左外连接：显示左表的全部记录和右表符合连接条件的记录<br>右外连接：显示右表的全部记录和左表符合连接条件的记录<br>先看一下左外连接：（左表tdb_goods  右表tdb_goods_cates）</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id,goods_name,cate_name FROM tdb_goods LEFT OUTER JOIN tdb_goods_cates</span><br><span class="line">    -&gt; ON tdb_goods.cate_id = tdb_goods_cates.cate_id\G;</span><br></pre></td></tr></table></figure>
+<p>将会返回23条记录，也就是tdb_goods 中的全部，看一下返回的第23条记录</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  goods_id: 23</span><br><span class="line">goods_name:  LaserJet Pro P1606dn 黑白激光打印机</span><br><span class="line"> cate_name: NULL</span><br><span class="line">23 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>因为cate_name在tdb_goods_cates中不存在所以为NULL。</p>
+<p>再来看一下右外连接：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id,goods_name,cate_name FROM tdb_goods RIGHT OUTER JOIN tdb_goods_cates</span><br><span class="line">    -&gt; ON tdb_goods.cate_id = tdb_goods_cates.cate_id\G;</span><br></pre></td></tr></table></figure>
+<p>一共有25个记录返回，包括右表的全部和左表符合连接条件的22条<br>其中的后三条：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">*************************** 23. row ***************************</span><br><span class="line">  goods_id: NULL</span><br><span class="line">goods_name: NULL</span><br><span class="line"> cate_name: 路由器</span><br><span class="line">*************************** 24. row ***************************</span><br><span class="line">  goods_id: NULL</span><br><span class="line">goods_name: NULL</span><br><span class="line"> cate_name: 交换机</span><br><span class="line">*************************** 25. row ***************************</span><br><span class="line">  goods_id: NULL</span><br><span class="line">goods_name: NULL</span><br><span class="line"> cate_name: 网卡</span><br></pre></td></tr></table></figure>
+<p>因为在左表中无连接，所以其他信息为NULL。<br>这三种连接中，内连接用的相对比较多。</p>
+<h1 id="6-多表连接"><a href="#6-多表连接" class="headerlink" title="6. 多表连接"></a>6. 多表连接</h1><p>上一小节我们实现了两张表的连接，下面来试试三张表的连接，将商品的品牌，种类都通过连接的方式一起显示出来。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id,goods_name,cate_name,brand_name,goods_price FROM tdb_goods AS g</span><br><span class="line">    -&gt; INNER JOIN tdb_goods_cates AS c ON g.cate_id = c.cate_id</span><br><span class="line">    -&gt; INNER JOIN tdb_goods_brands AS b ON g.brand_id = b.brand_id\G;</span><br></pre></td></tr></table></figure>
+
+<p>这样最开始创建的22条商品就全部显示出来啦。<br>要明白，这个显示的结果和原来显示的结果不一样的地方在于：这是通过多张表的连接实现的，而以前是纯粹的一张表查询实现的。<br>表的连接可以看做是外键的一种逆向操作，外键将多张表分开存储，而连接又将表联系在一起。</p>
+<h1 id="7-关于连接的几点说明"><a href="#7-关于连接的几点说明" class="headerlink" title="7. 关于连接的几点说明"></a>7. 关于连接的几点说明</h1><p>外连接为例：<br>A LEFT JOIN B join_condition（左外连接，右外连接情况下调换AB就可）<br>数据表B的结果集依赖数据表A。（A中有的记录才可以在B中显示，否则不显示）<br>数据表A的结果集根据左连接条件依赖所有数据表(B表除外)。<br>左外连接条件决定如何检索数据表B(在没有指定WHERE条件的情况下)。（A表决定B表）<br>如果数据表A的某条记录符合WHERE条件,但是在数据表B不存在符合连接条件的记录,将生成一个所有列为空的额外的B行。</p>
+<p>如果使用内连接查找的记录在连接数据表中不存在,并且在WHERE子句中尝试以下操作: col-namd IS NULL时,如果col-name被定义为NOT NULL, MySQL将在找到符合连执着条件的记录后停止搜索更多的行（查到为null，而要求不为null，此时发生冲突）。</p>
+<h1 id="8-无限级分类表设计"><a href="#8-无限级分类表设计" class="headerlink" title="8. 无限级分类表设计"></a>8. 无限级分类表设计</h1><p>当一个分类下面可能还要无数个子分类时，需要用到：<br>– 无限分类的数据表设计<br>下面创建一张无限级分类的数据表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tdb_goods_types(</span><br><span class="line">   type_id   <span class="built_in">SMALLINT</span> <span class="keyword">UNSIGNED</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT,</span><br><span class="line">   type_name <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">   parent_id <span class="built_in">SMALLINT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>插入下面的记录：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'家用电器'</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'电脑、办公'</span>,<span class="keyword">DEFAULT</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'大家电'</span>,<span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'生活电器'</span>,<span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'平板电视'</span>,<span class="number">3</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'空调'</span>,<span class="number">3</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'电风扇'</span>,<span class="number">4</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'饮水机'</span>,<span class="number">4</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'电脑整机'</span>,<span class="number">2</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'电脑配件'</span>,<span class="number">2</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'笔记本'</span>,<span class="number">9</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'超级本'</span>,<span class="number">9</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'游戏本'</span>,<span class="number">9</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'CPU'</span>,<span class="number">10</span>);</span><br><span class="line"><span class="keyword">INSERT</span> tdb_goods_types(type_name,parent_id) <span class="keyword">VALUES</span>(<span class="string">'主机'</span>,<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<p>查看记录：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM tdb_goods_types;</span><br><span class="line">+<span class="comment">---------+------------+-----------+</span></span><br><span class="line">| type_id | type_name  | parent_id |</span><br><span class="line">+<span class="comment">---------+------------+-----------+</span></span><br><span class="line">|       1 | 家用电器          |         0 |</span><br><span class="line">|       2 | 电脑、办公        |         0 |</span><br><span class="line">|       3 | 大家电          |         1 |</span><br><span class="line">|       4 | 生活电器           |         1 |</span><br><span class="line">|       5 | 平板电视          |         3 |</span><br><span class="line">|       6 | 空调          |         3 |</span><br><span class="line">|       7 | 电风扇           |         4 |</span><br><span class="line">|       8 | 饮水机          |         4 |</span><br><span class="line">|       9 | 电脑整机           |         2 |</span><br><span class="line">|      10 | 电脑配件           |         2 |</span><br><span class="line">|      11 | 笔记本         |         9 |</span><br><span class="line">|      12 | 超级本           |         9 |</span><br><span class="line">|      13 | 游戏本          |         9 |</span><br><span class="line">|      14 | CPU        |        10 |</span><br><span class="line">|      15 | 主机           |        10 |</span><br><span class="line">+<span class="comment">---------+------------+-----------+</span></span><br><span class="line">15 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>可以看到家电用器和电脑办公的parent_id 均为0，说明这两个是顶级分类，没有父节点；大家电和生活电器是家用电器的子类。<br>数据表建好啦，怎么实现查找呢？<br>自身连接<br>同一个数据表对其自身进行连接<br>下面我们将上面的那张表复制一份，看做两张表，分为左和右，如果把左表看作是父表，那么右表就是子表。同时，左表的parent_id 就没有意义啦，而且右表的type_id 也没有意义。</p>
+<hr>
+<p>   左表(父表p) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      右表（子表s）<br>| type_id | type_name|       &nbsp;&nbsp;&nbsp;    | type_name  | parent_id |</p>
+<hr>
+<p>下面看下如何连接：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT p.type_id,p.type_name,s.type_name FROM tdb_goods_types AS p</span><br><span class="line">    -&gt; LEFT JOIN tdb_goods_types AS s</span><br><span class="line">    -&gt; ON p.type_id = s.parent_id;</span><br><span class="line">+<span class="comment">---------+------------+-----------+</span></span><br><span class="line">| type_id | type_name  | type_name |</span><br><span class="line">+<span class="comment">---------+------------+-----------+</span></span><br><span class="line">|       1 | 家用电器          | 大家电         |</span><br><span class="line">|       1 | 家用电器          | 生活电器          |</span><br><span class="line">|       2 | 电脑、办公        | 电脑整机          |</span><br><span class="line">|       2 | 电脑、办公        | 电脑配件          |</span><br><span class="line">|       3 | 大家电          | 平板电视         |</span><br><span class="line">|       3 | 大家电          | 空调         |</span><br><span class="line">|       4 | 生活电器           | 电风扇          |</span><br><span class="line">|       4 | 生活电器           | 饮水机         |</span><br><span class="line">|       5 | 平板电视          | NULL      |</span><br><span class="line">|       6 | 空调          | NULL      |</span><br><span class="line">|       7 | 电风扇           | NULL      |</span><br><span class="line">|       8 | 饮水机          | NULL      |</span><br><span class="line">|       9 | 电脑整机           | 笔记本        |</span><br><span class="line">|       9 | 电脑整机           | 超级本          |</span><br><span class="line">|       9 | 电脑整机           | 游戏本         |</span><br><span class="line">|      10 | 电脑配件           | CPU       |</span><br><span class="line">|      10 | 电脑配件           | 主机          |</span><br><span class="line">|      11 | 笔记本         | NULL      |</span><br><span class="line">|      12 | 超级本           | NULL      |</span><br><span class="line">|      13 | 游戏本          | NULL      |</span><br><span class="line">|      14 | CPU        | NULL      |</span><br><span class="line">|      15 | 主机           | NULL      |</span><br><span class="line">+<span class="comment">---------+------------+-----------+</span></span><br><span class="line">22 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>第一列是父表的id，第二列是父表的类型，第三列是父类型对应的子类型<br>可以看到家用电器有两个子类，如果想显示每个父类具体有几个子类的数量呢？</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT p.type_id,p.type_name,COUNT(s.type_name) child_count FROM tdb_goods_types AS p</span><br><span class="line">    -&gt; LEFT JOIN tdb_goods_types AS s</span><br><span class="line">    -&gt; ON p.type_id = s.parent_id GROUP BY p.type_name ORDER BY p.type_id;</span><br><span class="line">+<span class="comment">---------+------------+-------------+</span></span><br><span class="line">| type_id | type_name  | child_count |</span><br><span class="line">+<span class="comment">---------+------------+-------------+</span></span><br><span class="line">|       1 | 家用电器          |           2 |</span><br><span class="line">|       2 | 电脑、办公        |           2 |</span><br><span class="line">|       3 | 大家电          |           2 |</span><br><span class="line">|       4 | 生活电器           |           2 |</span><br><span class="line">|       5 | 平板电视          |           0 |</span><br><span class="line">|       6 | 空调          |           0 |</span><br><span class="line">|       7 | 电风扇           |           0 |</span><br><span class="line">|       8 | 饮水机          |           0 |</span><br><span class="line">|       9 | 电脑整机           |           3 |</span><br><span class="line">|      10 | 电脑配件           |           2 |</span><br><span class="line">|      11 | 笔记本         |           0 |</span><br><span class="line">|      12 | 超级本           |           0 |</span><br><span class="line">|      13 | 游戏本          |           0 |</span><br><span class="line">|      14 | CPU        |           0 |</span><br><span class="line">|      15 | 主机           |           0 |</span><br><span class="line">+<span class="comment">---------+------------+-------------+</span></span><br><span class="line">15 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>这相当于根据父类查找的子类，那如果我们想要根据子类查找父类呢？</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT s.type_id,s.type_name,p.type_name FROM tdb_goods_types AS s</span><br><span class="line">    -&gt; LEFT JOIN tdb_goods_types AS p</span><br><span class="line">    -&gt; ON p.type_id = s.parent_id;</span><br><span class="line">+<span class="comment">---------+------------+------------+</span></span><br><span class="line">| type_id | type_name  | type_name  |</span><br><span class="line">+<span class="comment">---------+------------+------------+</span></span><br><span class="line">|       1 | 家用电器          | NULL       |</span><br><span class="line">|       2 | 电脑、办公        | NULL       |</span><br><span class="line">|       3 | 大家电          | 家用电器          |</span><br><span class="line">|       4 | 生活电器           | 家用电器          |</span><br><span class="line">|       5 | 平板电视          | 大家电          |</span><br><span class="line">|       6 | 空调          | 大家电          |</span><br><span class="line">|       7 | 电风扇           | 生活电器           |</span><br><span class="line">|       8 | 饮水机          | 生活电器           |</span><br><span class="line">|       9 | 电脑整机           | 电脑、办公        |</span><br><span class="line">|      10 | 电脑配件           | 电脑、办公        |</span><br><span class="line">|      11 | 笔记本         | 电脑整机           |</span><br><span class="line">|      12 | 超级本           | 电脑整机           |</span><br><span class="line">|      13 | 游戏本          | 电脑整机           |</span><br><span class="line">|      14 | CPU        | 电脑配件           |</span><br><span class="line">|      15 | 主机           | 电脑配件           |</span><br><span class="line">+<span class="comment">---------+------------+------------+</span></span><br><span class="line">15 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>第一列就是子类的id，第二列子类的名称，第三其父类的名称</p>
+<h1 id="9-多表删除"><a href="#9-多表删除" class="headerlink" title="9. 多表删除"></a>9. 多表删除</h1><p>我们来看一下最开始创建的这张表：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM tdb_goods\G;</span><br></pre></td></tr></table></figure>
+<p>你会发现有一些重复的商品，像第19和22个商品，下面我们的目标就是删除这些重复的商品。<br>语法：<br><strong>DELETE tbL_name[.<em>] [, tbl_name[.</em>]] …FROM table_references [WHERE where_condition]</strong><br>首先来看看哪些是多余的？</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT goods_id,goods_name FROM tdb_goods GROUP BY goods_name HAVING COUNT(goods_name)&gt;=2;</span><br><span class="line">+<span class="comment">----------+-----------------------+</span></span><br><span class="line">| goods_id | goods_name            |</span><br><span class="line">+<span class="comment">----------+-----------------------+</span></span><br><span class="line">|       18 |  HMZ-T3W 头戴显示设备         |</span><br><span class="line">|       19 | 商务双肩背包                   |</span><br><span class="line">+<span class="comment">----------+-----------------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>上面语句的意思是按照goods_name进行分组，附加条件是，相同的goods_name数量大于等于2，这样就把重复的挑选出来啦。<br>我们可以把上面的结果想象成一张表，参照这张表来删除tdb_goods中的重复商品。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DELETE t1 FROM tdb_goods AS t1 LEFT JOIN (SELECT goods_id,goods_name FROM tdb_goods GROUP BY goods_name HAVING COUNT(goods_name&gt;=2)) AS t2</span><br><span class="line">    -&gt; ON t1.goods_name = t2.goods_name</span><br><span class="line">    -&gt; WHERE t1.goods_id &gt; t2.goods_id;</span><br><span class="line">Query OK, 2 rows affected (0.03 sec)</span><br></pre></td></tr></table></figure>
+
+<p>delete t1 from tdb_goods as t1  //从本表中删除,将tdb_goods看做t1<br>left join (select goods_id,goods_name from tdb_goods group by goods_name having count(goods_name)&gt;=2) as t2  //子查询得到重复条目<br>on t1.goods_name=t2.goods_name  //t1和t2的连接条件<br>where t1.goods_id&gt;t2.goods_id;  //删除id号较大的条目<br>这样重复的两条记录就被删除。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p><strong>子查询</strong>是指出现在select语句中的，必须出现在小括号内。<br>子查询的外层可以是select语句，insert语句、update语句及delete语句。<br>子查询中可以包含多个关键字或条件，如group by、order by、limit以及相关函数等。<br><strong>使用子查询的环境</strong>：<br>（1）比较运算符引发的子查询<br>（2）in或not in引发的子查询<br>（3）exist或not exist引发的子查询。</p>
+<p><strong>多表更新、多表删除、select语句中都可以使用连接。</strong></p>
+<p><strong>连接的类型</strong>：<br>（1）内连接（交集，左表和右表都符合条件的记录）<br>（2）外连接（左连接和右连接）</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Qu-jq
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://qu-jq.github.io/2019/12/18/%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%90%E6%9F%A5%E8%AF%A2%E5%92%8C%E8%BF%9E%E6%8E%A5/" title="第五章 子查询和连接">https://qu-jq.github.io/2019/12/18/%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%90%E6%9F%A5%E8%AF%A2%E5%92%8C%E8%BF%9E%E6%8E%A5/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/15/%E7%AC%AC%E5%9B%9B%E7%AB%A0%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%AE%B0%E5%BD%95/" rel="next" title="第四章 操作数据表中的记录">
+                <i class="fa fa-chevron-left"></i> 第四章 操作数据表中的记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="Qu-jq" />
+            
+              <p class="site-author-name" itemprop="name">Qu-jq</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry! stay foolish!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Qu-jq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:qjq0806@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-准备数据"><span class="nav-text">1. 准备数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1）首先创建一个新的数据库"><span class="nav-text">1）首先创建一个新的数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）再创建一个数据表"><span class="nav-text">2）再创建一个数据表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3）插入记录"><span class="nav-text">3）插入记录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-子查询"><span class="nav-text">2. 子查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1）简介"><span class="nav-text">1）简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）由比较运算符引发的子查询"><span class="nav-text">2）由比较运算符引发的子查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3）IN-NOT-IN-引发的子查询"><span class="nav-text">3）IN&#x2F;NOT IN 引发的子查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4）-NOT-EXISTS的子查询"><span class="nav-text">4）[ NOT ] EXISTS的子查询</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-多表更新"><span class="nav-text">3. 多表更新</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1）-使用INSERT…SELECT插入记录"><span class="nav-text">1） 使用INSERT…SELECT插入记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）新建一个数据表存储分类"><span class="nav-text">2）新建一个数据表存储分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-使用方式2插入记录"><span class="nav-text">3) 使用方式2插入记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4）-多表更新的实现"><span class="nav-text">4） 多表更新的实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-多表更新之一步到位"><span class="nav-text">4. 多表更新之一步到位</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1）创建表-写入记录"><span class="nav-text">1）创建表+写入记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）实现多表更新"><span class="nav-text">2）实现多表更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3）数据表减肥"><span class="nav-text">3）数据表减肥</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-连接的语法结构"><span class="nav-text">5. 连接的语法结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-内连接INNER-JOIN"><span class="nav-text">1) 内连接INNER JOIN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）外连接OUTER-JOIN"><span class="nav-text">2）外连接OUTER JOIN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-多表连接"><span class="nav-text">6. 多表连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-关于连接的几点说明"><span class="nav-text">7. 关于连接的几点说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-无限级分类表设计"><span class="nav-text">8. 无限级分类表设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-多表删除"><span class="nav-text">9. 多表删除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qu-jq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

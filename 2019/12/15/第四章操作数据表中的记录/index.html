@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Qu-jq’s Blog">
 <meta property="og:description" content="这一章主要是记录的操作，之前已经学过记录的插入、查找、删除，下面进行更加详细的讲解。">
 <meta property="article:published_time" content="2019-12-15T07:41:14.564Z">
-<meta property="article:modified_time" content="2019-12-17T07:45:16.481Z">
+<meta property="article:modified_time" content="2019-12-18T08:19:56.659Z">
 <meta property="article:author" content="Qu-jq">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -487,28 +487,30 @@
 <p>查看一下：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM test;</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">| id | username |</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">|  1 | hao      |</span><br><span class="line">|  2 | yuan     |</span><br><span class="line">|  3 | ye       |</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">3 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
 <p>将age大于30的username插入到了test表中。</p>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p><strong>数据记录的操作</strong>：增：INSERT    更：UPDATE    删：DELETE     查：SELECT<br><strong>增 INSERT</strong>:可以通过三种方法进行记录的插入，分别为<br><strong>普通INSERT</strong><br><strong>INSERT SET</strong><br><strong>INSERT SELECT语句</strong><br>（1） INSERT [INTO] tb1_name [(col_name,…)] {VALUES | VALUE} ({expr | DEFUALT},…),(…),…<br>注意：如果col_name被省略，意味着所有的列都要依次被赋值，不可以省略；<br>对于默认编号（AUTO_INCREMENT）的字段，使用NULL/DEFUALT进行插入;<br>而且插入的记录是识别算术，函数和字符表达式的<br>（2）INSERT [INTO]  tb1_name SET col1_name={expr | DEFAULT}, …<br>如：INSERT users2 SET username=’xxx’,password=’xxx’;<br>说明与第一种不同之处在于：此方法可以使用子查询（SubQuery）<br>（3）INSERT [INTO] tb1_name [(col_name, …)] SELECT …<br>此方法可以将查询结果插入到指定数据表中</p>
-<p><strong>更 UPDATE</strong>：实际有两种更新语句，单表更新和多表更新（详见第五章)</p>
-<p><strong>删 DELETE</strong>:存在两种语法结构，单表删除、多表删除。<br>单表删除：<br>DELETE FROM tb1_name [WHERE where_condition]</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p><strong>数据记录的操作</strong>：增：INSERT    更：UPDATE    删：DELETE     查：SELECT<br><strong>1. 增 INSERT</strong>:可以通过三种方法进行记录的插入，分别为<br>普通INSERT<br>INSERT SET<br>INSERT SELECT语句<br>（1） INSERT [INTO] tb1_name [(col_name,…)] {VALUES | VALUE} ({expr | DEFUALT},…),(…),…<br>注意：如果col_name被省略，意味着所有的列都要依次被赋值，不可以省略；<br>对于默认编号（AUTO_INCREMENT）的字段，使用NULL/DEFUALT进行插入;<br>而且插入的记录是识别算术，函数和字符表达式的<br>（2）INSERT [INTO]  tb1_name SET col1_name={expr | DEFAULT}, …<br>如：INSERT users2 SET username=’xxx’,password=’xxx’;<br>说明与第一种不同之处在于：此方法可以使用子查询（SubQuery）<br>（3）INSERT [INTO] tb1_name [(col_name, …)] SELECT …<br>此方法可以将查询结果插入到指定数据表中</p>
+<p><strong>2. 更 UPDATE</strong>：实际有两种更新语句，单表更新和多表更新（详见第五章)</p>
+<p><strong>3. 删 DELETE</strong>:存在两种语法结构，单表删除、多表删除。<br>单表删除：<br>DELETE FROM tb1_name [WHERE where_condition]</p>
 <p>如：删除第五条记录：DELETE FROM users WHERE id = 5; 而后再添加记录，那么该条记录不会填充到第六条，而是以顺序填到最后一个</p>
-<p>条件表达式<br>对记录进行过滤,如果没有指定WHERE子句,则显示所有记录。<br>在WHERE表达式中,可以使用MySQL支持的函数或运算符。<br><strong>查 select select_expr<br>[<br>from table_references 表的参照<br>[where where_condition] 条件<br>[group by {col_name|position} [asc|sesc],…记录的分组<br>[having where_condition] 分组时对分组的条件进行设定<br>[order by {col_name|expr|position} [asc|desc]…]对于结果进行排序<br>[limit {[offset,]row_count|row_count OFFSET offset}]限制返回结果的数量<br>]</strong><br>SELECT后面可以省略：如SELECT VERSION();/SELECT NOW();/SELECT 3+5;/SELECT id,username FROM users;/SELECT username,id FROM users;</p>
+<p>条件表达式<br>对记录进行过滤,如果没有指定WHERE子句,则显示所有记录。<br>在WHERE表达式中,可以使用MySQL支持的函数或运算符。</p>
+<p><strong>4. 查 select select_expr</strong><br>[<br>from table_references 表的参照<br>[where where_condition] 条件<br>[group by {col_name|position} [asc|sesc],…记录的分组<br>[having where_condition] 分组时对分组的条件进行设定<br>[order by {col_name|expr|position} [asc|desc]…]对于结果进行排序<br>[limit {[offset,]row_count|row_count OFFSET offset}]限制返回结果的数量<br>]<br><strong>（1）常规</strong><br>SELECT后面可以省略：如SELECT VERSION();/SELECT NOW();/SELECT 3+5;/SELECT id,username FROM users;/SELECT username,id FROM users;</p>
 <p>所以查询顺序影响结果的输出顺序！！！</p>
-<p> *表示所有的列</p>
+<ul>
+<li>表示所有的列</li>
+</ul>
 <p>可以在查询的列前面加上表名+.  如：SELECT users.id,user2.password FROM users;</p>
 <p>当列名称复杂时可以用别名：如 SELECT users.id AS usersid, users.username AS uname FROM users;(注意一下AS)</p>
-<p>所以查询的别名也影响输出结果的列名！！！</p>
-<p>查询结果分组：[GROUP BY {col_name | position} [ASC | DESC], … ]</p>
+<p>所以查询的别名也影响输出结果的列名！！！<br><strong>（2）分组</strong><br>查询结果分组：[GROUP BY {col_name | position} [ASC | DESC], … ]</p>
 <p>ASC  升序；DESC  降序；</p>
-<p>如：SELECT password FROM users GROUP BY password/“位置”; 查看password的分组结果。（一般指定名称就行）</p>
+<p>如：SELECT sex FROM users GROUP BY sex/“位置”; 查看性别的分组结果。（一般指定名称就行）</p>
 <p>在GROUP BY 进行分组的时候，还可以进行设置分组条件：[HAVING where_condition]</p>
-<p>如：SELECT password FROM users GROUP BY 1 HAVING age &gt; 35; 这个语句错误，原因是sex里面没有age，所以更正为：SELECT password，age FROM users GROUP BY 1 HAVING age &gt; 10;或者采用聚合函数（max,min,sum等）  如 SELECT password FROM users GROUP BY 1 HAVING AVG(age)&gt;10;<br>还可以对查询分组的结果进行排序：</p>
+<p>如：SELECT sex FROM users GROUP BY 1 HAVING age &gt; 35; 这个语句错误，原因是sex里面没有age，所以更正为：SELECT sex，age FROM users GROUP BY 1 HAVING age &gt; 35;或者采用聚合函数（max,min,sum等）  如<br>SELECT password FROM users GROUP BY 1 HAVING AVG(age)&gt;10;<br>GROUP BY的规定：<br>1、GROUP BY 后面可以包含多个列，这就是嵌套。<br>2、如果GROUP BY进行了嵌套，数据将在最后一个分组上进行汇总。<br>3、GROUP BY子句中列出来的每个列必须是检索列或有效的表达式（但不能是聚集函数），如果在SELECT中使用了表达式，则必须在GROUP BY子句中指定相同的表达式。不能使用别名。<br>4、除了聚集语句外，SELECT语句中的每一个列都必须在GROUP BY子句中给出。<br>5、如果分组列中具有NULL值，则NULL将作为一个分组返回。如果列中有多个NULL，它们将作为一个分组返回。<br>6、GROUP BY子句必须在WHERE 子句之后，ORDER BY 子句之前。<br><strong>（3）排序</strong><br>还可以对查询分组的结果进行排序：</p>
 <p>[ORDER BY {col_name | expr | position} [ASC | DESC], …]</p>
 <p>如：SELECT * FROM users ORDER BY id, age DESC; 默认是升序。</p>
 <p>除了返回记录的排序还可以对记录进行限制查询结果的数量：</p>
 <p>[LIMIT ｛[offset,] row_count | row_count OFFSET offset｝]</p>
 <p>如：SELECT * FROM users LIMIT 2; 返回两条记录；</p>
 <p>SELECT * FROM users LIMIT 2，2；返回的是偏移值（索引号）为2的记录开始的两条记录（不管升序还是降序，第一条记录的索引号都是0）；</p>
-<p>插入记录：<br>INSERT [INTO] tb1_name [(col_name, …)] SELECT col_name  FROM   tb2_name …<br>说明:将查询结果插入到指定数据表的列</p>
+<p><strong>（4）插入记录</strong><br>INSERT [INTO] tb1_name [(col_name, …)] SELECT col_name  FROM   tb2_name …<br>说明:将查询结果插入到指定数据表的列</p>
 <p>如：INSERT test(username) SELECT username FROM users WHERE age &gt;= 30; 查找username表里的age&gt;=30的username,插入到test表中的username列————综合一点的</p>
 
       
@@ -569,6 +571,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/18/%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%90%E6%9F%A5%E8%AF%A2%E5%92%8C%E8%BF%9E%E6%8E%A5/" rel="prev" title="第五章 子查询和连接">
+                第五章 子查询和连接 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -649,7 +655,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
