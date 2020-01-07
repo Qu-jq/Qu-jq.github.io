@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="课程感想," />
+  <meta name="keywords" content="MySQL,数据库," />
 
 
 
@@ -79,19 +79,18 @@
 
 
 
-<meta name="description" content="最近一直在忙着考试，就没有时间学习Java，后天也就是下周一还有最后一科考试“系统建模与仿真”–比较水的一门课，所以也就腾出来了一点时间，就想总结一下研究生第一学期学习的课程。">
+<meta name="description" content="上一章学习了一些内置函数库，对于日常操作足够啦，但也可能需要到实现某一特定功能的函数，这个函数系统没有提供给我们，这时候就需要自定义函数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="研究生第一学期课程总结">
-<meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;2020&#x2F;01&#x2F;04&#x2F;%E7%A0%94%E7%A9%B6%E7%94%9F%E7%AC%AC%E4%B8%80%E5%AD%A6%E6%9C%9F%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93&#x2F;index.html">
+<meta property="og:title" content="第六章 运算符和函数;">
+<meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;2020&#x2F;01&#x2F;07&#x2F;%E7%AC%AC%E4%B8%83%E7%AB%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0&#x2F;index.html">
 <meta property="og:site_name" content="Qu-jq’s Blog">
-<meta property="og:description" content="最近一直在忙着考试，就没有时间学习Java，后天也就是下周一还有最后一科考试“系统建模与仿真”–比较水的一门课，所以也就腾出来了一点时间，就想总结一下研究生第一学期学习的课程。">
-<meta property="og:image" content="https:&#x2F;&#x2F;res.cloudinary.com&#x2F;qujq&#x2F;image&#x2F;upload&#x2F;v1578219072&#x2F;myPIC&#x2F;GAandGEP_sdfz2l.png">
-<meta property="article:published_time" content="2020-01-04T13:51:13.000Z">
-<meta property="article:modified_time" content="2020-01-05T10:11:43.579Z">
+<meta property="og:description" content="上一章学习了一些内置函数库，对于日常操作足够啦，但也可能需要到实现某一特定功能的函数，这个函数系统没有提供给我们，这时候就需要自定义函数。">
+<meta property="article:published_time" content="2020-01-07T05:37:57.000Z">
+<meta property="article:modified_time" content="2020-01-07T05:55:51.680Z">
 <meta property="article:author" content="Qu-jq">
-<meta property="article:tag" content="课程感想">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;res.cloudinary.com&#x2F;qujq&#x2F;image&#x2F;upload&#x2F;v1578219072&#x2F;myPIC&#x2F;GAandGEP_sdfz2l.png">
 
 
 
@@ -121,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://qu-jq.github.io/2020/01/04/研究生第一学期课程总结/"/>
+  <link rel="canonical" href="https://qu-jq.github.io/2020/01/07/第七章自定义函数/"/>
 
 
 
 
 
-  <title>研究生第一学期课程总结 | Qu-jq’s Blog</title>
+  <title>第六章 运算符和函数; | Qu-jq’s Blog</title>
   
 
 
@@ -288,7 +287,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://qu-jq.github.io/2020/01/04/%E7%A0%94%E7%A9%B6%E7%94%9F%E7%AC%AC%E4%B8%80%E5%AD%A6%E6%9C%9F%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="https://qu-jq.github.io/2020/01/07/%E7%AC%AC%E4%B8%83%E7%AB%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu-jq">
@@ -305,7 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">研究生第一学期课程总结</h1>
+          <h1 class="post-title" itemprop="name headline">第六章 运算符和函数;</h1>
         
 
         <div class="post-meta">
@@ -317,8 +316,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-04T21:51:13+08:00">
-                2020-01-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-07T13:37:57+08:00">
+                2020-01-07
               </time>
             
 
@@ -340,8 +339,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A0%94%E7%A9%B6%E7%94%9F/" itemprop="url" rel="index">
-                    <span itemprop="name">研究生</span>
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
                   </a>
                 </span>
 
@@ -377,44 +376,91 @@
       
 
       
-        <p>  最近一直在忙着考试，就没有时间学习Java，后天也就是下周一还有最后一科考试“<strong>系统建模与仿真</strong>”–比较水的一门课，所以也就腾出来了一点时间，就想总结一下研究生第一学期学习的课程。</p>
-<a id="more"></a> 
-<h1 id="1-英语"><a href="#1-英语" class="headerlink" title="1. 英语"></a>1. 英语</h1><p>研究生还要学习英语，一开始觉得真是让人头疼，后来觉得还是蛮实用的。英语分为了听说、读写，听说主要学习了一些演讲、申请留学和工作面试的表达；读写主要学习中西方语言表达的差异，这部分讲的很细致，对以后论文的写作很有帮助，可惜上课听得较少，大部分还是通过考试前自学的。</p>
-<h1 id="2-矩阵论"><a href="#2-矩阵论" class="headerlink" title="2. 矩阵论"></a>2. 矩阵论</h1><p>矩阵论就是大学线性代数的延伸，一开始学习这门课最令我震惊的是即使是一个函数表达式也可以写成矩阵的形式，并且可以进行相关的运算。随着课程的深入，也让我意识到这门课的重要性，尤其是对于数字图像处理领域，几乎是离不开矩阵论的思想。<br>这门课还需要写一篇课程论文，我写的是“基于SVD的图像压缩算法实现”，利用奇异值分解的性质，对图像进行压缩，因为奇异值分解可以降低矩阵的维度，奇异值较小的，所含的能量也较低，将这些奇异值和对应的向量消除，从而减少存储空间。<br>主要内容为：</p>
-<p>1) 线性空间与线性变换</p>
-<p>2) 内积空间与等距变换</p>
-<p>3) 矩阵的Jordan标准型</p>
-<p>4) 矩阵分解</p>
-<p>5) 矩阵分析</p>
-<p>6) 矩阵的广义逆</p>
-<h1 id="3-随机过程"><a href="#3-随机过程" class="headerlink" title="3. 随机过程"></a>3. 随机过程</h1><p>相应的随机过程也就是大学概率论的延伸，这里不再仅仅局限在一个或者几个随机变量，而是在每一个时刻都是一个随机变量，将这些时刻串在一起就构成了随机过程。这门课后面部分平稳过程的谱分析，谱密度还是挺让人头大的（想想大学的傅里叶变换就知道啦，哈哈！），即使今天考完啦，做出来啦，但还是不太懂得其中的意思。或许以后工程上用到的时候会有一个较深的理解吧。<br>主要内容为：</p>
-<p>1) 泊松过程</p>
-<p>2) 离散马尔科夫链</p>
-<p>3) 连续马尔科夫链</p>
-<p>4) 平稳过程</p>
-<h1 id="4-系统建模与仿真"><a href="#4-系统建模与仿真" class="headerlink" title="4. 系统建模与仿真"></a>4. 系统建模与仿真</h1><p>这门虽然有点“水”，但是用处很大，主要是讲线性系统的仿真，人工神经网络，BP神经网络，模拟退火算法，遗传算法。，每一部分拉出来都是可以讲一个学期的，然而我们17周，一周两节课就结束啦，或许这就是考验研究生自学能力的时候吧！<br>主要内容：</p>
-<p>1) 线性时不变系统的数学模型及其仿真<br>这一部分的内容和大学信号与系统的内容一样，这里就是大概的过一遍大学所学的知识点，涉及到拉式变换、传递函数、状态方程的求解、系统的各种数学模型之间的相互转换、系统模型的连接以及系统的离散化和连续化。</p>
-<p>2) 随机数的产生与混沌<br>讲了两个重要的随机数产生方法</p>
-<ul>
-<li>乘同余法<center>xi+1=A xi mod(M)</center>
-根据数论的理论证明：计算机位数为L，如果模数M=2L, 当
+        <p>上一章学习了一些内置函数库，对于日常操作足够啦，但也可能需要到实现某一特定功能的函数，这个函数系统没有提供给我们，这时候就需要自定义函数。</p>
+<a id="more"></a>
 
-</li>
-</ul>
-<p>（1）A=8k±3， A=4k+1，k为正整数；<br>（2）x0为奇数时，可以获得最长的随机序列长度为2L-2。</p>
+<h2 id="1-自定义函数简介"><a href="#1-自定义函数简介" class="headerlink" title="1. 自定义函数简介"></a>1. 自定义函数简介</h2><p><strong>定义：</strong></p>
+<p>用户自定义函数（UDF）是一种对MySQL扩展的途径，其用法与内置函数相同。</p>
+<p><strong>自定义函数的两个必要条件</strong>：</p>
+<ol>
+<li>参数</li>
+<li>返回值</li>
+</ol>
+<p>自定义函数</p>
 <ul>
-<li>混合同余法，也称线性同余<center>xi+1=(A xi +B)mod(M)</center>
-根据数论的理论证明：计算机位数为L，如果模数M=2L, 当
+<li>函数可以返回任意类型的值，同样可以接收这些类型的参数</li>
+</ul>
+<p><strong>创建自定义函数</strong></p>
+<p>CREATE FUNCTION function_name</p>
+<p>RETURNS</p>
+<p>{STRING|INTEGER|REAL|DECIMAL}</p>
+<p>routine_body</p>
+<p><strong>关于函数体</strong></p>
+<ol>
+<li>函数体由合法的SQL语句构成</li>
+<li>函数体可以是简单的SELECT或INSERT语句</li>
+<li>函数体如果为符合结构则使用BEGIN…END语句</li>
+<li>复合结构可以包含声明，循环，控制结构；</li>
+</ol>
+<h2 id="2-创建不带参数的自定义函数"><a href="#2-创建不带参数的自定义函数" class="headerlink" title="2. 创建不带参数的自定义函数"></a>2. 创建不带参数的自定义函数</h2><p>首先打开mysql，使用test数据库。本小节以创建一个显示“2020年1月7日12:26:11”时间的函数为例。</p>
+<p>看一下系统自带的函数NOW()：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT NOW();</span><br><span class="line">+<span class="comment">---------------------+</span></span><br><span class="line">| NOW()               |</span><br><span class="line">+<span class="comment">---------------------+</span></span><br><span class="line">| 2020-01-07 12:25:16 |</span><br><span class="line">+<span class="comment">---------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
-<p>（1）A=4k+1，k为正整数；<br>（2）B与M互为质数时，可以获得最长的随机序列长度为2L。<br>3) 神经网络<br>这里只是一个入门，只是讲解了人工神经网络的基本概念、单层网、多层网、循环网等各种基本网络模型的结构、特点、典型训练算法、运行方式、典型问题。<br>这部分值得思考的几点问题：</p>
-<ul>
-<li>为什么需要激活函数？</li>
-<li>不同激活函数之间的优缺点或者说具体的应用？</li>
-<li>为什么需要偏置？<br>这里还是推荐斯坦福大学吴恩达博士的<a href="https://www.coursera.org/learn/machine-learning?#about" target="_blank" rel="noopener">机器学习课程</a><br>讲解的很细致。<br>4) 遗传算法<br>这个对我来说还是比较熟悉的，因为本科毕设使用到了基因表达式编程算法就和这个算法有些类似。区别可以用下图展示：<br><img src="https://res.cloudinary.com/qujq/image/upload/v1578219072/myPIC/GAandGEP_sdfz2l.png" alt="正在加载"></li>
-</ul>
-<p>5) 模拟退火算法<br>模拟退火算法包括三函数两准则，即状态产生函数、状态接受函数、温度更新函数、内循环终止准则和外循环终止准则，这些环节的设计将决定SA算法的优化性能。此外，初温的选择对SA算法性能也有很大影响。还需要注意：降温过快， SA很快从广域搜索转为局域搜索，很可能过早陷于局部最优。<br>降温过慢，外循环次数增大，浪费时间。</p>
+<p>注意：下面要想显示汉字，别忘记设置set names gbk;</p>
+<p>使用DATE_FORMAT实现：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT DATE_FORMAT(NOW(),'%Y年%m月%d日 %H:%I:%S');</span><br><span class="line">+<span class="comment">--------------------------------------------+</span></span><br><span class="line">| DATE_FORMAT(NOW(),'%Y年%m月%d日 %H:%I:%S')       |</span><br><span class="line">+<span class="comment">--------------------------------------------+</span></span><br><span class="line">| 2020年01月07日 12:12:13                          |</span><br><span class="line">+<span class="comment">--------------------------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>注意：命令月和日前使用的是小写的m、d，这里如果改成大写显示就会不同。也就是说这里的大小写务必一一对应，不然会有不同的显示。<br>下面将其封装成函数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE FUNCTION y1() RETURNS VARCHAR(30)</span><br><span class="line">    -&gt; RETURN DATE_FORMAT(NOW(),'%Y年%m月%d日 %H:%I:%S');</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>调用一下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT y1();</span><br><span class="line">+<span class="comment">-------------------------+</span></span><br><span class="line">| y1()                    |</span><br><span class="line">+<span class="comment">-------------------------+</span></span><br><span class="line">| 2020年01月07日 12:12:36       |</span><br><span class="line">+<span class="comment">-------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>如果想要删除一个函数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DROP FUNCTION f1;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-创建带参数的自定义函数"><a href="#3-创建带参数的自定义函数" class="headerlink" title="3. 创建带参数的自定义函数"></a>3. 创建带参数的自定义函数</h2><p>下面创建一个带有参数的求两个参数平均值的函数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE FUNCTION y2(num1 SMALLINT UNSIGNED , num2 SMALLINT UNSIGNED)</span><br><span class="line"> -&gt; RETURNS FLOAT(10) UNSIGNED</span><br><span class="line"> -&gt; RETURN (num1+num2)/2;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>如果不传递参数直接调用：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT y2();</span><br><span class="line">ERROR 1318 (42000): Incorrect number of arguments for FUNCTION test.y2; expected 2, got 0</span><br></pre></td></tr></table></figure>
+
+<p>出现错误，必须传递参数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT y2(3,4);</span><br><span class="line">+<span class="comment">---------+</span></span><br><span class="line">| y2(3,4) |</span><br><span class="line">+<span class="comment">---------+</span></span><br><span class="line">|     3.5 |</span><br><span class="line">+<span class="comment">---------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-创建具有复合结构函数体的自定义函数体"><a href="#4-创建具有复合结构函数体的自定义函数体" class="headerlink" title="4. 创建具有复合结构函数体的自定义函数体"></a>4. 创建具有复合结构函数体的自定义函数体</h2><p>首先看一下test数据表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DESC test;</span><br><span class="line">+<span class="comment">----------+---------------------+------+-----+---------+----------------+</span></span><br><span class="line">| Field    | Type                | Null | Key | Default | Extra          |</span><br><span class="line">+<span class="comment">----------+---------------------+------+-----+---------+----------------+</span></span><br><span class="line">| id       | tinyint(3) unsigned | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| username | varchar(20)         | YES  |     | NULL    |                |</span><br><span class="line">+<span class="comment">----------+---------------------+------+-----+---------+----------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.05</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一共有两个字段，查看一下记录：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM test;</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">| id | username |</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">|  1 | hao      |</span><br><span class="line">|  2 | yuan     |</span><br><span class="line">|  3 | ye       |</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">3 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>一共有三条记录，下面创建一个函数，可以插入记录，并且可以返回id。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE FUNCTION adduser(username VARCHAR(20))</span><br><span class="line">    -&gt; RETURNS INT UNSIGNED</span><br><span class="line">    -&gt; RETURN</span><br><span class="line">    -&gt; INSERT test(username) VALUES(username);</span><br><span class="line">ERROR 1064 (42000): You have an error in your SQL syntax; <span class="keyword">check</span> the <span class="keyword">manual</span> that corresponds <span class="keyword">to</span> your MySQL <span class="keyword">server</span> <span class="keyword">version</span> <span class="keyword">for</span> the <span class="keyword">right</span> syntax <span class="keyword">to</span> <span class="keyword">use</span> near <span class="string">'test(username) VALUES(username)'</span> <span class="keyword">at</span> line <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>此时系统提示错误，原因是分号意味着语句的结束，而我们的返回值类型是整数，此时还没有返回整数值，只是执行了插入记录的命令，这时可以先修改mysql默认的分隔符。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DELIMITER //</span><br></pre></td></tr></table></figure>
+
+<p>以后所有的命令都通过//来结束。<br>举个例子：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT VERSION();</span><br><span class="line">    -&gt;</span><br><span class="line">    -&gt; //</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| VERSION() |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| 5.5.62    |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>只有//结尾时，才运行命令。<br>下面重新创建函数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE FUNCTION adduser(username VARCHAR(20))</span><br><span class="line">    -&gt; RETURNS INT UNSIGNED</span><br><span class="line">    -&gt; RETURN</span><br><span class="line">    -&gt; INSERT test(username) VALUES(username);</span><br><span class="line">    -&gt; LAST_INSERT_ID();</span><br><span class="line">    -&gt; //</span><br><span class="line">ERROR 1064 (42000): You have an error in your SQL syntax; <span class="keyword">check</span> the <span class="keyword">manual</span> that corresponds <span class="keyword">to</span> your MySQL <span class="keyword">server</span> <span class="keyword">version</span> <span class="keyword">for</span> the <span class="keyword">right</span> syntax <span class="keyword">to</span> <span class="keyword">use</span> near <span class="string">'test(username) VALUES(username);</span></span><br><span class="line"><span class="string">LAST_INSERT_ID()'</span> <span class="keyword">at</span> line <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>还是错误，因为这里有两个语句需要执行，所以需要添加BEGIN END 语句。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE FUNCTION adduser(username VARCHAR(20))</span><br><span class="line">    -&gt; RETURNS INT UNSIGNED</span><br><span class="line">    -&gt; BEGIN</span><br><span class="line">    -&gt; INSERT test(username) VALUES(username);</span><br><span class="line">    -&gt; RETURN LAST_INSERT_ID();</span><br><span class="line">    -&gt; END</span><br><span class="line">    -&gt; //</span><br><span class="line">Query OK, 0 rows affected (0.04 sec)</span><br></pre></td></tr></table></figure>
+
+<p>验证一下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT adduser('xiaohua');</span><br><span class="line">    -&gt; //</span><br><span class="line">+<span class="comment">--------------------+</span></span><br><span class="line">| adduser('xiaohua') |</span><br><span class="line">+<span class="comment">--------------------+</span></span><br><span class="line">|                  4 |</span><br><span class="line">+<span class="comment">--------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.03</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">test</span>//</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">| <span class="keyword">id</span> | username |</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">|  <span class="number">1</span> | hao      |</span><br><span class="line">|  <span class="number">2</span> | yuan     |</span><br><span class="line">|  <span class="number">3</span> | ye       |</span><br><span class="line">|  <span class="number">4</span> | xiaohua  |</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>可以看出创建成功，然后把分隔符变为“；”即可。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><strong>自定义函数：</strong>简称UDF，是对MySQL扩展的一种途径</p>
+<p><strong>创建自定义函数</strong>：CREATE FUNCTION</p>
+<p><strong>自定义函数两个必要条件：</strong></p>
+<p>​    参数：可以有零个或者duoge</p>
+<p>​    返回值：只能有一个返回值</p>
+<p><strong>函数体内可以书写多个sql语句，这种称为复合结构函数，需要使用BEGIN…END来包含。</strong></p>
 
       
     </div>
@@ -435,7 +481,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="https://qu-jq.github.io/2020/01/04/%E7%A0%94%E7%A9%B6%E7%94%9F%E7%AC%AC%E4%B8%80%E5%AD%A6%E6%9C%9F%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/" title="研究生第一学期课程总结">https://qu-jq.github.io/2020/01/04/%E7%A0%94%E7%A9%B6%E7%94%9F%E7%AC%AC%E4%B8%80%E5%AD%A6%E6%9C%9F%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/</a>
+    <a href="https://qu-jq.github.io/2020/01/07/%E7%AC%AC%E4%B8%83%E7%AB%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" title="第六章 运算符和函数;">https://qu-jq.github.io/2020/01/07/%E7%AC%AC%E4%B8%83%E7%AB%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -450,7 +496,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E8%AF%BE%E7%A8%8B%E6%84%9F%E6%83%B3/" rel="tag"># 课程感想</a>
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
           
         </div>
       
@@ -463,8 +511,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/12/18/%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%90%E6%9F%A5%E8%AF%A2%E5%92%8C%E8%BF%9E%E6%8E%A5/" rel="next" title="第五章 子查询和连接">
-                <i class="fa fa-chevron-left"></i> 第五章 子查询和连接
+              <a href="/2020/01/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E5%87%BD%E6%95%B0/" rel="next" title="第六章 运算符和函数;">
+                <i class="fa fa-chevron-left"></i> 第六章 运算符和函数;
               </a>
             
           </div>
@@ -472,10 +520,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E5%87%BD%E6%95%B0/" rel="prev" title="第六章 运算符和函数;">
-                第六章 运算符和函数; <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -627,7 +671,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-英语"><span class="nav-text">1. 英语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-矩阵论"><span class="nav-text">2. 矩阵论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-随机过程"><span class="nav-text">3. 随机过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-系统建模与仿真"><span class="nav-text">4. 系统建模与仿真</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-自定义函数简介"><span class="nav-text">1. 自定义函数简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-创建不带参数的自定义函数"><span class="nav-text">2. 创建不带参数的自定义函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-创建带参数的自定义函数"><span class="nav-text">3. 创建带参数的自定义函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-创建具有复合结构函数体的自定义函数体"><span class="nav-text">4. 创建具有复合结构函数体的自定义函数体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
