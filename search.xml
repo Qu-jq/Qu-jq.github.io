@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>第六章 运算符和函数;</title>
+    <title>第七章 自定义函数</title>
     <url>/2020/01/07/%E7%AC%AC%E4%B8%83%E7%AB%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<p>上一章学习了一些内置函数库，对于日常操作足够啦，但也可能需要到实现某一特定功能的函数，这个函数系统没有提供给我们，这时候就需要自定义函数。</p>
 <a id="more"></a>
@@ -98,7 +98,7 @@
       </tags>
   </entry>
   <entry>
-    <title>第六章 运算符和函数;</title>
+    <title>第六章 运算符和函数</title>
     <url>/2020/01/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<p>  这一章将讲解一些重要的运算符和函数。主要包括字符函数、数值运算符与函数、比较运算符与函数、日期时间函数、信息函数、聚合函数和加密函数。</p>
 <a id="more"></a> 
