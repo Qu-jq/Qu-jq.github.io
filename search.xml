@@ -1,6 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>第八章 MySQL存储过程</title>
+    <url>/2020/01/07/%E7%AC%AC%E5%85%AB%E7%AB%A0%20MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<p>本章介绍存储过程，可以提高MySQL的运行效率。</p>
+<a id="more"></a>
+
+<h2 id="1-存储过程简介"><a href="#1-存储过程简介" class="headerlink" title="1. 存储过程简介"></a>1. 存储过程简介</h2><p>存储过程是sql语句和控制语句的预编译集合，以一个名称存储并作为一个单元处理</p>
+<ul>
+<li>存储过程存放在数据库内，可以由应用程序调用执行，允许用户声明变量以及进行流程控制，可以接收参数（输入输出参数都可以接收）并且可以存在多个返回值</li>
+<li>存储过程的效率要比单纯的SQL语句的执行效率高<br><strong>优点：</strong><br>（1）增强sql语句的功能和灵活性；<br>（2）实现较快的执行速度；<br>（3）减少网络流量</li>
+</ul>
+<h2 id="2-创建存储结构语法分析"><a href="#2-创建存储结构语法分析" class="headerlink" title="2. 创建存储结构语法分析"></a>2. 创建存储结构语法分析</h2><p><strong>创建存储过程</strong><br>CREATE<br>[DEFINER={user|CURRENT_USER}]<br>PROCEDURE sp_name([proc_paremeter[,…]])<br>[characteristic…] routine_body<br>proc_paremeter:<br>[IN|OUT|INOUT]param_name type<br>创建存储过程语法结构基本和创建自定义函数语法结构相同，最大不同就是参数部分。<br>首先可以指定创建者DEFINER，如果省略，则默认指向（当前用户））当前登入到Mysql客户端的用户。<br>sp_name指的是存储过程的名字，它后面的参数可以有多个，存储过程名使用PROCEDURE修饰，参数前面可以使用IN|OUT|INOUT修饰。<br><strong>IN</strong>:表示该参数的值必须在调用存储过程时指定（存储过程中该值不能返回，只能进不能出）。<br><strong>OUT</strong>：表示该参数的值可以被存储过程代码改变，并且可以返回。<br><strong>INOUT</strong>：表示该参数的可以被指定，并且可以被存储过程体改变和返回。<br><strong>存储过程的特性</strong>（【characteristic…】）与自定义函数特性是完全相同的。<br>特性<br>COMMENT:注释<br>CONTAINS SQL:包含sql语句，但不包含读或者写数据的语句；<br>NOT SQL：不包含sql语句；<br>READS SQL DATA:包含读数据的语句；<br>MODIFIES SQL DATEA:包含写数据的语句；<br>SQL SECURITY{DEFINER|INVOKER}:指明谁有权限连执行<br><strong>过程体</strong><br>（1）过程体由合法的sql语句构成；<br>（2）过程体可以是任意的sql语句；<br>（3）过程体如果为复合结构则使用begin_end语句；<br>（4）复合结构可以包含声明、循环、控制结构</p>
+<h2 id="3-创建不带参数的存储过程"><a href="#3-创建不带参数的存储过程" class="headerlink" title="3.创建不带参数的存储过程"></a>3.创建不带参数的存储过程</h2><p>MySQL创建不带参数的存储过程（该存储过程获取Mysql版本的功能）<br><strong>创建存储过程</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> sp1() <span class="keyword">SELECT</span> <span class="keyword">VERSION</span>();</span><br><span class="line">mysql&gt; CREATE PROCEDURE sp1() SELECT VERSION();</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p><strong>调用存储过程</strong><br>【1】CALL sp_name([parameter[,…]])<br>【2】CALL sp_name[()]<br>如果存储过程在封装的过程中没有参数，小括号带不带都可以。但是如果封装时有参数，则小括号必须带。<br>例如上面调用：CALL sp1或者CALL sp1();</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; CALL sp1;</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| VERSION() |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| 5.5.62    |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"><span class="keyword">Query</span> OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-创建带有IN类型参数的存储过程"><a href="#4-创建带有IN类型参数的存储过程" class="headerlink" title="4. 创建带有IN类型参数的存储过程"></a>4. 创建带有IN类型参数的存储过程</h2><p>下面将创建一个可以删除指定id记录的存储过程。<br>首先看一下test数据表中有哪些记录：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM test;</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">| id | username |</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">|  1 | hao      |</span><br><span class="line">|  2 | yuan     |</span><br><span class="line">|  3 | ye       |</span><br><span class="line">|  4 | xiaohua  |</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">4 rows in <span class="keyword">set</span> (<span class="number">0.04</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>下面就创建带有IN类型参数的存储过程：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">mysql&gt; DELIMITER //</span><br><span class="line">mysql&gt; CREATE PROCEDURE removeUserById(IN p_id INT UNSIGNED)</span><br><span class="line">    -&gt; BEGIN</span><br><span class="line">    -&gt; DELETE FROM test WHERE id = p_id;</span><br><span class="line">    -&gt; END</span><br><span class="line">    -&gt; //</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line">mysql&gt; DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+<p>注意：p_id与id的名字不能一样，如果一样在调用此过程时将删除表的所有记录。<br>下面调用此过程：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; CALL removeUserById(2);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">mysql&gt; SELECT * FROM test WHERE id = 2;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>可以看出已经删除。<br>如果要<strong>修改存储过程的过程体</strong>：<br>1）必须先删除存储过程<br>DROP PROCEDURE [ IF EXISTS ] sp_name<br>2） 再重建存储过程<br>每次<strong>自定义函数或者存储过程之前</strong>：<br>1）DELIMITER //<br>先把界定符重新定义下 不要用；<br>2）定义完后，再改成DELIMETER ；</p>
+<h2 id="5-创建带有IN和OUT类型参数的存储过程"><a href="#5-创建带有IN和OUT类型参数的存储过程" class="headerlink" title="5. 创建带有IN和OUT类型参数的存储过程"></a>5. 创建带有IN和OUT类型参数的存储过程</h2><p>下面创建一个不仅可以根据id删除记录的过程，并且可以返回剩余记录的数量。</p>
+<h3 id="（1）创建带有in和out参数类型的存储过程【输入-返回】"><a href="#（1）创建带有in和out参数类型的存储过程【输入-返回】" class="headerlink" title="（1）创建带有in和out参数类型的存储过程【输入+返回】"></a>（1）创建带有in和out参数类型的存储过程【输入+返回】</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">mysql&gt; DELIMITER //</span><br><span class="line">mysql&gt; CREATE PROCEDURE removeUserAndReturnNum(IN p_id INT UNSIGNED , OUT num INT UNSIGNED)</span><br><span class="line"> -&gt; BEGIN</span><br><span class="line"> -&gt; DELETE FROM test WHERE id = p_id;</span><br><span class="line"> -&gt; SELECT COUNT(id) FROM test INTO num;</span><br><span class="line"> -&gt; END</span><br><span class="line"> -&gt; //</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line">mysql&gt; DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+<p>看看test数据表中还有几条记录</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; SELECT COUNT(id) FROM test;</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| COUNT(id) |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">|         3 |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）过程调用"><a href="#（2）过程调用" class="headerlink" title="（2）过程调用"></a>（2）过程调用</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; CALL removeUserAndReturnNum(1,@nums);</span><br><span class="line">Query OK, 1 row affected (0.03 sec)</span><br></pre></td></tr></table></figure>
+
+<p>将剩余的记录数量存储在nums变量之中。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; SELECT @nums;</span><br><span class="line">+<span class="comment">-------+</span></span><br><span class="line">| @nums |</span><br><span class="line">+<span class="comment">-------+</span></span><br><span class="line">|     2 |</span><br><span class="line">+<span class="comment">-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p><strong>局部变量</strong><br>局部变量只在begin和end之间的语句块有效；语句块运行完毕，局部变量消失；<br>在begin..end语句中声明。专门用declare语句声明，而且必须放在begin..end语句的第一行。作用范围在begin到end语句块之间。在该语句块里设置的变量称为局部变量。<br>语法结构：<br>    BEGIN<br>     declare test int;<br>    …<br>    END<br><strong>用户变量</strong><br>通过SELECT INTO语句或者 SET语句 （尤其带有@符号） 声明的为用户变量 只在该用户使用的客户端生效。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; SET @i = 7;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-创建带有多个OUT类型参数的存储过程"><a href="#6-创建带有多个OUT类型参数的存储过程" class="headerlink" title="6. 创建带有多个OUT类型参数的存储过程"></a>6. 创建带有多个OUT类型参数的存储过程</h2><p>MySQL创建带有多个OUT类型参数的存储过程（创建存储过程根据年龄age字段删除记录，返回的信息有两个，一个是删除的用户数，一个是剩余的用户数）</p>
+<h3 id="（1）系统函数——ROW-COUNT（）"><a href="#（1）系统函数——ROW-COUNT（）" class="headerlink" title="（1）系统函数——ROW_COUNT（）"></a>（1）系统函数——ROW_COUNT（）</h3><p><strong>作用</strong>：返回插入，删除或者更新 被影响到的记录总数</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; INSERT users(username,age) VALUES('e',12),('f',13),('h',14),('j',13);</span><br><span class="line">Query OK, 4 rows affected (0.03 sec)</span><br><span class="line">Records: 4  Duplicates: 0  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT ROW_COUNT();</span><br><span class="line">+<span class="comment">-------------+</span></span><br><span class="line">| ROW_COUNT() |</span><br><span class="line">+<span class="comment">-------------+</span></span><br><span class="line">|           4 |</span><br><span class="line">+<span class="comment">-------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）创建存储过程"><a href="#（2）创建存储过程" class="headerlink" title="（2）创建存储过程"></a>（2）创建存储过程</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; CREATE PROCEDURE removeUserReturnInfo(IN p_age INT UNSIGNED, OUT dels SMALLINT UNSIGNED, OUT rests SMALLINT UNSIGNED)</span><br><span class="line">    -&gt; BEGIN</span><br><span class="line">    -&gt; DELETE FROM users WHERE age=p_age;</span><br><span class="line">    -&gt; SELECT ROW_COUNT() INTO dels;</span><br><span class="line">    -&gt; SELECT COUNT(id) FROM users INTO rests;</span><br><span class="line">    -&gt; END</span><br><span class="line">    -&gt; //</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<p>先看一下users中的记录：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; DELIMITER ;</span><br><span class="line">mysql&gt; SELECT * FROM users;</span><br><span class="line">+<span class="comment">----+----------+------+</span></span><br><span class="line">| id | username | age  |</span><br><span class="line">+<span class="comment">----+----------+------+</span></span><br><span class="line">|  1 | A        |   12 |</span><br><span class="line">|  2 | B        |   13 |</span><br><span class="line">|  3 | C        |   14 |</span><br><span class="line">|  4 | D        |   13 |</span><br><span class="line">|  5 | e        |   12 |</span><br><span class="line">|  6 | f        |   13 |</span><br><span class="line">|  7 | h        |   14 |</span><br><span class="line">|  8 | j        |   13 |</span><br><span class="line">+<span class="comment">----+----------+------+</span></span><br><span class="line">8 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>一共八条记录下面删除age为13的用户</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; CALL removeUserReturnInfo(13,@dels,@rests);</span><br><span class="line">Query OK, 1 row affected (0.03 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT @dels,@rests;</span><br><span class="line">+<span class="comment">-------+--------+</span></span><br><span class="line">| @dels | @rests |</span><br><span class="line">+<span class="comment">-------+--------+</span></span><br><span class="line">|     4 |      4 |</span><br><span class="line">+<span class="comment">-------+--------+</span></span><br></pre></td></tr></table></figure>
+
+<p>删除了四条还剩余四条。</p>
+<h2 id="7-存储过程与自定义函数的区别"><a href="#7-存储过程与自定义函数的区别" class="headerlink" title="7. 存储过程与自定义函数的区别"></a>7. 存储过程与自定义函数的区别</h2><p><strong>存储过程与自定义函数的区别</strong><br>【1】存储过程实现的功能要复杂一些；而函数的针对性更强（实际工作中很少使用函数针对表进行操作，都是使用存储过程对表进行操作）。<br>【2】存储过程可以返回多个值，而函数只能有一个返回值。<br>【3】存储过程一般独立的来执行（CALL 存储过程名），而函数一般作为SQL语句的组成来出现和内置函数功能一致(SELECT)。<br>如果开发过程中经常使用到某个功能，一般将它封装为存储过程。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ol>
+<li><p>存储过程：是SQL语句和控制语句的预编译集合，以一个名称存储并作为一个单元处理。</p>
+</li>
+<li><p>参数：输入类型，输出类型，输入&amp;&amp;输出；</p>
+</li>
+<li><p>创建：CREATE…PROCEDURE…;</p>
+</li>
+<li><p>注意事项：</p>
+</li>
+</ol>
+<p>1) 创建存储过程或者自定义函数时需要通过delimiter语句修改定界符。</p>
+<p>2) 如果函数体或过程体有多个语句，需要包含在BEGIN…END语句块中。</p>
+<p>3) 存储过程通过call调用。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>第七章 自定义函数</title>
     <url>/2020/01/07/%E7%AC%AC%E4%B8%83%E7%AB%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<p>上一章学习了一些内置函数库，对于日常操作足够啦，但也可能需要到实现某一特定功能的函数，这个函数系统没有提供给我们，这时候就需要自定义函数。</p>

@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="这一章将讲解一些重要的运算符和函数。主要包括字符函数、数值运算符与函数、比较运算符与函数、日期时间函数、信息函数、聚合函数和加密函数。">
+<meta name="description" content="本章介绍存储过程，可以提高MySQL的运行效率。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第六章 运算符和函数">
-<meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;2020&#x2F;01&#x2F;06&#x2F;%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E5%87%BD%E6%95%B0&#x2F;index.html">
+<meta property="og:title" content="第八章 MySQL存储过程">
+<meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;2020&#x2F;01&#x2F;07&#x2F;%E7%AC%AC%E5%85%AB%E7%AB%A0%20MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B&#x2F;index.html">
 <meta property="og:site_name" content="Qu-jq’s Blog">
-<meta property="og:description" content="这一章将讲解一些重要的运算符和函数。主要包括字符函数、数值运算符与函数、比较运算符与函数、日期时间函数、信息函数、聚合函数和加密函数。">
-<meta property="article:published_time" content="2020-01-06T09:27:20.000Z">
-<meta property="article:modified_time" content="2020-01-07T05:57:56.047Z">
+<meta property="og:description" content="本章介绍存储过程，可以提高MySQL的运行效率。">
+<meta property="article:published_time" content="2020-01-07T11:58:55.000Z">
+<meta property="article:modified_time" content="2020-01-07T12:14:42.196Z">
 <meta property="article:author" content="Qu-jq">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://qu-jq.github.io/2020/01/06/第六章运算符和函数/"/>
+  <link rel="canonical" href="https://qu-jq.github.io/2020/01/07/第八章 MySQL存储过程/"/>
 
 
 
 
 
-  <title>第六章 运算符和函数 | Qu-jq’s Blog</title>
+  <title>第八章 MySQL存储过程 | Qu-jq’s Blog</title>
   
 
 
@@ -287,7 +287,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://qu-jq.github.io/2020/01/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E5%87%BD%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://qu-jq.github.io/2020/01/07/%E7%AC%AC%E5%85%AB%E7%AB%A0%20MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu-jq">
@@ -304,7 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">第六章 运算符和函数</h1>
+          <h1 class="post-title" itemprop="name headline">第八章 MySQL存储过程</h1>
         
 
         <div class="post-meta">
@@ -316,8 +316,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-06T17:27:20+08:00">
-                2020-01-06
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-07T19:58:55+08:00">
+                2020-01-07
               </time>
             
 
@@ -376,73 +376,72 @@
       
 
       
-        <p>  这一章将讲解一些重要的运算符和函数。主要包括字符函数、数值运算符与函数、比较运算符与函数、日期时间函数、信息函数、聚合函数和加密函数。</p>
-<a id="more"></a> 
-<h1 id="1-字符函数"><a href="#1-字符函数" class="headerlink" title="1. 字符函数"></a>1. 字符函数</h1><ul>
-<li><strong>CONCAT()  字符连接</strong><br>例如：SELECT CONCAT(‘mm’,’MYSQL’);<br>返回值：mmMYSQL</li>
-<li><strong>CONCAT_WS()  使用指定的分隔符进行字符连接</strong><br>注意：里面的参数至少三个<br>例如：CONCAT_WS(‘|’,’A’,’B’,’C’);<br>返回值：A|B|C<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT CONCAT_WS('|','A','B','C');</span><br><span class="line">+<span class="comment">----------------------------+</span></span><br><span class="line">| CONCAT_WS('|','A','B','C') |</span><br><span class="line">+<span class="comment">----------------------------+</span></span><br><span class="line">| A|B|C                      |</span><br><span class="line">+<span class="comment">----------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.03</span> sec)</span><br></pre></td></tr></table></figure>
-上一个语句也可以使用CONCAT_WS:<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT CONCAT_WS('-','mm','MySQL');</span><br><span class="line">+<span class="comment">-----------------------------+</span></span><br><span class="line">| CONCAT_WS('-','mm','MySQL') |</span><br><span class="line">+<span class="comment">-----------------------------+</span></span><br><span class="line">| mm-MySQL                    |</span><br><span class="line">+<span class="comment">-----------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></li>
-<li><strong>FORMAT()  数字格式化</strong><br>例如：SELECT FORMAT(15265.57,1);<br>返回值：15,265.6</li>
-<li><strong>LOWER() 转换成小写字母</strong></li>
-<li><strong>UPPER()  转换成大写字母</strong></li>
-<li><strong>LEFT()  获取左侧字符</strong></li>
-<li><strong>RIGHT()  获取右侧字符</strong><br>例如：SELECT LOWER(LEFT(‘MySQL’,2));<br>返回值：my</li>
-<li><strong>LENGTH()  获取字符长度，空格也算</strong></li>
-<li><strong>LTRIM()  删除前导空格</strong></li>
-<li><strong>RTRIM()  删除后续空格</strong></li>
-<li><strong>TRIM()  删除前导和后续空格</strong></li>
-<li><strong>REPLACE()  字符串替换</strong><br>例如：<strong>SELECT REPLACE(‘??My??SQL???’,’?’,’’);</strong>     将？替换成空<br>返回值：MySQL</li>
-<li><strong>SUBSTRING()  字符串截取</strong><br>例如：*<em>SELECT SUBSTRING(‘MySQL’,1,2); *</em>  从第一位开始截取两位<br>返回值：My</li>
-</ul>
-<p>*<em>SELECT SUBSTRING(‘MySQL’,3); *</em>  代表从第三位开始截取，到结尾<br>返回值：SQL<br>*<em>SELECT SUBSTRING(‘MySQL’,-4); *</em>  代表从结尾开始往前截取<br>返回值：ySQL<br>*<em>SELECT SUBSTRING(‘MySQL’,-3,-1); *</em><br>返回值为空，MySQL中不允许这种写法，只能起始位为负值，长度不能为负值<br>python中对于序列的截取可以使用L(-3,-1),表示的是获取倒数第一和倒数第二位置的数据。</p>
+        <p>本章介绍存储过程，可以提高MySQL的运行效率。</p>
+<a id="more"></a>
+
+<h2 id="1-存储过程简介"><a href="#1-存储过程简介" class="headerlink" title="1. 存储过程简介"></a>1. 存储过程简介</h2><p>存储过程是sql语句和控制语句的预编译集合，以一个名称存储并作为一个单元处理</p>
 <ul>
-<li><strong>[NOT] LIKE  模式匹配</strong><br>例如：SELECT ‘MySQL’ LIKE ‘MS%’;   百分号%代表任意一个或者多个字符，下划线_代表任意一个字符<br>返回值为1，代表true；0代表false<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT 'MySQL' LIKE 'MS%';</span><br><span class="line">+<span class="comment">--------------------+</span></span><br><span class="line">| 'MySQL' LIKE 'MS%' |</span><br><span class="line">+<span class="comment">--------------------+</span></span><br><span class="line">|                  0 |</span><br><span class="line">+<span class="comment">--------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></li>
+<li>存储过程存放在数据库内，可以由应用程序调用执行，允许用户声明变量以及进行流程控制，可以接收参数（输入输出参数都可以接收）并且可以存在多个返回值</li>
+<li>存储过程的效率要比单纯的SQL语句的执行效率高<br><strong>优点：</strong><br>（1）增强sql语句的功能和灵活性；<br>（2）实现较快的执行速度；<br>（3）减少网络流量</li>
 </ul>
-<p>*<em>SELECT * FROM test WHERE username LIKE ‘%1%%’ ESCAPE ‘1’; *</em>代表查找用户名中包含%字符的结果，1后边的%不需要再进行解析，直接认为是字符%，其中1可以为任意的一个字符。</p>
-<h1 id="2-数值运算符与函数"><a href="#2-数值运算符与函数" class="headerlink" title="2. 数值运算符与函数"></a>2. 数值运算符与函数</h1><p>简单的+-*/就略过啦</p>
-<ul>
-<li><strong>CEIL()  进一取整</strong><br>例如：SELECT CEIL(3.026487);<br>返回值为4</li>
-<li><strong>DIV   整数除法</strong><br>例如：SELECT 3 DIV 4;<br>返回值为0</li>
-<li><strong>FLOOR()  舍一取整 向下取整</strong><br>例如：SELECT FLOOR(3.97);<br>返回值为3<br>注意负数的向下取整：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT FLOOR(-3.99);</span><br><span class="line">+<span class="comment">--------------+</span></span><br><span class="line">| FLOOR(-3.99) |</span><br><span class="line">+<span class="comment">--------------+</span></span><br><span class="line">|           -4 |</span><br><span class="line">+<span class="comment">--------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.03</span> sec)</span><br></pre></td></tr></table></figure></li>
-<li><strong>MOD  取余数</strong><br>与%功能一样<br>例如：<strong>SELECT 5 MOD 3;</strong><br>返回值为2<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT 5%3;</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">| 5%3  |</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">|    2 |</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></li>
-<li><strong>POWER()  幂运算</strong><br>例如：*<em>SELECT POWER(3,3); *</em> 代表3的3次方<br>返回值为27</li>
-<li><strong>ROUND()  四舍五入</strong><br>例如：<strong>SELECT ROUND(3.655,2);</strong> 四舍五入小数点后留两位<br>返回值为3.66</li>
-<li><strong>TRUNCATE()  数字截取</strong><br>例如：*<em>SELECT TRUNCATE(3.655,2); *</em> 直接截图小数位数，不进行四舍五入<br>返回值为3.65</li>
-</ul>
-<h1 id="3-比较运算符与函数"><a href="#3-比较运算符与函数" class="headerlink" title="3. 比较运算符与函数"></a>3. 比较运算符与函数</h1><ul>
-<li><strong>[NOT] BETWEEN…AND…  [不]在范围之内</strong><br>例如：*<em>SELECT 23 BETWEEN 1 AND 23; *</em> 闭合区间，[1,23]<br>返回值为1</li>
-<li><strong>[NOT] IN()  [不]在取值范围内</strong><br>例如：<strong>SELECT 10 IN(5,10,15,20);</strong><br>返回值为1</li>
-<li><strong>IS [NOT] NULL  [不]为空</strong></li>
-</ul>
-<p><strong>NULL为空，空字符’’不为空，0不为空</strong></p>
-<h1 id="4-日期时间函数"><a href="#4-日期时间函数" class="headerlink" title="4.日期时间函数"></a>4.日期时间函数</h1><ul>
-<li><strong>NOW() 当前日期和时间</strong></li>
-<li><strong>CURDATE（） 当前日期</strong></li>
-<li><strong>CURTIME（） 当前时间</strong></li>
-<li><strong>DATE_ADD() 日期变化</strong><br>例如：<strong>SELECT DATE_ADD(‘2020-1-6’, INTERVAL 1 YEAR);</strong><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT DATE_ADD('2020-1-6', INTERVAL 1 YEAR);</span><br><span class="line">+<span class="comment">---------------------------------------+</span></span><br><span class="line">| DATE_ADD('2020-1-6', INTERVAL 1 YEAR) |</span><br><span class="line">+<span class="comment">---------------------------------------+</span></span><br><span class="line">| 2021-01-06                            |</span><br><span class="line">+<span class="comment">---------------------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p><strong>SELECT DATE_ADD(‘2020-1-6’, INTERVAL 1 WEEK);</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT DATE_ADD('2020-1-6', INTERVAL 1 WEEK);</span><br><span class="line">+<span class="comment">---------------------------------------+</span></span><br><span class="line">| DATE_ADD('2020-1-6', INTERVAL 1 WEEK) |</span><br><span class="line">+<span class="comment">---------------------------------------+</span></span><br><span class="line">| 2020-01-13                            |</span><br><span class="line">+<span class="comment">---------------------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>DATEDIFF（） 日期差值</strong><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT DATEDIFF('2020-1-9','2020-1-10');</span><br><span class="line">+<span class="comment">----------------------------------+</span></span><br><span class="line">| DATEDIFF('2020-1-9','2020-1-10') |</span><br><span class="line">+<span class="comment">----------------------------------+</span></span><br><span class="line">|                               -1 |</span><br><span class="line">+<span class="comment">----------------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">SELECT</span> <span class="keyword">DATEDIFF</span>(<span class="string">'2020-1-9'</span>,<span class="keyword">NOW</span>());</span><br><span class="line">+<span class="comment">----------------------------+</span></span><br><span class="line">| DATEDIFF('2020-1-9',NOW()) |</span><br><span class="line">+<span class="comment">----------------------------+</span></span><br><span class="line">|                          3 |</span><br><span class="line">+<span class="comment">----------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></li>
-<li><strong>DATE_FORMAT() 日期格式化</strong><br>例如：<strong>SELECT DATE_FORMAT(‘2019-6-24’,’%m/%d/%Y’);</strong><br>返回值为06/24/2019</li>
-</ul>
-<p><strong>SELECT DATE_FORMAT(‘2019-6-24’,’%m/%d/%y’);</strong><br>返回值为06/24/19</p>
-<h1 id="5-信息函数"><a href="#5-信息函数" class="headerlink" title="5.信息函数"></a>5.信息函数</h1><ul>
-<li><strong>CONNECTION_ID() 连接ID</strong></li>
-<li><strong>DATEBASE()          当前数据库</strong></li>
-<li><strong>LAST_INSERT_ID()  最后插入记录</strong><br>当同时插入多条记录时，返回其中第一条的id号。</li>
-<li><strong>USER()                    当前用户</strong></li>
-<li><strong>VERSION()                版本信息</strong><h1 id="6-聚合函数（需要配合数据表使用）"><a href="#6-聚合函数（需要配合数据表使用）" class="headerlink" title="6.聚合函数（需要配合数据表使用）"></a>6.聚合函数（需要配合数据表使用）</h1></li>
-<li><strong>AVG()    平均值</strong></li>
-<li><strong>COUNT()    计数</strong></li>
-<li><strong>MAX()    最大值</strong></li>
-<li><strong>MIN()    最小值</strong></li>
-<li><strong>SUM()    求和</strong><h1 id="7-加密函数"><a href="#7-加密函数" class="headerlink" title="7.加密函数"></a>7.加密函数</h1></li>
-<li><strong>md5()            信息摘要算法</strong><br>select md5(‘admin’);如果为了web页面做准备，建议使用MD5()</li>
-<li><strong>password()     密码算法</strong><br>主要用来更改mysql的更改密码<br>set password=password(‘123’)</li>
-</ul>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>１.字符函数<br>２.数值运算符与函数<br>３.比较运算符与函数<br>４.日期时间函数<br>５.信息函数<br>６.聚合函数<br>7.加密函数<br>通过上面的学习，也可以看出这些函数可以用在任意的字段上。</p>
+<h2 id="2-创建存储结构语法分析"><a href="#2-创建存储结构语法分析" class="headerlink" title="2. 创建存储结构语法分析"></a>2. 创建存储结构语法分析</h2><p><strong>创建存储过程</strong><br>CREATE<br>[DEFINER={user|CURRENT_USER}]<br>PROCEDURE sp_name([proc_paremeter[,…]])<br>[characteristic…] routine_body<br>proc_paremeter:<br>[IN|OUT|INOUT]param_name type<br>创建存储过程语法结构基本和创建自定义函数语法结构相同，最大不同就是参数部分。<br>首先可以指定创建者DEFINER，如果省略，则默认指向（当前用户））当前登入到Mysql客户端的用户。<br>sp_name指的是存储过程的名字，它后面的参数可以有多个，存储过程名使用PROCEDURE修饰，参数前面可以使用IN|OUT|INOUT修饰。<br><strong>IN</strong>:表示该参数的值必须在调用存储过程时指定（存储过程中该值不能返回，只能进不能出）。<br><strong>OUT</strong>：表示该参数的值可以被存储过程代码改变，并且可以返回。<br><strong>INOUT</strong>：表示该参数的可以被指定，并且可以被存储过程体改变和返回。<br><strong>存储过程的特性</strong>（【characteristic…】）与自定义函数特性是完全相同的。<br>特性<br>COMMENT:注释<br>CONTAINS SQL:包含sql语句，但不包含读或者写数据的语句；<br>NOT SQL：不包含sql语句；<br>READS SQL DATA:包含读数据的语句；<br>MODIFIES SQL DATEA:包含写数据的语句；<br>SQL SECURITY{DEFINER|INVOKER}:指明谁有权限连执行<br><strong>过程体</strong><br>（1）过程体由合法的sql语句构成；<br>（2）过程体可以是任意的sql语句；<br>（3）过程体如果为复合结构则使用begin_end语句；<br>（4）复合结构可以包含声明、循环、控制结构</p>
+<h2 id="3-创建不带参数的存储过程"><a href="#3-创建不带参数的存储过程" class="headerlink" title="3.创建不带参数的存储过程"></a>3.创建不带参数的存储过程</h2><p>MySQL创建不带参数的存储过程（该存储过程获取Mysql版本的功能）<br><strong>创建存储过程</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> sp1() <span class="keyword">SELECT</span> <span class="keyword">VERSION</span>();</span><br><span class="line">mysql&gt; CREATE PROCEDURE sp1() SELECT VERSION();</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p><strong>调用存储过程</strong><br>【1】CALL sp_name([parameter[,…]])<br>【2】CALL sp_name[()]<br>如果存储过程在封装的过程中没有参数，小括号带不带都可以。但是如果封装时有参数，则小括号必须带。<br>例如上面调用：CALL sp1或者CALL sp1();</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CALL sp1;</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| VERSION() |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| 5.5.62    |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"><span class="keyword">Query</span> OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-创建带有IN类型参数的存储过程"><a href="#4-创建带有IN类型参数的存储过程" class="headerlink" title="4. 创建带有IN类型参数的存储过程"></a>4. 创建带有IN类型参数的存储过程</h2><p>下面将创建一个可以删除指定id记录的存储过程。<br>首先看一下test数据表中有哪些记录：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM test;</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">| id | username |</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">|  1 | hao      |</span><br><span class="line">|  2 | yuan     |</span><br><span class="line">|  3 | ye       |</span><br><span class="line">|  4 | xiaohua  |</span><br><span class="line">+<span class="comment">----+----------+</span></span><br><span class="line">4 rows in <span class="keyword">set</span> (<span class="number">0.04</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>下面就创建带有IN类型参数的存储过程：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DELIMITER //</span><br><span class="line">mysql&gt; CREATE PROCEDURE removeUserById(IN p_id INT UNSIGNED)</span><br><span class="line">    -&gt; BEGIN</span><br><span class="line">    -&gt; DELETE FROM test WHERE id = p_id;</span><br><span class="line">    -&gt; END</span><br><span class="line">    -&gt; //</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line">mysql&gt; DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+<p>注意：p_id与id的名字不能一样，如果一样在调用此过程时将删除表的所有记录。<br>下面调用此过程：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CALL removeUserById(2);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">mysql&gt; SELECT * FROM test WHERE id = 2;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>可以看出已经删除。<br>如果要<strong>修改存储过程的过程体</strong>：<br>1）必须先删除存储过程<br>DROP PROCEDURE [ IF EXISTS ] sp_name<br>2） 再重建存储过程<br>每次<strong>自定义函数或者存储过程之前</strong>：<br>1）DELIMITER //<br>先把界定符重新定义下 不要用；<br>2）定义完后，再改成DELIMETER ；</p>
+<h2 id="5-创建带有IN和OUT类型参数的存储过程"><a href="#5-创建带有IN和OUT类型参数的存储过程" class="headerlink" title="5. 创建带有IN和OUT类型参数的存储过程"></a>5. 创建带有IN和OUT类型参数的存储过程</h2><p>下面创建一个不仅可以根据id删除记录的过程，并且可以返回剩余记录的数量。</p>
+<h3 id="（1）创建带有in和out参数类型的存储过程【输入-返回】"><a href="#（1）创建带有in和out参数类型的存储过程【输入-返回】" class="headerlink" title="（1）创建带有in和out参数类型的存储过程【输入+返回】"></a>（1）创建带有in和out参数类型的存储过程【输入+返回】</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DELIMITER //</span><br><span class="line">mysql&gt; CREATE PROCEDURE removeUserAndReturnNum(IN p_id INT UNSIGNED , OUT num INT UNSIGNED)</span><br><span class="line"> -&gt; BEGIN</span><br><span class="line"> -&gt; DELETE FROM test WHERE id = p_id;</span><br><span class="line"> -&gt; SELECT COUNT(id) FROM test INTO num;</span><br><span class="line"> -&gt; END</span><br><span class="line"> -&gt; //</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line">mysql&gt; DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+<p>看看test数据表中还有几条记录</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT COUNT(id) FROM test;</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| COUNT(id) |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">|         3 |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）过程调用"><a href="#（2）过程调用" class="headerlink" title="（2）过程调用"></a>（2）过程调用</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CALL removeUserAndReturnNum(1,@nums);</span><br><span class="line">Query OK, 1 row affected (0.03 sec)</span><br></pre></td></tr></table></figure>
+
+<p>将剩余的记录数量存储在nums变量之中。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT @nums;</span><br><span class="line">+<span class="comment">-------+</span></span><br><span class="line">| @nums |</span><br><span class="line">+<span class="comment">-------+</span></span><br><span class="line">|     2 |</span><br><span class="line">+<span class="comment">-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p><strong>局部变量</strong><br>局部变量只在begin和end之间的语句块有效；语句块运行完毕，局部变量消失；<br>在begin..end语句中声明。专门用declare语句声明，而且必须放在begin..end语句的第一行。作用范围在begin到end语句块之间。在该语句块里设置的变量称为局部变量。<br>语法结构：<br>    BEGIN<br>     declare test int;<br>    …<br>    END<br><strong>用户变量</strong><br>通过SELECT INTO语句或者 SET语句 （尤其带有@符号） 声明的为用户变量 只在该用户使用的客户端生效。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SET @i = 7;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-创建带有多个OUT类型参数的存储过程"><a href="#6-创建带有多个OUT类型参数的存储过程" class="headerlink" title="6. 创建带有多个OUT类型参数的存储过程"></a>6. 创建带有多个OUT类型参数的存储过程</h2><p>MySQL创建带有多个OUT类型参数的存储过程（创建存储过程根据年龄age字段删除记录，返回的信息有两个，一个是删除的用户数，一个是剩余的用户数）</p>
+<h3 id="（1）系统函数——ROW-COUNT（）"><a href="#（1）系统函数——ROW-COUNT（）" class="headerlink" title="（1）系统函数——ROW_COUNT（）"></a>（1）系统函数——ROW_COUNT（）</h3><p><strong>作用</strong>：返回插入，删除或者更新 被影响到的记录总数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSERT users(username,age) VALUES('e',12),('f',13),('h',14),('j',13);</span><br><span class="line">Query OK, 4 rows affected (0.03 sec)</span><br><span class="line">Records: 4  Duplicates: 0  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT ROW_COUNT();</span><br><span class="line">+<span class="comment">-------------+</span></span><br><span class="line">| ROW_COUNT() |</span><br><span class="line">+<span class="comment">-------------+</span></span><br><span class="line">|           4 |</span><br><span class="line">+<span class="comment">-------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）创建存储过程"><a href="#（2）创建存储过程" class="headerlink" title="（2）创建存储过程"></a>（2）创建存储过程</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE PROCEDURE removeUserReturnInfo(IN p_age INT UNSIGNED, OUT dels SMALLINT UNSIGNED, OUT rests SMALLINT UNSIGNED)</span><br><span class="line">    -&gt; BEGIN</span><br><span class="line">    -&gt; DELETE FROM users WHERE age=p_age;</span><br><span class="line">    -&gt; SELECT ROW_COUNT() INTO dels;</span><br><span class="line">    -&gt; SELECT COUNT(id) FROM users INTO rests;</span><br><span class="line">    -&gt; END</span><br><span class="line">    -&gt; //</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<p>先看一下users中的记录：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DELIMITER ;</span><br><span class="line">mysql&gt; SELECT * FROM users;</span><br><span class="line">+<span class="comment">----+----------+------+</span></span><br><span class="line">| id | username | age  |</span><br><span class="line">+<span class="comment">----+----------+------+</span></span><br><span class="line">|  1 | A        |   12 |</span><br><span class="line">|  2 | B        |   13 |</span><br><span class="line">|  3 | C        |   14 |</span><br><span class="line">|  4 | D        |   13 |</span><br><span class="line">|  5 | e        |   12 |</span><br><span class="line">|  6 | f        |   13 |</span><br><span class="line">|  7 | h        |   14 |</span><br><span class="line">|  8 | j        |   13 |</span><br><span class="line">+<span class="comment">----+----------+------+</span></span><br><span class="line">8 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>一共八条记录下面删除age为13的用户</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CALL removeUserReturnInfo(13,@dels,@rests);</span><br><span class="line">Query OK, 1 row affected (0.03 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT @dels,@rests;</span><br><span class="line">+<span class="comment">-------+--------+</span></span><br><span class="line">| @dels | @rests |</span><br><span class="line">+<span class="comment">-------+--------+</span></span><br><span class="line">|     4 |      4 |</span><br><span class="line">+<span class="comment">-------+--------+</span></span><br></pre></td></tr></table></figure>
+
+<p>删除了四条还剩余四条。</p>
+<h2 id="7-存储过程与自定义函数的区别"><a href="#7-存储过程与自定义函数的区别" class="headerlink" title="7. 存储过程与自定义函数的区别"></a>7. 存储过程与自定义函数的区别</h2><p><strong>存储过程与自定义函数的区别</strong><br>【1】存储过程实现的功能要复杂一些；而函数的针对性更强（实际工作中很少使用函数针对表进行操作，都是使用存储过程对表进行操作）。<br>【2】存储过程可以返回多个值，而函数只能有一个返回值。<br>【3】存储过程一般独立的来执行（CALL 存储过程名），而函数一般作为SQL语句的组成来出现和内置函数功能一致(SELECT)。<br>如果开发过程中经常使用到某个功能，一般将它封装为存储过程。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ol>
+<li><p>存储过程：是SQL语句和控制语句的预编译集合，以一个名称存储并作为一个单元处理。</p>
+</li>
+<li><p>参数：输入类型，输出类型，输入&amp;&amp;输出；</p>
+</li>
+<li><p>创建：CREATE…PROCEDURE…;</p>
+</li>
+<li><p>注意事项：</p>
+</li>
+</ol>
+<p>1) 创建存储过程或者自定义函数时需要通过delimiter语句修改定界符。</p>
+<p>2) 如果函数体或过程体有多个语句，需要包含在BEGIN…END语句块中。</p>
+<p>3) 存储过程通过call调用。</p>
 
       
     </div>
@@ -463,7 +462,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="https://qu-jq.github.io/2020/01/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E5%87%BD%E6%95%B0/" title="第六章 运算符和函数">https://qu-jq.github.io/2020/01/06/%E7%AC%AC%E5%85%AD%E7%AB%A0%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E5%87%BD%E6%95%B0/</a>
+    <a href="https://qu-jq.github.io/2020/01/07/%E7%AC%AC%E5%85%AB%E7%AB%A0%20MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" title="第八章 MySQL存储过程">https://qu-jq.github.io/2020/01/07/%E7%AC%AC%E5%85%AB%E7%AB%A0%20MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -493,8 +492,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/04/%E7%A0%94%E7%A9%B6%E7%94%9F%E7%AC%AC%E4%B8%80%E5%AD%A6%E6%9C%9F%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/" rel="next" title="研究生第一学期课程总结">
-                <i class="fa fa-chevron-left"></i> 研究生第一学期课程总结
+              <a href="/2020/01/07/%E7%AC%AC%E4%B8%83%E7%AB%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" rel="next" title="第七章 自定义函数">
+                <i class="fa fa-chevron-left"></i> 第七章 自定义函数
               </a>
             
           </div>
@@ -502,10 +501,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/07/%E7%AC%AC%E4%B8%83%E7%AB%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" rel="prev" title="第七章 自定义函数">
-                第七章 自定义函数 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -657,7 +652,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-字符函数"><span class="nav-text">1. 字符函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-数值运算符与函数"><span class="nav-text">2. 数值运算符与函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-比较运算符与函数"><span class="nav-text">3. 比较运算符与函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-日期时间函数"><span class="nav-text">4.日期时间函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-信息函数"><span class="nav-text">5.信息函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-聚合函数（需要配合数据表使用）"><span class="nav-text">6.聚合函数（需要配合数据表使用）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-加密函数"><span class="nav-text">7.加密函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-存储过程简介"><span class="nav-text">1. 存储过程简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-创建存储结构语法分析"><span class="nav-text">2. 创建存储结构语法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-创建不带参数的存储过程"><span class="nav-text">3.创建不带参数的存储过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-创建带有IN类型参数的存储过程"><span class="nav-text">4. 创建带有IN类型参数的存储过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-创建带有IN和OUT类型参数的存储过程"><span class="nav-text">5. 创建带有IN和OUT类型参数的存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）创建带有in和out参数类型的存储过程【输入-返回】"><span class="nav-text">（1）创建带有in和out参数类型的存储过程【输入+返回】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）过程调用"><span class="nav-text">（2）过程调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-创建带有多个OUT类型参数的存储过程"><span class="nav-text">6. 创建带有多个OUT类型参数的存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）系统函数——ROW-COUNT（）"><span class="nav-text">（1）系统函数——ROW_COUNT（）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）创建存储过程"><span class="nav-text">（2）创建存储过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-存储过程与自定义函数的区别"><span class="nav-text">7. 存储过程与自定义函数的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
