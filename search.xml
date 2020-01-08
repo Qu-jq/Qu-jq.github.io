@@ -6,12 +6,17 @@
     <content><![CDATA[<p>前面学习数据库都是基于命令行进行处理，下面介绍通过图形化管理工具进行操作。主要是三种：PHPMyAdmin、Navicat和MySQL Workbench。</p>
 <a id="more"></a>
 
-<p>1、PHPMyAdmin Web界面的</p>
-<p>   1）下载：planet.phpmyadmin.net // PHPMyAdmin 下载官网,解压在appach目录下</p>
+<h2 id="1、PHPMyAdmin-Web界面的"><a href="#1、PHPMyAdmin-Web界面的" class="headerlink" title="1、PHPMyAdmin Web界面的"></a>1、PHPMyAdmin Web界面的</h2><p>   1）下载：planet.phpmyadmin.net // PHPMyAdmin 下载官网,解压在appach目录下</p>
 <p>   2）登入：127.0.0.1/PHPMyAdmin</p>
-<p> 2、Navicat for MySQL 以平台方式运行的</p>
-<p><a href="https://pan.baidu.com/s/1MwafBklUTiqzBqipRN20xQ" target="_blank" rel="noopener">百度云下载链接</a></p>
-<p> 3、MySQL Workbench 以平台方式运行的 PK: primary key 主键 NN: not null UQ: unique key 唯一约束 zf: zero fill 添加前导0 un:unsigned 无符号 ai: auto_increment 当前的自动编号</p>
+<h2 id="2、Navicat-for-MySQL-以平台方式运行的"><a href="#2、Navicat-for-MySQL-以平台方式运行的" class="headerlink" title="2、Navicat for MySQL 以平台方式运行的"></a>2、Navicat for MySQL 以平台方式运行的</h2><p><a href="https://pan.baidu.com/s/1MwafBklUTiqzBqipRN20xQ" target="_blank" rel="noopener">百度云下载链接</a></p>
+<p>安装方法：</p>
+<p>1）点击nacivat_trial进行安装</p>
+<p>2）点击PatchNavicat选择刚刚安装的程序navicat.exe，即可</p>
+<h2 id="3、MySQL-Workbench-以平台方式运行的"><a href="#3、MySQL-Workbench-以平台方式运行的" class="headerlink" title="3、MySQL Workbench 以平台方式运行的"></a>3、MySQL Workbench 以平台方式运行的</h2><p> PK: primary key 主键 </p>
+<p>NN: not null UQ: unique key 唯一约束 </p>
+<p>zf: zero fill 添加前导0 </p>
+<p>un:unsigned 无符号 </p>
+<p>ai: auto_increment 当前的自动编号</p>
 <p>基础课程到此结束，寒假也即将来临，今天从图书馆借了《MySQL基础教程（第二版）》准备回家之后再好好看看，加油吧！</p>
 ]]></content>
       <categories>
