@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="MySQL,数据库," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="你好，我是一名在读研究生，正在自学Java开发，我会将我平时的学习笔记放在博客上，希望可以一起交流学习。 如果有什么问题的话，可以添加下面的微信联系我：">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于我">
-<meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;about&#x2F;index.html">
+<meta name="description" content="本章只是对存储引擎做一个基础的介绍，对不同的存储引擎的特点做一个了解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第九章 MySQL存储引擎">
+<meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;2020&#x2F;01&#x2F;08&#x2F;%E7%AC%AC%E4%B9%9D%E7%AB%A0MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E&#x2F;index.html">
 <meta property="og:site_name" content="Qu-jq’s Blog">
-<meta property="og:description" content="你好，我是一名在读研究生，正在自学Java开发，我会将我平时的学习笔记放在博客上，希望可以一起交流学习。 如果有什么问题的话，可以添加下面的微信联系我：">
-<meta property="og:image" content="http:&#x2F;&#x2F;q3qm0iisd.bkt.clouddn.com&#x2F;%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg">
-<meta property="article:published_time" content="2019-12-15T01:57:20.000Z">
-<meta property="article:modified_time" content="2020-01-07T13:11:24.957Z">
+<meta property="og:description" content="本章只是对存储引擎做一个基础的介绍，对不同的存储引擎的特点做一个了解。">
+<meta property="og:image" content="http:&#x2F;&#x2F;q3qm0iisd.bkt.clouddn.com&#x2F;%E5%90%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E7%89%B9%E7%82%B9.jpg">
+<meta property="article:published_time" content="2020-01-08T07:11:53.000Z">
+<meta property="article:modified_time" content="2020-01-08T07:19:30.773Z">
 <meta property="article:author" content="Qu-jq">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;q3qm0iisd.bkt.clouddn.com&#x2F;%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;q3qm0iisd.bkt.clouddn.com&#x2F;%E5%90%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E7%89%B9%E7%82%B9.jpg">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://qu-jq.github.io/about/"/>
+  <link rel="canonical" href="https://qu-jq.github.io/2020/01/08/第九章MySQL存储引擎/"/>
 
 
 
 
 
-  <title>关于我 | Qu-jq’s Blog</title>
+  <title>第九章 MySQL存储引擎 | Qu-jq’s Blog</title>
   
 
 
@@ -275,35 +277,270 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://qu-jq.github.io/2020/01/08/%E7%AC%AC%E4%B9%9D%E7%AB%A0MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qu-jq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qu-jq’s Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">关于我</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>你好，我是一名在读研究生，正在自学Java开发，我会将我平时的学习笔记放在博客上，希望可以一起交流学习。</p>
-<p>如果有什么问题的话，可以添加下面的微信联系我：</p>
-<img src="http://q3qm0iisd.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg" alt="正在加载" style="zoom:25%;" />
+          <h1 class="post-title" itemprop="name headline">第九章 MySQL存储引擎</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-08T15:11:53+08:00">
+                2020-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>本章只是对存储引擎做一个基础的介绍，对不同的存储引擎的特点做一个了解。</p>
+<a id="more"></a>
+
+<h2 id="1-存储引擎简介"><a href="#1-存储引擎简介" class="headerlink" title="1. 存储引擎简介"></a>1. 存储引擎简介</h2><p><strong>定义：</strong></p>
+<p>- MySQL可以将数据不同的技术存储在文件（内存）中，这种技术就称为存储引擎。</p>
+<p>关系型数据库中数据的存储以表的形式来实现的。所以存储引擎也可以称为表类型。</p>
+<p>每一种存储引擎使用不同的存储机制、索引技巧、锁定水平，最终提供广泛且不同的功能。</p>
+<p><strong>MySQL支持的存储引擎</strong></p>
+<ul>
+<li><p>MyISAM</p>
+</li>
+<li><p>InnoDB</p>
+</li>
+<li><p>Memory</p>
+</li>
+<li><p>CSV</p>
+</li>
+<li><p>Archive</p>
+</li>
+</ul>
+<h2 id="2-MySQL相关知识点之并发处理"><a href="#2-MySQL相关知识点之并发处理" class="headerlink" title="2. MySQL相关知识点之并发处理"></a>2. MySQL相关知识点之并发处理</h2><p>在了解每个存储引擎特点前，需要先了解一下并发处理相关的知识。</p>
+<p><strong>并发控制：</strong></p>
+<p>  <strong>当多个连接对记录进行操作时保证数据的一致性和完整性。</strong></p>
+<p>（例如：一张数据表中，两个用户，其中一个用户删除id为22的商品，另一个用户查询id为22的商品，这样可能就会报错，这时就需要并发控制，在处理并发读或者并发写时，系统会使用锁系统解决该问题）</p>
+<p><strong>锁：</strong></p>
+<p><strong>【1】共享锁（读锁）：</strong>在同一时间段内，多个用户可以读取同一个资源，读取过程中不会发生任何变化。</p>
+<p><strong>【2】排他锁（写锁）：</strong>在任何时候只能有一个用户写入资源，当进行写锁时会阻塞其他的读锁或者写锁操作。</p>
+<p><strong>锁的力度（</strong>锁的颗粒）</p>
+<p>只需要对需要修改的表或者记录加锁</p>
+<p><strong>锁颗粒（锁的单位）</strong></p>
+<p><strong>——表锁：是一种开销最小的锁策略。</strong></p>
+<p>对整个表进行锁定。</p>
+<p><strong>——行锁：是一种开销最大的锁策略。</strong></p>
+<p>对每一条记录进行锁定，支持最大并发处理操作。</p>
+<h2 id="3-MySQL相关知识点之事务处理"><a href="#3-MySQL相关知识点之事务处理" class="headerlink" title="3. MySQL相关知识点之事务处理"></a>3. MySQL相关知识点之事务处理</h2><p><strong>事务</strong>：用于保证数据库的完整性</p>
+<p><strong>例子：</strong></p>
+<p>用户A转账200元给用户B</p>
+<p>实现步骤：</p>
+<p>（1）从当前账户减掉200元（账户余额大于等于200元）</p>
+<p>（2）在对方账户增加200元</p>
+<p>那么两个过程应该作为一个整体出现。任何一个环节出现问题，都应该恢复到原有状态</p>
+<p><strong>事务的特性：</strong></p>
+<p>- 原子性</p>
+<p>- 一致性</p>
+<p>- 隔离性</p>
+<p>- 持久性</p>
+<h2 id="4-MySQL相关知识点之外键及索引"><a href="#4-MySQL相关知识点之外键及索引" class="headerlink" title="4. MySQL相关知识点之外键及索引"></a>4. MySQL相关知识点之外键及索引</h2><p><strong>外键：保证数据一致性的策略。</strong></p>
+<p><strong>索引：是对数据表中一列或者多列的值进行排序的一种结构，使用索引可以快速访问数据表中的特定信息。</strong></p>
+<h2 id="5-各个存储引擎的特点"><a href="#5-各个存储引擎的特点" class="headerlink" title="5. 各个存储引擎的特点"></a>5. 各个存储引擎的特点</h2><img src="http://q3qm0iisd.bkt.clouddn.com/%E5%90%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E7%89%B9%E7%82%B9.jpg" alt="各个存储引擎的特点" style="zoom: 50%;" />
+
+<p><strong>1.扩展</strong></p>
+<p>Memory的存储限制是由内存的大小来决定。</p>
+<p>CSV存储引擎不支持索引。</p>
+<p>BlackHole:黑洞引擎，写入的数据都会消失，一般用做数据复制的中继。</p>
+<p><strong>2.索引</strong>：普通索引、唯一索引、全文索引、btree索引、hash索引……</p>
+<p><strong>3.最广泛</strong>：MyISAM/InnoDB</p>
+<p>MyISAM：适用于事务的处理不多的情况。</p>
+<p>InnoDB：适用于事务处理比较多，需要有外键支持的情况</p>
+<h2 id="6-设置存储引擎"><a href="#6-设置存储引擎" class="headerlink" title="6. 设置存储引擎"></a>6. 设置存储引擎</h2><p><strong>【1】通过修改MySQL配置文件实现</strong></p>
+<p><strong>-default-storage-engine=engine(MySQL5.5默认使用Innodb存储引擎）</strong></p>
+<p><strong>【2】通过创建数据表命令实现</strong></p>
+<p><strong>-CREATE TABLE table_name(</strong></p>
+<p><strong>…</strong></p>
+<p><strong>…</strong></p>
+<p><strong>)ENGINE=engine;</strong></p>
+<p><strong>【3】通过修改数据表命令实现</strong></p>
+<p><strong>-ALTER TABLE_name ENGINE [=] engine_name</strong></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><strong>1.存储引擎</strong>：数据的系统的心脏，<strong>实现数据存储和查询的功能</strong>。</p>
+<p><strong>2.特点解析</strong></p>
+<p>对应的特点为，存储限制、事务安全、是否支持索引、锁的粒度大小、是否支持数据压缩、是否支持外键等。每个技术特点解决的问题是不一样的，不过本质就是为了实现数据存储和查询，是实现的技术不一样，特点不一样，所以我们应该根据需要选择最为合适的。</p>
+<p>  <strong>a.存储限制</strong>—数据库能存多少数据</p>
+<p>  <strong>b.事务安全</strong>—能否保证数据完整性</p>
+<p>  <strong>c.是否支持索引</strong>—能够实现快速查询</p>
+<p>  <strong>d.锁的粒度大小</strong>—用于并发控制，实现数据一致性和完整性(表锁、行锁)</p>
+<p>  <strong>e.是否支持数据压缩</strong>—-用于数据压缩，能存储更多数据或者改变数据存储结构</p>
+<p>  <strong>f.是否支持外键</strong>—能够保证数据的一致性。</p>
+<p>3.常用的两种存储引擎及其特点</p>
+<ul>
+<li>MyISAM：存储闲置可达256TB，支持索引，表级锁定，数据压缩</li>
+<li>InnoDB：存储闲置为64TB，支持事务和索引，锁颗粒为行锁</li>
+</ul>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Qu-jq
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://qu-jq.github.io/2020/01/08/%E7%AC%AC%E4%B9%9D%E7%AB%A0MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" title="第九章 MySQL存储引擎">https://qu-jq.github.io/2020/01/08/%E7%AC%AC%E4%B9%9D%E7%AB%A0MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/07/%E7%AC%AC%E5%85%AB%E7%AB%A0%20MySQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="next" title="第八章 MySQL存储过程">
+                <i class="fa fa-chevron-left"></i> 第八章 MySQL存储过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/08/%E7%AC%AC%E5%8D%81%E7%AB%A0%20MySQL%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="prev" title="第八章 MySQL存储过程">
+                第八章 MySQL存储过程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -336,8 +573,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -417,6 +663,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-存储引擎简介"><span class="nav-text">1. 存储引擎简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-MySQL相关知识点之并发处理"><span class="nav-text">2. MySQL相关知识点之并发处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-MySQL相关知识点之事务处理"><span class="nav-text">3. MySQL相关知识点之事务处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-MySQL相关知识点之外键及索引"><span class="nav-text">4. MySQL相关知识点之外键及索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-各个存储引擎的特点"><span class="nav-text">5. 各个存储引擎的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-设置存储引擎"><span class="nav-text">6. 设置存储引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
