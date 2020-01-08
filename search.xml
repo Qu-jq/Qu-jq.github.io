@@ -13,7 +13,8 @@
 <p>1）点击nacivat_trial进行安装</p>
 <p>2）点击PatchNavicat选择刚刚安装的程序navicat.exe，即可</p>
 <h2 id="3、MySQL-Workbench-以平台方式运行的"><a href="#3、MySQL-Workbench-以平台方式运行的" class="headerlink" title="3、MySQL Workbench 以平台方式运行的"></a>3、MySQL Workbench 以平台方式运行的</h2><p> PK: primary key 主键 </p>
-<p>NN: not null UQ: unique key 唯一约束 </p>
+<p>NN: not null 非空</p>
+<p>UQ: unique key 唯一约束 </p>
 <p>zf: zero fill 添加前导0 </p>
 <p>un:unsigned 无符号 </p>
 <p>ai: auto_increment 当前的自动编号</p>
@@ -81,8 +82,8 @@
 <h2 id="5-各个存储引擎的特点"><a href="#5-各个存储引擎的特点" class="headerlink" title="5. 各个存储引擎的特点"></a>5. 各个存储引擎的特点</h2><img src="http://q3qm0iisd.bkt.clouddn.com/%E5%90%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E7%89%B9%E7%82%B9.jpg" alt="各个存储引擎的特点" style="zoom: 50%;" />
 
 <p><strong>1.扩展</strong></p>
-<p>Memory的存储限制是由内存的大小来决定。</p>
-<p>CSV存储引擎不支持索引。</p>
+<p>Memory 的存储限制是由内存的大小来决定。</p>
+<p>CSV 存储引擎不支持索引。</p>
 <p>BlackHole:黑洞引擎，写入的数据都会消失，一般用做数据复制的中继。</p>
 <p><strong>2.索引</strong>：普通索引、唯一索引、全文索引、btree索引、hash索引……</p>
 <p><strong>3.最广泛</strong>：MyISAM/InnoDB</p>
