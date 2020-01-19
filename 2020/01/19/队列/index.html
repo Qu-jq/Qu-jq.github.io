@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,数据结构," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="遇到排队问题，经常会使用到队列。先到的先服务，后到的从队伍后面排队，等待服务。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="队列">
+<meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;2020&#x2F;01&#x2F;19&#x2F;%E9%98%9F%E5%88%97&#x2F;index.html">
+<meta property="og:site_name" content="Qu-jq’s Blog">
+<meta property="og:description" content="遇到排队问题，经常会使用到队列。先到的先服务，后到的从队伍后面排队，等待服务。">
+<meta property="og:image" content="http:&#x2F;&#x2F;q3qm0iisd.bkt.clouddn.com&#x2F;%E6%95%B0%E7%BB%84%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97%E5%9B%BE%E8%A7%A3.png">
+<meta property="article:published_time" content="2020-01-19T02:56:06.769Z">
+<meta property="article:modified_time" content="2020-01-19T05:40:03.694Z">
+<meta property="article:author" content="Qu-jq">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;q3qm0iisd.bkt.clouddn.com&#x2F;%E6%95%B0%E7%BB%84%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97%E5%9B%BE%E8%A7%A3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://qu-jq.github.io/2020/01/19/队列/"/>
+
+
+
+
+
+  <title>队列 | Qu-jq’s Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qu-jq’s Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录学习中的点点滴滴</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://qu-jq.github.io/2020/01/19/%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qu-jq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qu-jq’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">队列</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-19T10:56:06+08:00">
+                2020-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> 遇到排队问题，经常会使用到队列。先到的先服务，后到的从队伍后面排队，等待服务。</p>
+<a id="more"></a> 
+
+<h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h2><p> 一种可以实现“<strong>先进先出</strong>”的存储结构</p>
+<p><strong>栈只允许在一端进行操作</strong>，而<strong>队列在两端操作</strong>，队尾进行存入，队头进行删除 </p>
+<h2 id="2-分类"><a href="#2-分类" class="headerlink" title="2. 分类"></a>2. 分类</h2><ul>
+<li><p>静态队列(连续队列) </p>
+<p><strong>静态队列通常必须是循环队列</strong></p>
+</li>
+<li><p>动态队列(链式队列)</p>
+</li>
+</ul>
+<h2 id="3-静态队列"><a href="#3-静态队列" class="headerlink" title="3.静态队列"></a>3.静态队列</h2><h3 id="1-静态非循环队列"><a href="#1-静态非循环队列" class="headerlink" title="1) 静态非循环队列"></a>1) 静态非循环队列</h3><h4 id="（1）使用数组模拟队列的思路"><a href="#（1）使用数组模拟队列的思路" class="headerlink" title="（1）使用数组模拟队列的思路"></a>（1）使用数组模拟队列的思路</h4><ul>
+<li><p>队列本身是有序列表，若使用数组的结构来存储队列的数据，则队列数组的声明如下图, 其中 maxSize 是该队列的最大容量，即数组长度。</p>
+</li>
+<li><p>因为队列的输出、输入是分别从前后端来处理，因此需要两个变<strong>量</strong> front及rear分别记录队列前后端的下标，front 会随着数据输出而改变，而 rear则是随着数据输入而改变。</p>
+</li>
+</ul>
+<p><strong>注意</strong>：front指向队列第一个数据的前一个位置，rear指向最后一个数据的位置。</p>
+<p><strong>初始化时front和rear都为-1</strong>。</p>
+<h4 id="（2）判断队列满和空的条件"><a href="#（2）判断队列满和空的条件" class="headerlink" title="（2）判断队列满和空的条件"></a>（2）判断队列满和空的条件</h4><p>满：rear+1 == maxSize;</p>
+<p>空：front == rear；</p>
+<h4 id="（3）存在的问题"><a href="#（3）存在的问题" class="headerlink" title="（3）存在的问题"></a>（3）存在的问题</h4><p>数组使用一次就不能再次使用，不能达到复用的效果（这时就需要使用循环队列）</p>
+<h4 id="（4）代码实现："><a href="#（4）代码实现：" class="headerlink" title="（4）代码实现："></a>（4）代码实现：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> datastructure;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用数组模拟队列</span></span><br><span class="line"><span class="comment"> * 存在的问题：</span></span><br><span class="line"><span class="comment"> * 数组只能利用一次，不能重复利用（应该使用循环数组解决）</span></span><br><span class="line"><span class="comment"> * Created by qjq on 2020/1/18 19:57</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayQueueDemo</span> </span>&#123;</span><br><span class="line">    <span class="comment">//测试</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个队列</span></span><br><span class="line">        ArrayQueue arrayQueue = <span class="keyword">new</span> ArrayQueue(<span class="number">3</span>);</span><br><span class="line">        <span class="keyword">char</span> key;<span class="comment">//用于接收用户输入</span></span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);<span class="comment">//控制台输入</span></span><br><span class="line">        <span class="keyword">boolean</span> loop = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">while</span>(loop)&#123;</span><br><span class="line">            System.out.println(<span class="string">"s(show):显示队列"</span>);</span><br><span class="line">            System.out.println(<span class="string">"e(exit):退出队列"</span>);</span><br><span class="line">            System.out.println(<span class="string">"a(add):添加队列"</span>);</span><br><span class="line">            System.out.println(<span class="string">"g(get):从队列取出数据"</span>);</span><br><span class="line">            System.out.println(<span class="string">"h(head):显示队列头的数据"</span>);</span><br><span class="line">            key = scanner.next().charAt(<span class="number">0</span>);<span class="comment">//接收一个字符串</span></span><br><span class="line">            <span class="keyword">switch</span> (key)&#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'s'</span>:</span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        arrayQueue.showQueue();</span><br><span class="line">                    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                        System.out.println(e.getMessage());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'a'</span>:</span><br><span class="line">                    System.out.println(<span class="string">"请输入需要插入的数据："</span>);</span><br><span class="line">                    <span class="keyword">int</span> value = scanner.nextInt();</span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        arrayQueue.addQueue(value);</span><br><span class="line">                    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                        System.out.println(e.getMessage());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'g'</span>:</span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">int</span> val = arrayQueue.getQueue();</span><br><span class="line">                        System.out.printf(<span class="string">"取出的数据是%d\n"</span>,val);</span><br><span class="line">                    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                        System.out.println(e.getMessage());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'h'</span>:</span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">int</span> val = arrayQueue.headQueue();</span><br><span class="line">                        System.out.printf(<span class="string">"取出的队列头的数据是%d\n"</span>,val);</span><br><span class="line">                    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                        System.out.println(e.getMessage());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'e'</span>:</span><br><span class="line">                    scanner.close();</span><br><span class="line">                    loop=<span class="keyword">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"程序退出"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArrayQueue</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxSize;<span class="comment">//表示数组的最大容量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> front;<span class="comment">//队列头</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> rear;<span class="comment">//队列尾</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] arr;<span class="comment">//该数组用于模拟队列存放数据</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ArrayQueue</span><span class="params">(<span class="keyword">int</span> maxSize)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.maxSize = maxSize;</span><br><span class="line">        arr = <span class="keyword">new</span> <span class="keyword">int</span>[maxSize];<span class="comment">//初始化队列</span></span><br><span class="line">        front = -<span class="number">1</span>;<span class="comment">//指向队列头部，指向队列头的前一个位置</span></span><br><span class="line">        rear = -<span class="number">1</span>;<span class="comment">//指向队列的尾部，指向队列的最后一个数据（即就是队列最后一个数据）</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断队列是否满</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isFull</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> rear == maxSize-<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断队列是否为空</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> front == rear;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//添加数据到队列</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addQueue</span><span class="params">(<span class="keyword">int</span> info)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isFull())&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"列表已满，不能插入数据"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        rear++;</span><br><span class="line">        arr[rear]=info;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取队列数据，出队</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getQueue</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isEmpty())&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"队列为空，无法获取数据"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        front++;</span><br><span class="line">        <span class="keyword">return</span> arr[front];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//显示队列所有数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showQueue</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isEmpty())&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"队列为空，无法获取数据"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            System.out.printf(<span class="string">"arr[%d]=%d\n"</span>,i,arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//显示队列头部信息，只是显示，不是出队</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">headQueue</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isEmpty())&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"队列为空，无法获取数据"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr[front+<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-静态循环队列"><a href="#2-静态循环队列" class="headerlink" title="2) 静态循环队列"></a>2) 静态循环队列</h3><h4 id="（1）静态队列为什么必须是循环队列"><a href="#（1）静态队列为什么必须是循环队列" class="headerlink" title="（1）静态队列为什么必须是循环队列"></a>（1）静态队列为什么必须是循环队列</h4><p>防止浪费空间</p>
+<h4 id="（2）循环队列需要几个参数来确定"><a href="#（2）循环队列需要几个参数来确定" class="headerlink" title="（2）循环队列需要几个参数来确定"></a>（2）循环队列需要几个参数来确定</h4><p>需要<strong>2个参数</strong>来确定: 队头指针front和队尾指针rear。队头删除，队尾存入</p>
+<p><strong>注意</strong>: 两个参数不同场合有不同的含义，这个先记住，慢慢体会</p>
+<p><strong>场合1</strong>  队列初始化  front和rear的值都是零</p>
+<p><strong>场合2</strong>  队列非空</p>
+<p>front代表的是队列的第一个元素，</p>
+<p>rear代表的是队列的最后一个有效元素的<strong>下一个</strong>元素，是<strong>下一个！！！</strong></p>
+<p><strong>场合3</strong>  队列空   front和rear的值相等，但不一定是零</p>
+<h4 id="（3）循环队列入队伪算法讲解"><a href="#（3）循环队列入队伪算法讲解" class="headerlink" title="（3）循环队列入队伪算法讲解"></a>（3）循环队列入队伪算法讲解</h4><p>第一步: 将值存入rear所代表的位置</p>
+<p>第二步: <strong>错误</strong>写法 rear=rear+1; (＞﹏＜) </p>
+<p><strong>正确写法</strong>  rear=（rear+1）%数组的长度</p>
+<h4 id="（4）循环队列出队伪算法讲解"><a href="#（4）循环队列出队伪算法讲解" class="headerlink" title="（4）循环队列出队伪算法讲解"></a>（4）循环队列出队伪算法讲解</h4><p>front=（front+1）%数组的长度</p>
+<h4 id="（5）队列的长度-有效数据的个数"><a href="#（5）队列的长度-有效数据的个数" class="headerlink" title="（5）队列的长度(有效数据的个数)"></a>（5）队列的长度(有效数据的个数)</h4><p>将未进入循环和进入循环综合之后：</p>
+<p><strong>length = （rear + maxSize - front）%maxSize</strong></p>
+<h4 id="（6）如何判断循环队列是否为空-后面有图解"><a href="#（6）如何判断循环队列是否为空-后面有图解" class="headerlink" title="（6）如何判断循环队列是否为空(后面有图解)"></a>（6）如何判断循环队列是否为空(后面有图解)</h4><p>如果front与rear的值相等，则该队列就一定为空</p>
+<h4 id="（7）如何判断循环队列是否已满-后面有图解"><a href="#（7）如何判断循环队列是否已满-后面有图解" class="headerlink" title="（7）如何判断循环队列是否已满(后面有图解)"></a>（7）如何判断循环队列是否已满(后面有图解)</h4><p><strong>预备知识1</strong>: 当front = rear时，这个循环队列是满的还是空的？这个没有办法判断。为了区分空和满，规定front指向队头元素的位置，rear指向队尾元素的下一个位置(<strong>rear指向的必须为空</strong>)，所以满队元素个数比数组元素个数少一个，<strong>也就是说牺牲一个存储位置，换来了不再纠结空和满的判断(∩_∩)</strong></p>
+<p><strong>预备知识2</strong>: front的值可能比rear大，也可能比rear小，也可能两者相等</p>
+<p>那么如何判断队列已满？就是如果f和r的值紧挨着，则队列已满</p>
+<p>用C语言伪算法表示就是:</p>
+<p>if（（rear+1）%数组长度== front）</p>
+<p>​        已满</p>
+<p>else</p>
+<p>​        不满</p>
+<h4 id="（8）图解"><a href="#（8）图解" class="headerlink" title="（8）图解"></a>（8）图解</h4><p><img src="http://q3qm0iisd.bkt.clouddn.com/%E6%95%B0%E7%BB%84%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97%E5%9B%BE%E8%A7%A3.png" alt="图解"></p>
+<h4 id="（8）代码实现"><a href="#（8）代码实现" class="headerlink" title="（8）代码实现"></a>（8）代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> datastructure;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 循环数组队列</span></span><br><span class="line"><span class="comment"> * Created by qjq on 2020/1/19 12:12</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CircleArrayQueueDemo</span> </span>&#123;</span><br><span class="line">    <span class="comment">//测试</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个队列</span></span><br><span class="line">        CircleArrayQueue arrayQueue = <span class="keyword">new</span> CircleArrayQueue(<span class="number">3</span>);</span><br><span class="line">        <span class="keyword">char</span> key;<span class="comment">//用于接收用户输入</span></span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);<span class="comment">//控制台输入</span></span><br><span class="line">        <span class="keyword">boolean</span> loop = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">while</span>(loop)&#123;</span><br><span class="line">            System.out.println(<span class="string">"s(show):显示队列"</span>);</span><br><span class="line">            System.out.println(<span class="string">"e(exit):退出队列"</span>);</span><br><span class="line">            System.out.println(<span class="string">"a(add):添加队列"</span>);</span><br><span class="line">            System.out.println(<span class="string">"g(get):从队列取出数据"</span>);</span><br><span class="line">            System.out.println(<span class="string">"h(head):显示队列头的数据"</span>);</span><br><span class="line">            key = scanner.next().charAt(<span class="number">0</span>);<span class="comment">//接收一个字符串</span></span><br><span class="line">            <span class="keyword">switch</span> (key)&#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'s'</span>:</span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        arrayQueue.showQueue();</span><br><span class="line">                    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                        System.out.println(e.getMessage());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'a'</span>:</span><br><span class="line">                    System.out.println(<span class="string">"请输入需要插入的数据："</span>);</span><br><span class="line">                    <span class="keyword">int</span> value = scanner.nextInt();</span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        arrayQueue.addQueue(value);</span><br><span class="line">                    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                        System.out.println(e.getMessage());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'g'</span>:</span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">int</span> val = arrayQueue.getQueue();</span><br><span class="line">                        System.out.printf(<span class="string">"取出的数据是%d\n"</span>,val);</span><br><span class="line">                    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                        System.out.println(e.getMessage());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'h'</span>:</span><br><span class="line">                    <span class="keyword">try</span>&#123;</span><br><span class="line">                        <span class="keyword">int</span> val = arrayQueue.headQueue();</span><br><span class="line">                        System.out.printf(<span class="string">"取出的队列头的数据是%d\n"</span>,val);</span><br><span class="line">                    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                        System.out.println(e.getMessage());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'e'</span>:</span><br><span class="line">                    scanner.close();</span><br><span class="line">                    loop=<span class="keyword">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"程序退出"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CircleArrayQueue</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxSize;<span class="comment">//表示数组的最大容量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> front;<span class="comment">//队列头  指向队列第一个元素</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> rear;<span class="comment">//队列尾 队列的最后一个有效元素的下一个元素</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] arr;<span class="comment">//该数组用于模拟队列存放数据</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleArrayQueue</span><span class="params">(<span class="keyword">int</span> maxSize)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.maxSize = maxSize;</span><br><span class="line">        arr = <span class="keyword">new</span> <span class="keyword">int</span>[maxSize];<span class="comment">//初始化队列</span></span><br><span class="line">        front = <span class="number">0</span>;<span class="comment">//指向队列头部，指向队列第一个元素</span></span><br><span class="line">        rear = <span class="number">0</span>;<span class="comment">//指向队列的尾部，队列的最后一个有效元素的下一个元素</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断队列是否满</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isFull</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (rear+<span class="number">1</span>)%maxSize == front;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断队列是否为空</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> front == rear;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//添加数据到队列</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addQueue</span><span class="params">(<span class="keyword">int</span> info)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isFull())&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"列表已满，不能插入数据"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        arr[rear]=info;<span class="comment">//和非循环队列不同</span></span><br><span class="line">        rear = (rear+<span class="number">1</span>)%maxSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取队列数据，出队</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getQueue</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isEmpty())&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"队列为空，无法获取数据"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> value = arr[front];</span><br><span class="line">        front = (front+<span class="number">1</span>)%maxSize;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//显示队列所有数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showQueue</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isEmpty())&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"队列为空，无法获取数据"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//从front开始遍历，直到rear的前一个位置</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = front; i &lt; front+size(); i++) &#123;</span><br><span class="line">            System.out.printf(<span class="string">"arr[%d]=%d\n"</span>,i%maxSize,arr[i%maxSize]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算队列有效数据的个数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (rear+maxSize-front)%maxSize;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//显示队列头部信息，只是显示，不是出队</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">headQueue</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isEmpty())&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"队列为空，无法获取数据"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr[front];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3）非循环队列与循环队列的区别"><a href="#3）非循环队列与循环队列的区别" class="headerlink" title="3）非循环队列与循环队列的区别"></a>3）非循环队列与循环队列的区别</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">front</th>
+<th align="center">rear</th>
+<th>判空</th>
+<th>判满</th>
+<th align="center">入队</th>
+<th align="center">出队</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">非循环队列</td>
+<td align="center">指向第一个有效数据的前一个位置（初始值为-1）</td>
+<td align="center">指向最后一个有效数据的位置（初始值为-1）</td>
+<td>rear==front</td>
+<td>rear+1==maxSize</td>
+<td align="center">1.判断是否满; 2.rear++; 3. 将值赋给rear所在位置的队列</td>
+<td align="center">1.判断是否为空；2.front++；3. 返回front所在位置的值</td>
+</tr>
+<tr>
+<td align="center">循环队列</td>
+<td align="center">指向第一个有效数据的位置（初始值为0）</td>
+<td align="center">指向最后一个有效数据的后一个位置（初始值为0）</td>
+<td>rear==front</td>
+<td>(rear+1)%maxSize == front</td>
+<td align="center">1. 判断是否满；2. 将值赋给rear所在位置的队列；3. rear=(rear+1)%maxSize</td>
+<td align="center">1. 判断是否为空；2. 将font所在位置的值传给中间变量temp；3. front=(front+1)%maxSize；4. 返回temp</td>
+</tr>
+</tbody></table>
+<h2 id="4-动态队列-待完成"><a href="#4-动态队列-待完成" class="headerlink" title="4.动态队列(待完成)"></a>4.动态队列(待完成)</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Qu-jq
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://qu-jq.github.io/2020/01/19/%E9%98%9F%E5%88%97/" title="队列">https://qu-jq.github.io/2020/01/19/%E9%98%9F%E5%88%97/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/18/%E7%A8%80%E7%96%8F%E6%95%B0%E7%BB%84/" rel="next" title="稀疏数组">
+                <i class="fa fa-chevron-left"></i> 稀疏数组
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="Qu-jq" />
+            
+              <p class="site-author-name" itemprop="name">Qu-jq</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry! stay foolish!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Qu-jq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:qjq0806@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-定义"><span class="nav-text">1. 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-分类"><span class="nav-text">2. 分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-静态队列"><span class="nav-text">3.静态队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-静态非循环队列"><span class="nav-text">1) 静态非循环队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）使用数组模拟队列的思路"><span class="nav-text">（1）使用数组模拟队列的思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）判断队列满和空的条件"><span class="nav-text">（2）判断队列满和空的条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）存在的问题"><span class="nav-text">（3）存在的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（4）代码实现："><span class="nav-text">（4）代码实现：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-静态循环队列"><span class="nav-text">2) 静态循环队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）静态队列为什么必须是循环队列"><span class="nav-text">（1）静态队列为什么必须是循环队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）循环队列需要几个参数来确定"><span class="nav-text">（2）循环队列需要几个参数来确定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）循环队列入队伪算法讲解"><span class="nav-text">（3）循环队列入队伪算法讲解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（4）循环队列出队伪算法讲解"><span class="nav-text">（4）循环队列出队伪算法讲解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（5）队列的长度-有效数据的个数"><span class="nav-text">（5）队列的长度(有效数据的个数)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（6）如何判断循环队列是否为空-后面有图解"><span class="nav-text">（6）如何判断循环队列是否为空(后面有图解)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（7）如何判断循环队列是否已满-后面有图解"><span class="nav-text">（7）如何判断循环队列是否已满(后面有图解)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（8）图解"><span class="nav-text">（8）图解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（8）代码实现"><span class="nav-text">（8）代码实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3）非循环队列与循环队列的区别"><span class="nav-text">3）非循环队列与循环队列的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-动态队列-待完成"><span class="nav-text">4.动态队列(待完成)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qu-jq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
