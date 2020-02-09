@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="Stay hungry! stay foolish!">
+<meta name="description" content="Stay hungry! Stay foolish!">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Qu-jq’s Blog">
 <meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;categories&#x2F;%E7%A0%94%E7%A9%B6%E7%94%9F&#x2F;index.html">
 <meta property="og:site_name" content="Qu-jq’s Blog">
-<meta property="og:description" content="Stay hungry! stay foolish!">
+<meta property="og:description" content="Stay hungry! Stay foolish!">
 <meta property="article:author" content="Qu-jq">
 <meta name="twitter:card" content="summary">
 
@@ -355,7 +355,7 @@
                 alt="Qu-jq" />
             
               <p class="site-author-name" itemprop="name">Qu-jq</p>
-              <p class="site-description motion-element" itemprop="description">Stay hungry! stay foolish!</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry! Stay foolish!</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -615,6 +615,28 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'iGiEeC0Oo5VL3TPdhm6z20TK-gzGzoHsz',
+        appKey: 'xLAgi7WxJPCw1rQ94a9qqzSA',
+        placeholder: '欢迎一起交流学习',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
@@ -946,6 +968,21 @@
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
   
