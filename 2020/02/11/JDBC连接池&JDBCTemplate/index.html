@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="MySQL,数据库," />
+  <meta name="keywords" content="Java,MySQL,数据库," />
 
 
 
@@ -79,15 +79,16 @@
 
 
 
-<meta name="description" content="花了几天的时间将《SQL基础教程》（第二版）看完了，就将上面一些易错的、重要的知识点总结了一下。">
+<meta name="description" content="本章介绍存储过程，可以提高MySQL的运行效率。 后面学习经常用到数据库的操作，为了简化数据库代码操作，学习一下JDBC连接池&amp;JDBCTemplate">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL知识点总结">
-<meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;2020&#x2F;01&#x2F;11&#x2F;MySQL%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93&#x2F;index.html">
+<meta property="og:title" content="JDBC连接池&amp;JDBCTemplate">
+<meta property="og:url" content="https:&#x2F;&#x2F;qu-jq.github.io&#x2F;2020&#x2F;02&#x2F;11&#x2F;JDBC%E8%BF%9E%E6%8E%A5%E6%B1%A0&amp;JDBCTemplate&#x2F;index.html">
 <meta property="og:site_name" content="Qu-jq’s Blog">
-<meta property="og:description" content="花了几天的时间将《SQL基础教程》（第二版）看完了，就将上面一些易错的、重要的知识点总结了一下。">
-<meta property="article:published_time" content="2020-01-11T11:10:55.000Z">
-<meta property="article:modified_time" content="2020-01-11T11:31:56.649Z">
+<meta property="og:description" content="本章介绍存储过程，可以提高MySQL的运行效率。 后面学习经常用到数据库的操作，为了简化数据库代码操作，学习一下JDBC连接池&amp;JDBCTemplate">
+<meta property="article:published_time" content="2020-02-11T13:34:23.298Z">
+<meta property="article:modified_time" content="2020-02-11T13:39:36.241Z">
 <meta property="article:author" content="Qu-jq">
+<meta property="article:tag" content="Java">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
@@ -120,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://qu-jq.github.io/2020/01/11/MySQL知识点总结/"/>
+  <link rel="canonical" href="https://qu-jq.github.io/2020/02/11/JDBC连接池&JDBCTemplate/"/>
 
 
 
 
 
-  <title>MySQL知识点总结 | Qu-jq’s Blog</title>
+  <title>JDBC连接池&JDBCTemplate | Qu-jq’s Blog</title>
   
 
 
@@ -287,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://qu-jq.github.io/2020/01/11/MySQL%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="https://qu-jq.github.io/2020/02/11/JDBC%E8%BF%9E%E6%8E%A5%E6%B1%A0&JDBCTemplate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu-jq">
@@ -304,7 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MySQL知识点总结</h1>
+          <h1 class="post-title" itemprop="name headline">JDBC连接池&JDBCTemplate</h1>
         
 
         <div class="post-meta">
@@ -316,8 +317,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-11T19:10:55+08:00">
-                2020-01-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-11T21:34:23+08:00">
+                2020-02-11
               </time>
             
 
@@ -357,8 +358,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/01/11/MySQL%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2020/01/11/MySQL%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+                <a href="/2020/02/11/JDBC%E8%BF%9E%E6%8E%A5%E6%B1%A0&JDBCTemplate/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/02/11/JDBC%E8%BF%9E%E6%8E%A5%E6%B1%A0&JDBCTemplate/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -366,7 +367,7 @@
 
           
           
-             <span id="/2020/01/11/MySQL%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" class="leancloud_visitors" data-flag-title="MySQL知识点总结">
+             <span id="/2020/02/11/JDBC%E8%BF%9E%E6%8E%A5%E6%B1%A0&JDBCTemplate/" class="leancloud_visitors" data-flag-title="JDBC连接池&JDBCTemplate">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -397,143 +398,169 @@
       
 
       
-        <p>花了几天的时间将《SQL基础教程》（第二版）看完了，就将上面一些易错的、重要的知识点总结了一下。</p>
+        <p>本章介绍存储过程，可以提高MySQL的运行效率。</p>
+<p>后面学习经常用到数据库的操作，为了简化数据库代码操作，学习一下JDBC连接池&amp;JDBCTemplate</p>
 <a id="more"></a>
 
+<h1 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h1><ol>
+<li><p>数据库连接池</p>
+</li>
+<li><p>Spring JDBC : JDBC Template</p>
+</li>
+</ol>
+<h2 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h2><ol>
+<li><p>概念：其实就是一个容器(集合)，存放数据库连接的容器。</p>
+<pre><code>当系统初始化好后，容器被创建，容器中会申请一些连接对象，当用户来访问数据库时，从容器中获取连接对象，用户访问完之后，会将连接对象归还给容器。</code></pre></li>
+<li><p>好处：</p>
 <ol>
-<li><p>SQL语句及其分类</p>
+<li>节约资源</li>
+<li>用户访问高效</li>
+</ol>
+</li>
+<li><p>实现：</p>
+<ol>
+<li><p>标准接口：DataSource   javax.sql包下的</p>
+<ol>
+<li>方法：<ul>
+<li>获取连接：getConnection()</li>
+<li>归还连接：Connection.close()。如果连接对象Connection是从连接池中获取的，那么调用Connection.close()方法，则不会再关闭连接了。而是归还连接</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>一般我们不去实现它，有数据库厂商来实现</p>
+<ol>
+<li>C3P0：数据库连接池技术</li>
+<li>Druid：数据库连接池实现技术，由阿里巴巴提供的</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>C3P0：数据库连接池技术</p>
 <ul>
-<li><p><strong>DDL数据定义语言</strong></p>
-<p>CREATE: 创建数据库和表等对象</p>
-<p>DROP:删除数据库和表等对象</p>
-<p>ALTER:修改数据库和表等对象的结构</p>
+<li><p>步骤：</p>
+<ol>
+<li><p>导入jar包 (两个) c3p0-0.9.5.2.jar mchange-commons-java-0.2.12.jar ，</p>
+<ul>
+<li>不要忘记导入数据库驱动jar包</li>
+</ul>
 </li>
-<li><p><strong>DML数据操纵语言</strong></p>
-<p>SELECT:查询表中的数据</p>
-<p>INSERT:向表中插入新数据</p>
-<p>UPDATE:更新表中的数据</p>
-<p>DELETE:删除表中的数据</p>
+<li><p>定义配置文件：</p>
+<ul>
+<li>名称： c3p0.properties 或者 c3p0-config.xml</li>
+<li>路径：直接将文件放在src目录下即可。</li>
+</ul>
 </li>
-<li><p><strong>DCL数据控制语言</strong></p>
-<p>COMMIT:确认对数据库中的数据进行的变更</p>
-<p>ROLLBACK:取消对数据库中的数据进行的变更</p>
-<p>GRANT:赋予用户操作权限</p>
-<p>REVOKE:取消用户操作权限</p>
+<li><p>创建核心对象 数据库连接池对象 ComboPooledDataSource</p>
+</li>
+<li><p>获取连接： getConnection</p>
+</li>
+</ol>
+</li>
+<li><p>代码：<br>   //1.创建数据库连接池对象<br>  DataSource ds  = new ComboPooledDataSource();<br>  //2. 获取连接对象<br>  Connection conn = ds.getConnection();</p>
 </li>
 </ul>
 </li>
-<li><p>使用汉语别名使用“ ”扩起来</p>
+<li><p>Druid：数据库连接池实现技术，由阿里巴巴提供的</p>
+<ol>
+<li>步骤：<ol>
+<li>导入jar包 druid-1.0.9.jar</li>
+<li>定义配置文件：<ul>
+<li>是properties形式的</li>
+<li>可以叫任意名称，可以放在任意目录下</li>
+</ul>
 </li>
-<li><p>先where查询出符合指定条件的记录，然后select选取指定的列</p>
-</li>
-<li><p>-  -          行注释</p>
-</li>
-<li><p>/*  */         多行注释</p>
-</li>
-<li><p>含有NULL的运算结果全为NULL</p>
-</li>
-<li><p>比较运算符不等于： &lt;&gt;</p>
-</li>
-<li><p>字符‘2’大于‘12’，不同于数字，字符按照条目在字典中出现的顺序比较大小。</p>
-</li>
-<li><p>不能对NULL使用比较运算符，如果想要选取为NULL的数据可以使用IS NULL，相反的IS NOT NULL。</p>
-</li>
-<li><p>AND运算符优先级高于OR运算符，想要优先执行OR可以使用括号。</p>
-</li>
-<li><p>逻辑运算中除了真假还有第三种值— 不确定(UNKNOWN)，当加入NULL时，条件判断也就变得异常复杂，因此数据库领域的有识之士达成了”尽量不使用NULL的共识”，这也就解释了为什么在创建表时会给某些列设置NOT NULL约束的原因。</p>
-</li>
-<li><p>聚合函数会对NULL以外的对象进行汇总。但是只有COUNT函数除外，使用COUNT(*)可以查出包含NULL在内的全部数据的行数。注意使用COUNT函数的结果会根据输入参数的不同而不同。若为COUNT(列名)得到的则是除了NULL之外的数据行数。</p>
-</li>
-<li><p>所有的聚合函数如果以列名为参数，在计算之前都将NULL过滤掉，因此当使用SUM(列名)计算含有NULL的数据列时，其结果不会是NULL。</p>
-</li>
-<li><p>关键字DISTINCT 删除重复值。因此想要计算值的种类时，可以在COUNT函数的参数中使用DISTINCT。</p>
-</li>
-<li><p>子句书写顺序 SELECT–&gt;FROM–&gt;WHERE–&gt;GROUP BY–&gt;HAVING–&gt;ORDER BY</p>
-</li>
-<li><p>在GROUP BY子句中指定的列称为聚合键或者分组列。聚合键中包含NULL时，在结果中会以”不确定”行(空行)的形式表现出来。</p>
-</li>
-<li><p>SELECT语句执行的顺序FROM–&gt;WHERE–&gt;GROUP BY–&gt;SELECT –&gt;ORDER BY这与第14条说明的顺序不同，这是由于在SQL语句中，书写顺序和DBMS内部的执行顺序不同。注意这里是程序执行的顺序。执行顺序也会根据DBMS的不同而不同，这里只需要有一个大致印象，记住SELECT子句的执行顺序在GROUP BY之后，在ORDER BY之前就行。</p>
-</li>
-<li><p>使用GROUP BY子句时，SELECT子句中不能出现聚合键之外的列名，因为如果出现列A，那结果中当前类别只有一行，而如果这个类别对应的类A有两个数据，该显示谁呢？问题就在于聚合键与其他类并不一定是一对一的。</p>
-</li>
-<li><p>在GROUP BY子句中不能使用SELECT子句中定义的别名，因为GROUP BY先执行，参照第16条。</p>
-</li>
-<li><p>GROUP BY子句结果的显示是无序的。</p>
-</li>
-<li><p>只有SELECT，HAVING，ORDER BY子句中能够使用聚合函数。WHERE子句中不能使用聚合函数。<br>SELECT子句使用聚合函数时，子句中只能存在以下三种元素：<br>1） 常数<br>2）聚合函数<br>3）GROUP BY子句中指定的列名（聚合键）</p>
-</li>
-<li><p>在“想要删除选择结果中的重复记录”时使用DISTINCT，在“计算汇总结果”时使用GROUP BY。</p>
-</li>
-<li><p>WHERE子句用于指定数据行（记录）的条件，HAVING子句用于指定分组的条件。注意WHERE子句不能使用聚合函数。</p>
-</li>
-<li><p>HAVING子句的构成要素：常数，聚合函数，GROUP BY子句中使用的列名，即聚合键。（参照第17条）</p>
-</li>
-<li><p>聚合键所对应的条件不应该写在HAVING子句中，而应该书写在WHERE子句中。其中一个理由与性能即执行速度有关。通常情况下为了得到相同的结果，讲条件写在WHERE子句中要比写在HAVING子句中的处理速度要快，返回结果所需的时间更短。</p>
-</li>
-<li><p>（续第24条）为什么写在WHERE子句中速度更快呢？<br>这需要从DBMS的内部运行机制来考虑。使用COUNT函数等对表中的数据进行聚合操作时，DBMS内部就会进行排序处理。排序处理是会大大增加机器负担的高负荷处理。因此只有尽可能的减少排序行数才能提高处理速度。通过WHERE子句指定的条件，由于排序之前就对数据进行了过滤，因此能够减少排序的数量。但HAVING子句是在排序之后才对数据进行分组的，因此需要排序的数目较多。</p>
-</li>
-<li><p>未指定ORDER BY子句中排列顺序时会默认使用升序ASC（ascendent）排列，降序使用关键字DESC（descendent）</p>
-</li>
-<li><p>排序键中如果包含NULL时，会在开头或末尾进行汇总。</p>
-</li>
-<li><p>在ORDER BY子句中可以使用SELECT子句中未使用的列和聚合函数。</p>
-</li>
-<li><p>在ORDER BY子句中不要使用列编号。</p>
-</li>
-<li><p>INSERT语句的SELECT语句中，可以使用WHERE子句或者GROUP BY子句等任意SQL语法（但使用OERDER BY子句并不会产生任何效果）。</p>
-</li>
-<li><p>删除表使用DROP TABLE语句，删除表中的数据（记录）使用DELETE语句。</p>
-</li>
-<li><p>同时更新多列时，可以在UPDATE语句的SET子句中，使用逗号分隔更新对象的多个列。</p>
-</li>
-<li><p>事务是需要在同一个处理单元中执行的一系列更新处理的集合。</p>
-</li>
-<li><p>DBMS遵循四种特性：原子性（Atomicity）、一致性(Cinsisitency)、隔离性(Isolation)和持久性(Durability)，即ACID特性。</p>
-</li>
-<li><p>表中存储的是实际数据，而视图中保存的则是从数据表中取出数据所使用的SELECT语句。</p>
-</li>
-<li><p>视图的优点：</p>
-<p>1）由于视图无需保存数据，因此可以节省存储设备的容量<br>2）可以将频繁使用的语句保存为视图，这样就不用每次都重新书写。</p>
-</li>
-<li><p>应该避免在视图的基础上创建视图。</p>
-</li>
-<li><p>使用视图时，有哪些限制？<br>1）定义视图时可以使用任意SELECT子句，但除了ORDER BY子句，因为视图和表一样，数据行都是没有顺序的。实际上，有些DBMS在定义视图时，可以使用ORDER BY子句，但这并不是通用的语法，因此在定义视图时，请不要使用ORDER BY子句。<br>2）视图和表需要同时更新，因此通过汇总得到的视图无法进行更新。</p>
-</li>
-<li><p>子查询作为内层查询会首先执行。</p>
-</li>
-<li><p>标量子查询就是返回单一值的子查询。</p>
-</li>
-<li><p>在细分的组内进行比较时，需要使用关联子查询。</p>
-</li>
-<li><p>谓词就是返回真值（TRUE/FALSE/UNKNOWN）的函数。也就是说谓词也就是函数的一种。</p>
-</li>
-<li><p>LIKE的三种使用方法：<br>1）前方一致<br>选取出作为查询条件的字符串与查询对象字符串起始部分相同的记录查询方式。比如 LIKE ‘ddd%’,查询起始字符含有ddd的字符串<br>2）中间一致<br>选取出查询对象字符串中含有作为查询条件的字符串的记录查询方式。无论该字符串出现在对象字符串的前面、中间、还是后面都没关系。如LIKE ‘%ddd%’<br>3）后方一致<br>与前方一致相反，选取出作为查询条件的字符串与查询对象字符串末尾部分相同的记录查询方式。比如 LIKE ‘%ddd’,查询末尾字符含有ddd的字符串</p>
-</li>
-<li><p>%表示任意个字符，-表示任意一个字符。</p>
-</li>
-<li><p>BETWEEN的特点是选取的结果会包含两边的临界值。如果不想包含就可以使用&lt;&gt;。</p>
-</li>
-<li><p>为了选出某些值为NULL的列的记录，不能使用=，而只能使用特定的谓词IS NULL</p>
-</li>
-<li><p>谓词IN 和 NOT IN是无法选出NULL数据的。</p>
-</li>
-<li><p>通常指定关联子查询作为EXIST的参数。</p>
-</li>
-<li><p>EXIST只关心子查询中的记录是否存在，返回哪些列都没有关系。因此可以使用WHERE EXISTS (SELECT * FROM 。。WHERE。。 )</p>
-</li>
-<li><p>CASE表达式中的END不能省略。</p>
-</li>
-<li><p>表的加减法：UNION（并集）、INTERSECT（交集）、EXCEPT（差集）<br>注意：Oracle使用MINUS代替EXCEPT，MYSQL还不支持EXCEPT，因此也无法使用。 </p>
-</li>
-<li><p>使用UNION时会自动滤除重复的记录。要想保留重复记录，只需要在UNION后面添加关键字ALL就可以啦。</p>
-</li>
-<li><p>联结（JOIN）就是将其他表中的列添加过来，进行“添加列”的集合运算。UNION是以行为单位进行操作，而联结是以列为单位进行的</p>
-</li>
-<li><p>进行内联结时必须使用ON子句，并且要书写在FROM和WHERE之间</p>
-</li>
-<li><p>COALESCE 将NULL转换为其他值。</p>
+<li>加载配置文件。Properties</li>
+<li>获取数据库连接池对象：通过工厂类来获取  DruidDataSourceFactory</li>
+<li>获取连接：getConnection</li>
+</ol>
 </li>
 </ol>
+<ul>
+<li>代码：<br>   //3.加载配置文件<br>  Properties pro = new Properties();<br>  InputStream is = DruidDemo.class.getClassLoader().getResourceAsStream(“druid.properties”);<br>  pro.load(is);<br>  //4.获取连接池对象<br>  DataSource ds = DruidDataSourceFactory.createDataSource(pro);<br>  //5.获取连接<br>  Connection conn = ds.getConnection();</li>
+</ul>
+<ol start="2">
+<li>定义工具类<ol>
+<li>定义一个类 JDBCUtils</li>
+<li>提供静态代码块加载配置文件，初始化连接池对象</li>
+<li>提供方法<ol>
+<li>获取连接方法：通过数据库连接池获取连接</li>
+<li>释放资源</li>
+<li>获取连接池的方法</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>代码：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.qjq.jdbc.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.druid.pool.DruidDataSourceFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.sql.DataSource;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * JDBC方法类</span></span><br><span class="line"><span class="comment"> * Created by qjq on 2020/2/11 16:52</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JDBCUtils</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> DataSource ds;</span><br><span class="line">    <span class="comment">//加载配置文件</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Properties ps = <span class="keyword">new</span> Properties();</span><br><span class="line">            ps.load(JDBCUtils.class.getClassLoader().getResourceAsStream("druid.properties"));</span><br><span class="line">            ds = DruidDataSourceFactory.createDataSource(ps);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取连接</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 连接</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ds.getConnection();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 关闭资源</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> stmt 连接</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> cnn 连接</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">(Statement stmt,Connection cnn)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(stmt != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                stmt.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnn != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                cnn.close();<span class="comment">//归还连接</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">(ResultSet rs, Statement stmt, Connection cnn)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (rs != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                rs.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(stmt != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                stmt.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnn != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                cnn.close();<span class="comment">//归还连接</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取资源</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 资源</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DataSource <span class="title">getDataSource</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ds;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Spring-JDBC"><a href="#Spring-JDBC" class="headerlink" title="Spring JDBC"></a>Spring JDBC</h2><ul>
+<li><p>Spring框架对JDBC的简单封装。提供了一个JDBCTemplate对象简化JDBC的开发</p>
+</li>
+<li><p>步骤：</p>
+<ol>
+<li>导入jar包</li>
+<li>创建JdbcTemplate对象。依赖于数据源DataSource</li>
+</ol>
+</li>
+<li><p>JdbcTemplate template = new JdbcTemplate(ds);</p>
+<ol start="3">
+<li><p>调用JdbcTemplate的方法来完成CRUD的操作</p>
+<ul>
+<li>update():执行DML语句。增、删、改语句</li>
+<li>queryForMap():查询结果将结果集封装为map集合，将列名作为key，将值作为value 将这条记录封装为一个map集合<ul>
+<li>注意：这个方法查询的结果集长度只能是1</li>
+</ul>
+</li>
+<li>queryForList():查询结果将结果集封装为list集合<ul>
+<li>注意：将每一条记录封装为一个Map集合，再将Map集合装载到List集合中</li>
+</ul>
+</li>
+<li>query():查询结果，将结果封装为JavaBean对象<ul>
+<li>query的参数：RowMapper<ul>
+<li>一般我们使用BeanPropertyRowMapper实现类。可以完成数据到JavaBean的自动封装</li>
+<li>new BeanPropertyRowMapper&lt;类型&gt;(类型.class)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>queryForObject：查询结果，将结果封装为对象</li>
+<li>一般用于聚合函数的查询</li>
+</ul>
+</li>
+<li><p>练习：</p>
+<ul>
+<li>需求：<ol>
+<li>修改1号数据的 salary 为 10000</li>
+<li>添加一条记录</li>
+<li>删除刚才添加的记录</li>
+<li>查询id为1的记录，将其封装为Map集合</li>
+<li>查询所有记录，将其封装为List</li>
+<li>查询所有记录，将其封装为Emp对象的List集合</li>
+</ol>
+</li>
+</ul>
+<ol start="7">
+<li>查询总记录数</li>
+</ol>
+<ul>
+<li><p>代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.qjq.jdbc.Template;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.qjq.jdbc.domain.Emp;</span><br><span class="line"><span class="keyword">import</span> cn.qjq.jdbc.utils.JDBCUtils;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.BeanPropertyRowMapper;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用JDBCTemplate实现增删改查</span></span><br><span class="line"><span class="comment"> * Created by qjq on 2020/2/11 20:24</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcTemplateDemo02</span> </span>&#123;</span><br><span class="line">    <span class="comment">//创建JdbcTemplate对象</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate template = <span class="keyword">new</span> JdbcTemplate(JDBCUtils.getDataSource());</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 增加一条记录</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//调用方法</span></span><br><span class="line">        String sql = <span class="string">"insert into users(username,age) values(?,?)"</span>;</span><br><span class="line">        <span class="keyword">int</span> count = template.update(sql, <span class="string">"lisi"</span>, <span class="number">17</span>);</span><br><span class="line">        System.out.println(count);</span><br><span class="line">        <span class="comment">//不需要再关闭，会自动处理</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 改</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">alter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String sql = <span class="string">"update users set age = 20 where id = ?"</span>;</span><br><span class="line">        <span class="keyword">int</span> count = template.update(sql, <span class="number">2</span>);</span><br><span class="line">        System.out.println(count);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String sql = <span class="string">"delete from users where id = ?"</span>;</span><br><span class="line">        <span class="keyword">int</span> count = template.update(sql, <span class="number">2</span>);</span><br><span class="line">        System.out.println(count);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询id为1的记录，将其封装为Map集合</span></span><br><span class="line"><span class="comment">     * 注意：这个方法查询的结果集长度只能是1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">search2Map</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String sql = <span class="string">"select * from users where id = 1"</span>;</span><br><span class="line">        Map&lt;String, Object&gt; map = template.queryForMap(sql);</span><br><span class="line">        System.out.println(map);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询所有记录，将其封装为List</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">search2List</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String sql = <span class="string">"select * from users"</span>;</span><br><span class="line">        List&lt;Map&lt;String, Object&gt;&gt; list = template.queryForList(sql);</span><br><span class="line">        <span class="keyword">for</span> (Map&lt;String, Object&gt; map : list) &#123;</span><br><span class="line">            System.out.println(map);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询所有记录，将其封装为Emp对象的List集合</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">search2Bean</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String sql = <span class="string">"select * from users"</span>;</span><br><span class="line">        List&lt;Emp&gt; emps = template.query(sql, <span class="keyword">new</span> BeanPropertyRowMapper&lt;Emp&gt;(Emp<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">        <span class="keyword">for</span> (Emp emp : emps) &#123;</span><br><span class="line">            System.out.println(emp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询总记录数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">total</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String sql = <span class="string">"select count(id) from users"</span>;</span><br><span class="line">        Long total = template.queryForObject(sql, <span class="keyword">long</span><span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        System.out.println(total);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>​                </p>
+<p>来源于黑马视频笔记。</p>
 
       
     </div>
@@ -554,7 +581,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="https://qu-jq.github.io/2020/01/11/MySQL%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" title="MySQL知识点总结">https://qu-jq.github.io/2020/01/11/MySQL%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/</a>
+    <a href="https://qu-jq.github.io/2020/02/11/JDBC%E8%BF%9E%E6%8E%A5%E6%B1%A0&JDBCTemplate/" title="JDBC连接池&JDBCTemplate">https://qu-jq.github.io/2020/02/11/JDBC%E8%BF%9E%E6%8E%A5%E6%B1%A0&JDBCTemplate/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -568,6 +595,8 @@
     <footer class="post-footer">
       
         <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
             <a href="/tags/MySQL/" rel="tag"># MySQL</a>
           
@@ -584,8 +613,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/08/%E7%AC%AC%E5%8D%81%E7%AB%A0MySQL%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="next" title="第十章 MySQL图形化管理工具">
-                <i class="fa fa-chevron-left"></i> 第十章 MySQL图形化管理工具
+              <a href="/2020/02/07/maven%E5%9F%BA%E7%A1%80/" rel="next" title="maven基础">
+                <i class="fa fa-chevron-left"></i> maven基础
               </a>
             
           </div>
@@ -593,10 +622,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/12/Find%20a%20Better%20Way/" rel="prev" title="Find a Better Way">
-                Find a Better Way <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -651,8 +676,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -732,6 +766,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内容"><span class="nav-text">内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库连接池"><span class="nav-text">数据库连接池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-JDBC"><span class="nav-text">Spring JDBC</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
