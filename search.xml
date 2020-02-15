@@ -523,10 +523,12 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <li><p>其他功能：</p>
 <ol>
 <li><p>获取请求参数通用方式：不论get还是post请求方式都可以使用下列方法来获取请求参数</p>
-<pre><code>1. String getParameter(String name):根据参数名称获取参数值    username=zs&amp;password=123
-                 2. String[] getParameterValues(String name):根据参数名称获取参数值的数组  hobby=xx&amp;hobby=game
-                3. Enumeration&lt;String&gt; getParameterNames():获取所有请求的参数名称
-                4. Map&lt;String,String[]&gt; getParameterMap():获取所有参数的map集合</code></pre><ul>
+<pre><code>1. String getParameter(String name):根据参数名称获取参数值    username=zs&amp;password=123</code></pre><ol start="2">
+<li>String[] getParameterValues(String name):根据参数名称获取参数值的数组  hobby=xx&amp;hobby=game</li>
+<li>Enumeration&lt;String&gt; getParameterNames():获取所有请求的参数名称</li>
+<li>Map&lt;String,String[]&gt; getParameterMap():获取所有参数的map集合</li>
+</ol>
+<ul>
 <li>中文乱码问题：<ul>
 <li>get方式：tomcat 8 已经将get方式乱码问题解决了<ul>
 <li>post方式：会乱码</li>
@@ -586,14 +588,17 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </li>
 </ol>
 </li>
-</ol>
+<li><p>获取ServletContext：</p>
+<ul>
+<li>ServletContext getServletContext()</li>
+</ul>
 </li>
 </ol>
 </li>
 </ol>
-<pre><code>4. 获取ServletContext：
-
- * ServletContext getServletContext()</code></pre><h1 id="8-案例：用户登录"><a href="#8-案例：用户登录" class="headerlink" title="8. 案例：用户登录"></a>8. 案例：用户登录</h1><ul>
+</li>
+</ol>
+<h1 id="8-案例：用户登录"><a href="#8-案例：用户登录" class="headerlink" title="8. 案例：用户登录"></a>8. 案例：用户登录</h1><ul>
 <li>用户登录案例需求：<br>1.编写login.html登录页面<pre><code>username &amp; password 两个输入框</code></pre>2.使用Druid数据库连接池技术,操作mysql，day14数据库中user表<br>3.使用JdbcTemplate技术封装JDBC<br>4.登录成功跳转到SuccessServlet展示：登录成功！用户名,欢迎您<br>5.登录失败跳转到FailServlet展示：登录失败，用户名或密码错误</li>
 </ul>
 <p><img src="https://res.cloudinary.com/qujq/image/upload/v1581736724/myPIC/javaWeb/%E7%99%BB%E5%BD%95%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90_peeiqu.png" alt="登录案例分析"></p>
@@ -630,41 +635,45 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <p>​        6. 编写cn.itcast.web.servlet.LoginServlet类        </p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.qjq.web.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.qjq.Dao.UserDao;</span><br><span class="line"><span class="keyword">import</span> cn.qjq.domain.User;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.beanutils.BeanUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by qjq on 2020/2/12 14:35</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/loginServlet"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">//设置编码</span></span><br><span class="line">        req.setCharacterEncoding(<span class="string">"utf-8"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取数据</span></span><br><span class="line"><span class="comment">//        String username = req.getParameter("username");</span></span><br><span class="line"><span class="comment">//        String password = req.getParameter("password");</span></span><br><span class="line"><span class="comment">//        //封装成User对象</span></span><br><span class="line"><span class="comment">//        User loginUser = new User();</span></span><br><span class="line"><span class="comment">//        loginUser.setUsername(username);</span></span><br><span class="line"><span class="comment">//        loginUser.setpassword(password);</span></span><br><span class="line">        <span class="comment">//简化上面程序 使用BeanUtils处理</span></span><br><span class="line">        <span class="comment">//获取数据</span></span><br><span class="line">        Map&lt;String, String[]&gt; parameterMap = req.getParameterMap();</span><br><span class="line">        Set&lt;String&gt; keySet = parameterMap.keySet();</span><br><span class="line">        <span class="comment">//创建User对象</span></span><br><span class="line">        User loginUser  = <span class="keyword">new</span> User();</span><br><span class="line">        <span class="comment">//使用BeanUtils封装</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            BeanUtils.populate(loginUser,parameterMap);<span class="comment">//使用时注意，html中的用户和密码的变量名要和bean中一致</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//登录</span></span><br><span class="line">        UserDao dao = <span class="keyword">new</span> UserDao();</span><br><span class="line">        User user = dao.login(loginUser);</span><br><span class="line">        <span class="keyword">if</span>(user == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="comment">//登录失败</span></span><br><span class="line">            req.getRequestDispatcher(<span class="string">"/failServlet"</span>).forward(req,resp);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//登录成功</span></span><br><span class="line">            <span class="comment">//共享数据</span></span><br><span class="line">            req.setAttribute(<span class="string">"user"</span>,user);</span><br><span class="line">            <span class="comment">//转发</span></span><br><span class="line">            req.getRequestDispatcher(<span class="string">"/successServlet"</span>).forward(req,resp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doPost(req,resp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-<pre><code>7. 编写FailServlet和SuccessServlet类    </code></pre><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.qjq.web.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.qjq.domain.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by qjq on 2020/2/12 14:48</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/failServlet"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FailServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">//设置编码</span></span><br><span class="line">        resp.setContentType(<span class="string">"text/html;charset=utf-8"</span>);</span><br><span class="line">        <span class="comment">//输出</span></span><br><span class="line">        resp.getWriter().write(<span class="string">"登陆失败！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doGet(req,resp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​        7. 编写FailServlet和SuccessServlet类    </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.qjq.web.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.qjq.domain.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by qjq on 2020/2/12 14:48</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/failServlet"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FailServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">//设置编码</span></span><br><span class="line">        resp.setContentType(<span class="string">"text/html;charset=utf-8"</span>);</span><br><span class="line">        <span class="comment">//输出</span></span><br><span class="line">        resp.getWriter().write(<span class="string">"登陆失败！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doGet(req,resp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.qjq.web.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.qjq.domain.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by qjq on 2020/2/12 14:48</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/successServlet"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SuccessServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">//设置编码</span></span><br><span class="line">        resp.setContentType(<span class="string">"text/html;charset=utf-8"</span>);</span><br><span class="line">        <span class="comment">//获取共享数据</span></span><br><span class="line">        User user = (User)req.getAttribute(<span class="string">"user"</span>);</span><br><span class="line">        <span class="comment">//输出</span></span><br><span class="line">        <span class="keyword">if</span> (user!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            resp.getWriter().write(<span class="string">"登陆成功"</span>+user.getUsername()+<span class="string">"!欢迎您！"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doGet(req,resp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<pre><code>8. login.html中form表单的action路径的写法
- * 虚拟目录+Servlet的资源路径
-
- * 出现问题：
-
-   <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">type</span>=<span class="string">"password"</span>  <span class="attr">placeholder</span>=<span class="string">"请输入密码"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-   这里的name一直修改无效，我修改为psw时，servlet获取的名称还是username</code></pre><ol start="9">
-<li><p>BeanUtils工具类，简化数据封装</p>
+<ol start="8">
+<li><p>login.html中form表单的action路径的写法</p>
 <ul>
+<li><p>虚拟目录+Servlet的资源路径</p>
+</li>
+<li><p>出现问题：</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">type</span>=<span class="string">"password"</span>  <span class="attr">placeholder</span>=<span class="string">"请输入密码"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的name一直修改无效，我修改为psw时，servlet获取的名称还是username</p>
+</li>
+</ol>
+<h2 id="BeanUtils工具类，简化数据封装"><a href="#BeanUtils工具类，简化数据封装" class="headerlink" title="BeanUtils工具类，简化数据封装"></a>BeanUtils工具类，简化数据封装</h2><ul>
 <li>用于封装JavaBean的</li>
 </ul>
 <ol>
 <li><p>JavaBean：标准的Java类</p>
-</li>
+<ol start="2">
 <li><p>要求：</p>
 <pre><code>1. 类必须被public修饰
-          2. 必须提供空参的构造器
-                    3. 成员变量必须使用private修饰
-                              4. 提供公共setter和getter方法</code></pre></li>
+2. 必须提供空参的构造器
+3. 成员变量必须使用private修饰
+4. 提供公共setter和getter方法</code></pre></li>
 <li><p>功能：封装数据</p>
-<pre><code>2. 概念：
-          成员变量：
-          属性：setter和getter方法截取后的产物
-              例如：getUsername() --&gt; Username--&gt; username
+<pre><code>1. 概念：
+        成员变量：
+        属性：setter和getter方法截取后的产物
+        例如：getUsername() --&gt; Username--&gt; username
 
-      3. 方法：
-            1. setProperty()
-              2. getProperty()
-                3. populate(Object obj , Map map):将map集合的键值对信息，封装到对应的JavaBean对象中</code></pre></li>
+2. 方法：
+  1. setProperty()
+  2. getProperty()
+  3. populate(Object obj , Map map):将map集合的键值对信息，封装到对应的JavaBean对象中</code></pre></li>
 </ol>
 </li>
 </ol>
