@@ -12,7 +12,9 @@
 <li>Servlet入门学习</li>
 <li>HTTP</li>
 <li>Request</li>
+<li>Response</li>
 <li>登录案例</li>
+<li>下载案例</li>
 </ol>
 <h1 id="1-web相关概念回顾"><a href="#1-web相关概念回顾" class="headerlink" title="1. web相关概念回顾"></a>1. web相关概念回顾</h1><ol>
 <li><p>软件架构</p>
@@ -49,7 +51,7 @@
 </ol>
 </li>
 </ol>
-<h1 id="2-web服务器软件："><a href="#2-web服务器软件：" class="headerlink" title="2.web服务器软件："></a>2.web服务器软件：</h1><ul>
+<h1 id="2-web服务器软件："><a href="#2-web服务器软件：" class="headerlink" title="2. web服务器软件："></a>2. web服务器软件：</h1><ul>
 <li>服务器：安装了服务器软件的计算机</li>
 <li>服务器软件：接收用户的请求，处理请求，做出响应</li>
 <li>web服务器软件：接收用户的请求，处理请求，做出响应。<ul>
@@ -105,8 +107,7 @@
 </li>
 <li>温柔：修改自身的端口号<ul>
 <li>conf/server.xml</li>
-<li>&lt;Connector port=”8888” protocol=”HTTP/1.1”<pre><code>connectionTimeout=&quot;20000&quot;
-redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
+<li><code>&lt;Connector port=&quot;8888&quot; protocol=&quot;HTTP/1.1&quot;</code>   <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;redirectPort&#x3D;&quot;8445&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ol>
@@ -145,23 +146,26 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <li>war包会自动解压缩</li>
 </ul>
 </li>
-<li><p>配置conf/server.xml文件<br> 在<Host>标签体中配置</p>
- <Context docBase="D:\hello" path="/hehe" />
- * docBase:项目存放的路径
- * path：虚拟目录
+<li><p>配置conf/server.xml文件<br> 在&lt;Host&gt;标签体中配置<br> &lt;Context docBase=”D:\hello” path=”/hehe” /&gt;</p>
+<ul>
+<li>docBase:项目存放的路径</li>
+<li>path：虚拟目录</li>
+</ul>
 </li>
-<li><p>在conf\Catalina\localhost创建任意名称的xml文件。在文件中编写</p>
- <Context docBase="D:\hello" />
-     * 虚拟目录：xml文件的名称
-</li>
+<li><p>在conf\Catalina\localhost创建任意名称的xml文件。在文件中编写<br> &lt;Context docBase=”D:\hello” /&gt;</p>
+<pre><code>* 虚拟目录：xml文件的名称</code></pre></li>
 </ol>
 <ul>
-<li>静态项目和动态项目：<ul>
-<li>目录结构<ul>
-<li>java动态项目的目录结构：<br>  – 项目的根目录<pre><code>-- WEB-INF目录：
-    -- web.xml：web项目的核心配置文件
-    -- classes目录：放置字节码文件的目录
-    -- lib目录：放置依赖的jar包</code></pre></li>
+<li><p>静态项目和动态项目：</p>
+<ul>
+<li><p>目录结构</p>
+<ul>
+<li><p>java动态项目的目录结构：</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 项目的根目录</span><br><span class="line">	-- WEB-INF目录：</span><br><span class="line">		-- web.xml：web项目的核心配置文件</span><br><span class="line">		-- classes目录：放置字节码文件的目录</span><br><span class="line">		-- lib目录：放置依赖的jar包</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
 </ul>
 </li>
 </ul>
@@ -220,8 +224,8 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <ul>
 <li>执行原理：<ol>
 <li>当服务器接受到客户端浏览器的请求后，会解析请求URL路径，获取访问的Servlet的资源路径</li>
-<li>查找web.xml文件，是否有对应的<url-pattern>标签体内容。</li>
-<li>如果有，则在找到对应的<servlet-class>全类名</li>
+<li>查找web.xml文件，是否有对应的&lt;url-pattern&gt;标签体内容。</li>
+<li>如果有，则在找到对应的&lt;servlet-class&gt;全类名</li>
 <li>tomcat会将字节码文件加载进内存，并且创建其对象</li>
 <li>调用其方法</li>
 </ol>
@@ -237,13 +241,15 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <ul>
 <li>默认情况下，第一次被访问时，Servlet被创建</li>
 <li>可以配置执行Servlet的创建时机。<ul>
-<li>在<servlet>标签下配置<ol>
+<li>在&lt;servlet&gt;标签下配置<ol>
 <li>第一次被访问时，创建<ul>
-<li><load-on-startup>的值为负数</li>
+<li>&lt;load-on-startup&gt;的值为负数<ol start="2">
+<li>在服务器启动时，创建</li>
+</ol>
+<ul>
+<li>&lt;load-on-startup&gt;的值为0或正整数</li>
 </ul>
 </li>
-<li>在服务器启动时，创建<ul>
-<li><load-on-startup>的值为0或正整数</li>
 </ul>
 </li>
 </ol>
@@ -269,12 +275,10 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <ul>
 <li>Servlet被销毁时执行。服务器关闭时，Servlet被销毁</li>
 <li>只有服务器正常关闭时，才会执行destroy方法。</li>
+<li>destroy方法在Servlet被销毁之前执行，一般用于释放资源</li>
 </ul>
 </li>
 </ol>
-<ul>
-<li>destroy方法在Servlet被销毁之前执行，一般用于释放资源</li>
-</ul>
 </li>
 </ul>
 <p>上面的servlet创建过程中，都需要配置web.xml，过程十分繁琐，这时候就需要了解servlet3.0的新特性：</p>
@@ -300,18 +304,13 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </ul>
 </li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> WebServlet &#123;</span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;<span class="comment">//相当于&lt;Servlet-name&gt;</span></span><br><span class="line"></span><br><span class="line">    String[] value() <span class="keyword">default</span> &#123;&#125;;<span class="comment">//代表urlPatterns()属性配置</span></span><br><span class="line"></span><br><span class="line">    String[] urlPatterns() <span class="keyword">default</span> &#123;&#125;;<span class="comment">//相当于&lt;url-pattern&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">loadOnStartup</span><span class="params">()</span> <span class="keyword">default</span> -1</span>;<span class="comment">//相当于&lt;load-on-startup&gt;</span></span><br><span class="line"></span><br><span class="line">    WebInitParam[] initParams() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">asyncSupported</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">smallIcon</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">largeIcon</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">description</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">displayName</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
 <h1 id="5-Servlet进阶"><a href="#5-Servlet进阶" class="headerlink" title="5. Servlet进阶"></a>5. Servlet进阶</h1><ol>
 <li>概念</li>
 <li>步骤</li>
 <li>执行原理</li>
 <li>生命周期</li>
 <li>Servlet3.0 注解配置</li>
-<li>Servlet的体系结构<br>Servlet – 接口<pre><code>|</code></pre>GenericServlet – 抽象类<pre><code>|</code></pre>HttpServlet  – 抽象类</li>
+<li>Servlet的体系结构<br>Servlet – 接口<br>  <br> |<br>GenericServlet – 抽象类<br><br>|<br>HttpServlet  – 抽象类</li>
 </ol>
 <ul>
 <li><p>GenericServlet：将Servlet接口中其他的方法做了默认空实现，只将service()方法作为抽象</p>
@@ -321,10 +320,8 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </li>
 <li><p>HttpServlet：对http协议的一种封装，简化操作（常用）</p>
 <ol>
-<li>定义类继承HttpServlet<ol start="2">
+<li>定义类继承HttpServlet</li>
 <li>复写doGet/doPost方法</li>
-</ol>
-</li>
 </ol>
 </li>
 </ul>
@@ -365,34 +362,33 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </ul>
 </li>
 </ul>
-<h3 id="请求消息"><a href="#请求消息" class="headerlink" title="请求消息"></a>请求消息</h3><ul>
-<li><p>请求消息数据格式</p>
+<h2 id="请求消息"><a href="#请求消息" class="headerlink" title="请求消息"></a>请求消息</h2><h3 id="请求消息数据格式"><a href="#请求消息数据格式" class="headerlink" title="请求消息数据格式"></a>请求消息数据格式</h3><h4 id="1）请求行"><a href="#1）请求行" class="headerlink" title="1）请求行"></a>1）请求行</h4><p>请求方式 请求url 请求协议/版本<br>GET /login.html    HTTP/1.1<br>请求方式：HTTP协议有7中请求方式，常用的有2种</p>
 <ol>
-<li>请求行<br>请求方式 请求url 请求协议/版本<br>GET /login.html    HTTP/1.1</li>
+<li>GET：<ol>
+<li>请求参数在请求行中，在url后。</li>
+<li>请求的url长度有限制的</li>
+<li>不太安全</li>
 </ol>
 </li>
-<li><p>请求方式：</p>
-<pre><code>* HTTP协议有7中请求方式，常用的有2种
-  * GET：
-    1. 请求参数在请求行中，在url后。
-    2. 请求的url长度有限制的
-    3. 不太安全
-  * POST：
-    1. 请求参数在请求体中
-    2. 请求的url长度没有限制的
-    3. 相对安全</code></pre><ol start="2">
-<li><p>请求头：客户端浏览器告诉服务器一些信息<br>请求头名称: 请求头值</p>
+<li>POST：<ol>
+<li>请求参数在请求体中</li>
+<li>请求的url长度没有限制的</li>
+<li>相对安全</li>
+</ol>
+</li>
+</ol>
+<h4 id="2）请求头：客户端浏览器告诉服务器一些信息"><a href="#2）请求头：客户端浏览器告诉服务器一些信息" class="headerlink" title="2）请求头：客户端浏览器告诉服务器一些信息"></a>2）请求头：客户端浏览器告诉服务器一些信息</h4><p>请求头名称: 请求头值</p>
 <ul>
-<li>常见的请求头：<ol>
-<li>User-Agent：浏览器告诉服务器，我访问你使用的浏览器版本信息<ul>
+<li>常见的请求头：</li>
+</ul>
+<ol>
+<li><p>User-Agent：浏览器告诉服务器，我访问你使用的浏览器版本信息</p>
+<ul>
 <li>可以在服务器端获取该头的信息，解决浏览器的兼容性问题</li>
 </ul>
 </li>
-</ol>
-</li>
-</ul>
-<ol start="2">
-<li>Referer：<a href="http://localhost/login.html" target="_blank" rel="noopener">http://localhost/login.html</a><ul>
+<li><p>Referer：<a href="http://localhost/login.html" target="_blank" rel="noopener">http://localhost/login.html</a></p>
+<ol>
 <li>告诉服务器，我(当前请求)从哪里来？<ul>
 <li>作用：<ol>
 <li>防盗链：</li>
@@ -401,48 +397,23 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </li>
 </ul>
 </li>
-</ul>
-</li>
 </ol>
 </li>
 </ol>
-</li>
-</ul>
 <p><img src="https://res.cloudinary.com/qujq/image/upload/v1581736723/myPIC/javaWeb/Referer%E4%BD%9C%E7%94%A8_s805nn.png" alt="Referer作用"></p>
-<ol>
-<li><p>请求空行<br>  空行，就是用于分割POST请求的请求头，和请求体的。</p>
-<ol start="2">
-<li>请求体(正文)：</li>
-</ol>
-<ul>
-<li>封装POST请求消息的请求参数的</li>
-</ul>
+<h4 id="3）请求空行"><a href="#3）请求空行" class="headerlink" title="3）请求空行"></a>3）请求空行</h4><p> 空行，就是用于分割POST请求的请求头，和请求体的。</p>
+<h4 id="4）请求体-正文-："><a href="#4）请求体-正文-：" class="headerlink" title="4）请求体(正文)："></a>4）请求体(正文)：</h4><ul>
+<li><p>封装POST请求消息的请求参数的</p>
 </li>
-</ol>
-<ul>
-<li><p>字符串格式：<br>  POST /login.html    HTTP/1.1<br>  Host: localhost<br>  User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0<br>  Accept: text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8<br>  Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br>  Accept-Encoding: gzip, deflate<br>  Referer: <a href="http://localhost/login.html" target="_blank" rel="noopener">http://localhost/login.html</a><br>  Connection: keep-alive<br>  Upgrade-Insecure-Requests: 1</p>
-<p>username=zhangsan    </p>
+<li><p>字符串格式：</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  POST &#x2F;login.html	HTTP&#x2F;1.1</span><br><span class="line">  Host: localhost</span><br><span class="line">  User-Agent: Mozilla&#x2F;5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko&#x2F;20100101 Firefox&#x2F;60.0</span><br><span class="line">  Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">  Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">  Accept-Encoding: gzip, deflate</span><br><span class="line">  Referer: http:&#x2F;&#x2F;localhost&#x2F;login.html</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">username&#x3D;zhangsan</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ul>
-<h3 id="响应消息"><a href="#响应消息" class="headerlink" title="响应消息"></a>响应消息</h3><p>服务器端发送给客户端的数据</p>
-<ol>
-<li><p>请求消息：客户端发送给服务器端的数据</p>
-<ul>
-<li>数据格式：<ol>
-<li>请求行</li>
-<li>请求头</li>
-<li>请求空行</li>
-<li>请求体</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>响应消息：服务器端发送给客户端的数据</p>
-<ul>
-<li><p>数据格式：</p>
-<ol>
-<li><p>响应行</p>
-<ol>
+<h2 id="响应消息"><a href="#响应消息" class="headerlink" title="响应消息"></a>响应消息</h2><p>服务器端发送给客户端的数据</p>
+<h3 id="响应消息数据格式"><a href="#响应消息数据格式" class="headerlink" title="响应消息数据格式"></a>响应消息数据格式</h3><h4 id="1）响应行"><a href="#1）响应行" class="headerlink" title="1）响应行"></a>1）响应行</h4><ol>
 <li><p>组成：协议/版本 响应状态码 状态码描述</p>
 </li>
 <li><p>响应状态码：服务器告诉客户端浏览器本次请求和响应的一个状态。</p>
@@ -475,13 +446,13 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </ol>
 </li>
 </ol>
-<ol start="2">
-<li><p>响应头：</p>
-<ol>
+<h4 id="2）响应头："><a href="#2）响应头：" class="headerlink" title="2）响应头："></a>2）响应头：</h4><ol>
 <li><p>格式：头名称： 值</p>
 </li>
 <li><p>常见的响应头：</p>
-<pre><code>1. Content-Type：服务器告诉客户端本次响应体数据格式以及编码格式</code></pre><ol start="2">
+<ol>
+<li><p>Content-Type：服务器告诉客户端本次响应体数据格式以及编码格式</p>
+<ol start="2">
 <li>Content-disposition：服务器告诉客户端以什么格式打开响应体数据<ul>
 <li>值：<ul>
 <li>in-line:默认值,在当前页面内打开</li>
@@ -495,28 +466,12 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </ol>
 </li>
 </ol>
-</li>
-<li><p>响应空行</p>
-</li>
-<li><p>响应体:传输的数据</p>
-<p>响应体格式:</p>
-<p> HTTP/1.1 200 OK<br> Content-Type: text/html;charset=UTF-8<br> Content-Length: 101<br> Date: Wed, 06 Jun 2018 07:08:42 GMT</p>
- <html>
-   <head>
-     <title>$Title$</title>
-   <meta name="generator" content="Hexo 4.1.0"></head>
-   <body>
-   hello , response
-   </body>
- </html>
+<h4 id="3）响应空行"><a href="#3）响应空行" class="headerlink" title="3）响应空行"></a>3）响应空行</h4><h4 id="4）响应体-传输的数据"><a href="#4）响应体-传输的数据" class="headerlink" title="4）响应体:传输的数据"></a>4）响应体:传输的数据</h4><p>响应体格式:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Content-Type: text&#x2F;html;charset&#x3D;UTF-8</span><br><span class="line">Content-Length: 101</span><br><span class="line">Date: Wed, 06 Jun 2018 07:08:42 GMT</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;$Title$&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;&#x2F;head&gt;</span><br><span class="line"></span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  hello , response</span><br><span class="line">  &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
-</li>
-</ul>
-</li>
-</ol>
-<h1 id="7-Request："><a href="#7-Request：" class="headerlink" title="7. Request："></a>7. Request：</h1><h2 id="request对象和response对象的原理"><a href="#request对象和response对象的原理" class="headerlink" title="request对象和response对象的原理"></a>request对象和response对象的原理</h2><ol>
+
+
+<h1 id="7-Request"><a href="#7-Request" class="headerlink" title="7. Request"></a>7. Request</h1><h2 id="request对象和response对象的原理"><a href="#request对象和response对象的原理" class="headerlink" title="request对象和response对象的原理"></a>request对象和response对象的原理</h2><ol>
 <li><p>request和response对象是由服务器创建的。我们来使用它们</p>
 </li>
 <li><p>request对象是来获取请求消息，response对象是来设置响应消息</p>
@@ -557,9 +512,14 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </ol>
 </li>
 </ul>
-<h4 id="2）获取请求头数据"><a href="#2）获取请求头数据" class="headerlink" title="2）获取请求头数据"></a>2）获取请求头数据</h4><pre><code>- 方法：
-  - (*)String getHeader(String name):通过请求头的名称获取请求头的值
-  - Enumeration&lt;String&gt; getHeaderNames():获取所有的请求头名称</code></pre><h4 id="3）获取请求体数据"><a href="#3）获取请求体数据" class="headerlink" title="3）获取请求体数据:"></a>3）获取请求体数据:</h4><ul>
+<h4 id="2）获取请求头数据"><a href="#2）获取请求头数据" class="headerlink" title="2）获取请求头数据"></a>2）获取请求头数据</h4><ul>
+<li>方法：<ul>
+<li>(*)String getHeader(String name):通过请求头的名称获取请求头的值</li>
+<li>Enumeration<String> getHeaderNames():获取所有的请求头名称</li>
+</ul>
+</li>
+</ul>
+<h4 id="3）获取请求体数据"><a href="#3）获取请求体数据" class="headerlink" title="3）获取请求体数据:"></a>3）获取请求体数据:</h4><ul>
 <li><p>请求体：只有POST请求方式，才有请求体，在请求体中封装了POST请求的请求参数</p>
 <pre><code>- 步骤：
   1.  获取流对象
@@ -573,22 +533,24 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <li><p>String getParameter(String name):根据参数名称获取参数值    username=zs&amp;password=123</p>
 </li>
 <li><p>String[] getParameterValues(String name):根据参数名称获取参数值的数组  hobby=xx&amp;hobby=game</p>
-<pre><code>3. Enumeration\&lt;String&gt; getParameterNames():获取所有请求的参数名称</code></pre><ol start="4">
-<li><p>Map&lt;String,String[]&gt; getParameterMap():获取所有参数的map集合</p>
-<ul>
-<li>中文乱码问题：</li>
-</ul>
+</li>
+<li><p>Enumeration&lt;String&gt; getParameterNames():获取所有请求的参数名称</p>
+<ol start="4">
+<li>Map&lt;String,String[]&gt; getParameterMap():获取所有参数的map集合</li>
+</ol>
 </li>
 </ol>
 <ul>
-<li>get方式：tomcat 8 已经将get方式乱码问题解决了<ul>
-<li>post方式：会乱码</li>
-<li>解决：在获取参数前，设置request的编码request.setCharacterEncoding(“utf-8”);</li>
-</ul>
+<li><p>中文乱码问题：</p>
+<ul>
+<li><p>get方式：tomcat 8 已经将get方式乱码问题解决了</p>
+</li>
+<li><p>post方式：会乱码</p>
 </li>
 </ul>
 </li>
-</ol>
+</ul>
+<p>解决：在获取参数前，设置request的编码request.setCharacterEncoding(“utf-8”);</p>
 <h4 id="2）请求转发：一种在服务器内部的资源跳转方式"><a href="#2）请求转发：一种在服务器内部的资源跳转方式" class="headerlink" title="2）请求转发：一种在服务器内部的资源跳转方式"></a>2）请求转发：一种在服务器内部的资源跳转方式</h4><ol>
 <li><p>步骤：</p>
 <ol>
@@ -662,8 +624,7 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <li><p>获取文件的真实(服务器)路径</p>
 <ol>
 <li><p>方法：String getRealPath(String path)  </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String b = context.getRealPath(<span class="string">"/b.txt"</span>);<span class="comment">//web目录下资源访问</span></span><br><span class="line">           System.out.println(b);</span><br><span class="line">         </span><br><span class="line"> String c = context.getRealPath(<span class="string">"/WEB-INF/c.txt"</span>);<span class="comment">//WEB-INF目录下的资源访问</span></span><br><span class="line">          System.out.println(c);</span><br><span class="line">         </span><br><span class="line">          String a = context.getRealPath(<span class="string">"/WEB-INF/classes/a.txt"</span>);<span class="comment">//src目录下的资源访问</span></span><br><span class="line">          System.out.println(a);</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String b = context.getRealPath(<span class="string">"/b.txt"</span>);<span class="comment">//web目录下资源访问</span></span><br><span class="line">         System.out.println(b);</span><br><span class="line">         </span><br><span class="line">         String c = context.getRealPath(<span class="string">"/WEB-INF/c.txt"</span>);<span class="comment">//WEB-INF目录下的资源访问</span></span><br><span class="line">         System.out.println(c);</span><br><span class="line">                  </span><br><span class="line">         String a = context.getRealPath(<span class="string">"/WEB-INF/classes/a.txt"</span>);<span class="comment">//src目录下的资源访问</span></span><br><span class="line">         System.out.println(a);</span><br></pre></td></tr></table></figure>
 
 
 
