@@ -87,11 +87,13 @@
 <meta property="og:description" content="Servlet相关知识点的学习。">
 <meta property="og:image" content="https:&#x2F;&#x2F;res.cloudinary.com&#x2F;qujq&#x2F;image&#x2F;upload&#x2F;v1581156825&#x2F;myPIC&#x2F;javaWeb&#x2F;servlet%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86_lyfd47.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;res.cloudinary.com&#x2F;qujq&#x2F;image&#x2F;upload&#x2F;v1581736723&#x2F;myPIC&#x2F;javaWeb&#x2F;Referer%E4%BD%9C%E7%94%A8_s805nn.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;res.cloudinary.com&#x2F;qujq&#x2F;image&#x2F;upload&#x2F;v1581830759&#x2F;myPIC&#x2F;javaWeb&#x2F;%E9%87%8D%E5%AE%9A%E5%90%91_zvg2rh.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;res.cloudinary.com&#x2F;qujq&#x2F;image&#x2F;upload&#x2F;v1581830759&#x2F;myPIC&#x2F;javaWeb&#x2F;%E8%AE%BF%E9%97%AE%E7%BC%93%E5%AD%98_fywm1e.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;res.cloudinary.com&#x2F;qujq&#x2F;image&#x2F;upload&#x2F;v1581736733&#x2F;myPIC&#x2F;javaWeb&#x2F;%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94%E8%BF%87%E7%A8%8B_qdjrvk.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;res.cloudinary.com&#x2F;qujq&#x2F;image&#x2F;upload&#x2F;v1581736723&#x2F;myPIC&#x2F;javaWeb&#x2F;servlet%E5%9F%9F_jr1p3h.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;res.cloudinary.com&#x2F;qujq&#x2F;image&#x2F;upload&#x2F;v1581736724&#x2F;myPIC&#x2F;javaWeb&#x2F;%E7%99%BB%E5%BD%95%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90_peeiqu.png">
 <meta property="article:published_time" content="2020-02-15T03:10:55.000Z">
-<meta property="article:modified_time" content="2020-02-15T04:59:50.260Z">
+<meta property="article:modified_time" content="2020-02-16T06:23:55.471Z">
 <meta property="article:author" content="Qu-jq">
 <meta property="article:tag" content="JavaWEB">
 <meta property="article:tag" content="Servlet">
@@ -142,7 +144,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.1.0"></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-hans">
 
@@ -764,41 +766,35 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </li>
 </ul>
 </li>
+</ul>
+<h3 id="请求消息"><a href="#请求消息" class="headerlink" title="请求消息"></a>请求消息</h3><ul>
 <li><p>请求消息数据格式</p>
 <ol>
-<li><p>请求行<br>请求方式 请求url 请求协议/版本<br>GET /login.html    HTTP/1.1</p>
-<ul>
-<li>请求方式：<ul>
-<li>HTTP协议有7中请求方式，常用的有2种<ul>
-<li>GET：<ol>
-<li>请求参数在请求行中，在url后。</li>
-<li>请求的url长度有限制的</li>
-<li>不太安全</li>
+<li>请求行<br>请求方式 请求url 请求协议/版本<br>GET /login.html    HTTP/1.1</li>
 </ol>
 </li>
-<li>POST：<ol>
-<li>请求参数在请求体中</li>
-<li>请求的url长度没有限制的</li>
-<li>相对安全</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><p>请求方式：</p>
+<pre><code>* HTTP协议有7中请求方式，常用的有2种
+  * GET：
+    1. 请求参数在请求行中，在url后。
+    2. 请求的url长度有限制的
+    3. 不太安全
+  * POST：
+    1. 请求参数在请求体中
+    2. 请求的url长度没有限制的
+    3. 相对安全</code></pre><ol start="2">
 <li><p>请求头：客户端浏览器告诉服务器一些信息<br>请求头名称: 请求头值</p>
 <ul>
-<li><p>常见的请求头：</p>
-<ol>
-<li><p>User-Agent：浏览器告诉服务器，我访问你使用的浏览器版本信息</p>
-<ul>
+<li>常见的请求头：<ol>
+<li>User-Agent：浏览器告诉服务器，我访问你使用的浏览器版本信息<ul>
 <li>可以在服务器端获取该头的信息，解决浏览器的兼容性问题</li>
 </ul>
 </li>
-<li><p>Referer：<a href="http://localhost/login.html" target="_blank" rel="noopener">http://localhost/login.html</a></p>
-<ul>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>Referer：<a href="http://localhost/login.html" target="_blank" rel="noopener">http://localhost/login.html</a><ul>
 <li>告诉服务器，我(当前请求)从哪里来？<ul>
 <li>作用：<ol>
 <li>防盗链：</li>
@@ -811,53 +807,130 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </li>
 </ol>
 </li>
-</ul>
-</li>
 </ol>
+</li>
+</ul>
 <p><img src="https://res.cloudinary.com/qujq/image/upload/v1581736723/myPIC/javaWeb/Referer%E4%BD%9C%E7%94%A8_s805nn.png" alt="Referer作用"></p>
 <ol>
-<li><p>请求空行<br>空行，就是用于分割POST请求的请求头，和请求体的。</p>
-</li>
-<li><p>请求体(正文)：</p>
+<li><p>请求空行<br>  空行，就是用于分割POST请求的请求头，和请求体的。</p>
+<ol start="2">
+<li>请求体(正文)：</li>
+</ol>
 <ul>
 <li>封装POST请求消息的请求参数的</li>
 </ul>
 </li>
 </ol>
 <ul>
-<li><p>字符串格式：<br>POST /login.html    HTTP/1.1<br>Host: localhost<br>User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0<br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8<br>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br>Accept-Encoding: gzip, deflate<br>Referer: <a href="http://localhost/login.html" target="_blank" rel="noopener">http://localhost/login.html</a><br>Connection: keep-alive<br>Upgrade-Insecure-Requests: 1</p>
+<li><p>字符串格式：<br>  POST /login.html    HTTP/1.1<br>  Host: localhost<br>  User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0<br>  Accept: text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8<br>  Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br>  Accept-Encoding: gzip, deflate<br>  Referer: <a href="http://localhost/login.html" target="_blank" rel="noopener">http://localhost/login.html</a><br>  Connection: keep-alive<br>  Upgrade-Insecure-Requests: 1</p>
 <p>username=zhangsan    </p>
 </li>
 </ul>
-</li>
-<li><p>响应消息数据格式（待做）</p>
+<h3 id="响应消息"><a href="#响应消息" class="headerlink" title="响应消息"></a>响应消息</h3><p>服务器端发送给客户端的数据</p>
+<ol>
+<li><p>请求消息：客户端发送给服务器端的数据</p>
+<ul>
+<li>数据格式：<ol>
+<li>请求行</li>
+<li>请求头</li>
+<li>请求空行</li>
+<li>请求体</li>
+</ol>
 </li>
 </ul>
-<h1 id="7-Request："><a href="#7-Request：" class="headerlink" title="7. Request："></a>7. Request：</h1><ol>
-<li><p>request对象和response对象的原理</p>
+</li>
+<li><p>响应消息：服务器端发送给客户端的数据</p>
+<ul>
+<li><p>数据格式：</p>
 <ol>
+<li><p>响应行</p>
+<ol>
+<li><p>组成：协议/版本 响应状态码 状态码描述</p>
+</li>
+<li><p>响应状态码：服务器告诉客户端浏览器本次请求和响应的一个状态。</p>
+<ol>
+<li><p>状态码都是3位数字 </p>
+</li>
+<li><p>分类：</p>
+<ol>
+<li><p>1xx：服务器就收客户端消息，但没有接受完成，等待一段时间后，发送1xx多状态码</p>
+</li>
+<li><p>2xx：成功。代表：200</p>
+</li>
+<li><p>3xx：重定向。代表：302(重定向)，304(访问缓存)</p>
+<p><img src="https://res.cloudinary.com/qujq/image/upload/v1581830759/myPIC/javaWeb/%E9%87%8D%E5%AE%9A%E5%90%91_zvg2rh.png" alt="重定向"></p>
+<p><img src="https://res.cloudinary.com/qujq/image/upload/v1581830759/myPIC/javaWeb/%E8%AE%BF%E9%97%AE%E7%BC%93%E5%AD%98_fywm1e.png" alt="访问缓存"></p>
+</li>
+<li><p>4xx：客户端错误。</p>
+<ul>
+<li>代表：<ul>
+<li>404（请求路径没有对应的资源） </li>
+<li>405：请求方式没有对应的doXxx方法</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>5xx：服务器端错误。代表：500(服务器内部出现异常)</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<ol start="2">
+<li><p>响应头：</p>
+<ol>
+<li><p>格式：头名称： 值</p>
+</li>
+<li><p>常见的响应头：</p>
+<pre><code>1. Content-Type：服务器告诉客户端本次响应体数据格式以及编码格式</code></pre><ol start="2">
+<li>Content-disposition：服务器告诉客户端以什么格式打开响应体数据<ul>
+<li>值：<ul>
+<li>in-line:默认值,在当前页面内打开</li>
+<li>attachment;filename=xxx：以附件形式打开响应体。文件下载</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>响应空行</p>
+</li>
+<li><p>响应体:传输的数据</p>
+<p>响应体格式:</p>
+<p> HTTP/1.1 200 OK<br> Content-Type: text/html;charset=UTF-8<br> Content-Length: 101<br> Date: Wed, 06 Jun 2018 07:08:42 GMT</p>
+ <html>
+   <head>
+     <title>$Title$</title>
+   <meta name="generator" content="Hexo 4.1.0"></head>
+   <body>
+   hello , response
+   </body>
+ </html>
+
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="7-Request："><a href="#7-Request：" class="headerlink" title="7. Request："></a>7. Request：</h1><h2 id="request对象和response对象的原理"><a href="#request对象和response对象的原理" class="headerlink" title="request对象和response对象的原理"></a>request对象和response对象的原理</h2><ol>
 <li><p>request和response对象是由服务器创建的。我们来使用它们</p>
 </li>
 <li><p>request对象是来获取请求消息，response对象是来设置响应消息</p>
 </li>
 </ol>
-</li>
-</ol>
 <p>   <img src="https://res.cloudinary.com/qujq/image/upload/v1581736733/myPIC/javaWeb/%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94%E8%BF%87%E7%A8%8B_qdjrvk.png" alt="请求响应流程"></p>
-<ol start="2">
-<li><p>request对象继承体系结构：<br>ServletRequest        –    接口</p>
-<pre><code>|    继承</code></pre><p>HttpServletRequest    – 接口</p>
-<pre><code>|    实现</code></pre><p>org.apache.catalina.connector.RequestFacade 类(tomcat)</p>
-</li>
-<li><p>request功能：</p>
-<ol>
-<li><p>获取请求消息数据</p>
-<ol>
-<li><p>获取请求行数据</p>
-<ul>
+<h2 id="request对象继承体系结构："><a href="#request对象继承体系结构：" class="headerlink" title="request对象继承体系结构："></a>request对象继承体系结构：</h2><p>   ServletRequest        –    接口<br>       |    继承<br>   HttpServletRequest    – 接口<br>       |    实现<br>   org.apache.catalina.connector.RequestFacade 类(tomcat)</p>
+<h2 id="request功能："><a href="#request功能：" class="headerlink" title="request功能："></a>request功能：</h2><h3 id="1-获取请求消息数据"><a href="#1-获取请求消息数据" class="headerlink" title="1. 获取请求消息数据"></a>1. 获取请求消息数据</h3><h4 id="1）-获取请求行数据"><a href="#1）-获取请求行数据" class="headerlink" title="1） 获取请求行数据"></a>1） 获取请求行数据</h4><ul>
 <li><p>GET /day14/demo1?name=zhangsan HTTP/1.1</p>
-</li>
-<li><p>方法：</p>
+<ul>
+<li>方法：</li>
+</ul>
 <ol>
 <li><p>获取请求方式 ：GET</p>
 <p>String getMethod()  </p>
@@ -886,50 +959,30 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </ol>
 </li>
 </ul>
-<ol start="2">
-<li><p>获取请求头数据</p>
-<ul>
-<li>方法：<ul>
-<li>(*)String getHeader(String name):通过请求头的名称获取请求头的值</li>
-<li>Enumeration<String> getHeaderNames():获取所有的请求头名称</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>获取请求体数据:</p>
-<ul>
+<h4 id="2）获取请求头数据"><a href="#2）获取请求头数据" class="headerlink" title="2）获取请求头数据"></a>2）获取请求头数据</h4><pre><code>- 方法：
+  - (*)String getHeader(String name):通过请求头的名称获取请求头的值
+  - Enumeration&lt;String&gt; getHeaderNames():获取所有的请求头名称</code></pre><h4 id="3）获取请求体数据"><a href="#3）获取请求体数据" class="headerlink" title="3）获取请求体数据:"></a>3）获取请求体数据:</h4><ul>
 <li><p>请求体：只有POST请求方式，才有请求体，在请求体中封装了POST请求的请求参数</p>
-</li>
-<li><p>步骤：</p>
+<pre><code>- 步骤：
+  1.  获取流对象
+     - BufferedReader getReader()：获取字符输入流，只能操作字符数据
+     - InputStream getInputStream()：获取字节输入流，可以操作所有类型数据
+
+  2. 再从流对象中拿数据</code></pre></li>
+</ul>
+<h3 id="2-其他功能："><a href="#2-其他功能：" class="headerlink" title="2. 其他功能："></a>2. 其他功能：</h3><h4 id="1）-获取请求参数通用方式："><a href="#1）-获取请求参数通用方式：" class="headerlink" title="1） 获取请求参数通用方式："></a>1） 获取请求参数通用方式：</h4><p>不论get还是post请求方式都可以使用下列方法来获取请求参数</p>
 <ol>
-<li><p>获取流对象</p>
+<li><p>String getParameter(String name):根据参数名称获取参数值    username=zs&amp;password=123</p>
+</li>
+<li><p>String[] getParameterValues(String name):根据参数名称获取参数值的数组  hobby=xx&amp;hobby=game</p>
+<pre><code>3. Enumeration\&lt;String&gt; getParameterNames():获取所有请求的参数名称</code></pre><ol start="4">
+<li><p>Map&lt;String,String[]&gt; getParameterMap():获取所有参数的map集合</p>
 <ul>
-<li>BufferedReader getReader()：获取字符输入流，只能操作字符数据</li>
-<li>ServletInputStream getInputStream()：获取字节输入流，可以操作所有类型数据<ul>
-<li>在文件上传知识点后讲解</li>
+<li>中文乱码问题：</li>
 </ul>
 </li>
-</ul>
-<ol start="2">
-<li>再从流对象中拿数据</li>
-</ol>
-</li>
-</ol>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p>其他功能：</p>
-<ol>
-<li><p>获取请求参数通用方式：不论get还是post请求方式都可以使用下列方法来获取请求参数</p>
-<pre><code>1. String getParameter(String name):根据参数名称获取参数值    username=zs&amp;password=123</code></pre><ol start="2">
-<li>String[] getParameterValues(String name):根据参数名称获取参数值的数组  hobby=xx&amp;hobby=game</li>
-<li>Enumeration&lt;String&gt; getParameterNames():获取所有请求的参数名称</li>
-<li>Map&lt;String,String[]&gt; getParameterMap():获取所有参数的map集合</li>
 </ol>
 <ul>
-<li>中文乱码问题：<ul>
 <li>get方式：tomcat 8 已经将get方式乱码问题解决了<ul>
 <li>post方式：会乱码</li>
 <li>解决：在获取参数前，设置request的编码request.setCharacterEncoding(“utf-8”);</li>
@@ -937,30 +990,23 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </li>
 </ul>
 </li>
-</ul>
-</li>
-<li><p>请求转发：一种在服务器内部的资源跳转方式</p>
-<ol>
+</ol>
+<h4 id="2）请求转发：一种在服务器内部的资源跳转方式"><a href="#2）请求转发：一种在服务器内部的资源跳转方式" class="headerlink" title="2）请求转发：一种在服务器内部的资源跳转方式"></a>2）请求转发：一种在服务器内部的资源跳转方式</h4><ol>
 <li><p>步骤：</p>
 <ol>
-<li><p>通过request对象获取请求转发器对象：RequestDispatcher getRequestDispatcher(String path)</p>
-<ol start="2">
-<li><p>使用RequestDispatcher对象来进行转发：forward(ServletRequest request, ServletResponse response) </p>
-<ol start="2">
-<li>特点：<ol>
+<li>通过request对象获取请求转发器对象：RequestDispatcher getRequestDispatcher(String path)</li>
+<li>使用RequestDispatcher对象来进行转发：forward(ServletRequest request, ServletResponse response) </li>
+</ol>
+</li>
+<li><p>特点：</p>
+<ol>
 <li>浏览器地址栏路径不发生变化</li>
 <li>只能转发到当前服务器内部资源中。</li>
 <li>转发是一次请求</li>
 </ol>
 </li>
 </ol>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-<li><p>共享数据：</p>
-<ul>
+<h4 id="3）共享数据："><a href="#3）共享数据：" class="headerlink" title="3）共享数据："></a>3）共享数据：</h4><ul>
 <li><p>域对象：一个有作用范围的对象，可以在范围内共享数据</p>
 <ul>
 <li><p>request域：代表一次请求的范围，一般用于请求转发的多个资源中共享数据</p>
@@ -968,13 +1014,11 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <li><p>方法：</p>
 <ol>
 <li><p>void setAttribute(String name,Object obj):存储数据</p>
-<ol start="2">
+</li>
 <li><p>Object getAttribute(String name):通过键获取值</p>
 </li>
 <li><p>void removeAttribute(String name):通过键移除键值对</p>
-<p>  <img src="https://res.cloudinary.com/qujq/image/upload/v1581736723/myPIC/javaWeb/servlet%E5%9F%9F_jr1p3h.png" alt="servlet域"></p>
-</li>
-</ol>
+<p><img src="https://res.cloudinary.com/qujq/image/upload/v1581736723/myPIC/javaWeb/servlet%E5%9F%9F_jr1p3h.png" alt="servlet域"></p>
 </li>
 </ol>
 </li>
@@ -983,22 +1027,237 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 </ul>
 </li>
 </ul>
+<h4 id="4）-获取ServletContext："><a href="#4）-获取ServletContext：" class="headerlink" title="4） 获取ServletContext："></a>4） 获取ServletContext：</h4><ul>
+<li><p>ServletContext对象</p>
+<ol>
+<li><p>概念：代表整个web应用，可以和程序的容器(服务器)来通信</p>
 </li>
+<li><p>获取：</p>
+<ol>
+<li>通过request对象获取<br>request.getServletContext();</li>
+<li>通过HttpServlet获取<br>this.getServletContext();</li>
 </ol>
 </li>
-</ol>
-</li>
-<li><p>获取ServletContext：</p>
+<li><p>功能：</p>
+<ol>
+<li><p>获取MIME类型：</p>
 <ul>
-<li>ServletContext getServletContext()</li>
+<li><p>MIME类型:在互联网通信过程中定义的一种文件数据类型</p>
+<ul>
+<li>格式： 大类型/小类型   text/html        image/jpeg</li>
+</ul>
+</li>
+<li><p>获取：String getMimeType(String file)  </p>
+</li>
+</ul>
+</li>
+<li><p>域对象：共享数据</p>
+<ol>
+<li>setAttribute(String name,Object value)</li>
+<li>getAttribute(String name)</li>
+<li>removeAttribute(String name)</li>
+</ol>
+<ul>
+<li>ServletContext对象范围：所有用户所有请求的数据</li>
+</ul>
+</li>
+<li><p>获取文件的真实(服务器)路径</p>
+<ol>
+<li><p>方法：String getRealPath(String path)  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String b = context.getRealPath(<span class="string">"/b.txt"</span>);<span class="comment">//web目录下资源访问</span></span><br><span class="line">           System.out.println(b);</span><br><span class="line">         </span><br><span class="line"> String c = context.getRealPath(<span class="string">"/WEB-INF/c.txt"</span>);<span class="comment">//WEB-INF目录下的资源访问</span></span><br><span class="line">          System.out.println(c);</span><br><span class="line">         </span><br><span class="line">          String a = context.getRealPath(<span class="string">"/WEB-INF/classes/a.txt"</span>);<span class="comment">//src目录下的资源访问</span></span><br><span class="line">          System.out.println(a);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="8-Response"><a href="#8-Response" class="headerlink" title="8.Response"></a>8.Response</h1><h3 id="功能：设置响应消息"><a href="#功能：设置响应消息" class="headerlink" title="功能：设置响应消息"></a>功能：设置响应消息</h3><ol>
+<li><p>设置响应行</p>
+<ol>
+<li>格式：HTTP/1.1 200 ok</li>
+<li>设置状态码：setStatus(int sc) </li>
+</ol>
+</li>
+<li><p>设置响应头：setHeader(String name, String value) </p>
+</li>
+<li><p>设置响应体：</p>
+<ul>
+<li><p>使用步骤：</p>
+<ol>
+<li><p>获取输出流</p>
+<ul>
+<li><p>字符输出流：PrintWriter getWriter()</p>
+</li>
+<li><p>字节输出流：ServletOutputStream getOutputStream()</p>
+</li>
+</ul>
+</li>
+<li><p>使用输出流，将数据输出到客户端浏览器</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="Response学习案例："><a href="#Response学习案例：" class="headerlink" title="Response学习案例："></a>Response学习案例：</h3><h4 id="1-完成重定向"><a href="#1-完成重定向" class="headerlink" title="1. 完成重定向"></a>1. 完成重定向</h4><ul>
+<li><p>重定向：资源跳转的方式</p>
+</li>
+<li><p>代码实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. 设置状态码为302</span></span><br><span class="line">  response.setStatus(<span class="number">302</span>);</span><br><span class="line"><span class="comment">//2.设置响应头location</span></span><br><span class="line"> response.setHeader(<span class="string">"location"</span>,<span class="string">"/response/responseDemo2"</span>);</span><br><span class="line"><span class="comment">//简单的重定向方法（这一条语句就可以）</span></span><br><span class="line"> response.sendRedirect(<span class="string">"/response/responseDemo2"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重定向的特点:redirect</p>
+<ol>
+<li><p>地址栏发生变化</p>
+</li>
+<li><p>重定向可以访问其他站点(服务器)的资源</p>
+</li>
+<li><p>重定向是两次请求。不能使用request对象来共享数据</p>
+</li>
+<li><p>通过response对象获取</p>
+</li>
+</ol>
+</li>
+<li><p>转发的特点：forward</p>
+<ol>
+<li>转发地址栏路径不变</li>
+<li>转发只能访问当前服务器下的资源</li>
+<li>转发是一次请求，可以使用request对象来共享数据</li>
+<li>通过request对象获取</li>
+</ol>
+<ul>
+<li><p><strong>forward 和  redirect 区别</strong>(常考)</p>
+</li>
+<li><p>路径写法：</p>
+<ol>
+<li><p>路径分类</p>
+<ol>
+<li><p>相对路径：通过相对路径不可以确定唯一资源</p>
+<ul>
+<li><p>如：./index.html</p>
+</li>
+<li><p>不以/开头，以.开头路径</p>
+</li>
+<li><p>规则：找到当前资源和目标资源之间的相对位置关系</p>
+<ul>
+<li>./：当前目录</li>
+<li>../:后退一级目录</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>绝对路径：通过绝对路径可以确定唯一资源</p>
+<ul>
+<li><p>如：<a href="http://localhost/day15/responseDemo2" target="_blank" rel="noopener">http://localhost/day15/responseDemo2</a>        /day15/responseDemo2</p>
+</li>
+<li><p>以/开头的路径</p>
+</li>
+<li><p>规则：判断定义的路径是给谁用的？判断请求将来从哪儿发出</p>
+<ul>
+<li>给客户端浏览器使用：需要加虚拟目录(<strong>项目的访问路径</strong>)</li>
+<li>建议虚拟目录动态获取：request.getContextPath()</li>
+<li>&lt;a&gt; , &lt;form&gt; 重定向…</li>
+<li>给服务器使用：不需要加虚拟目录<ul>
+<li>转发路径</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ol>
 </li>
 </ol>
 </li>
+</ul>
+</li>
+</ul>
+<h4 id="2-服务器输出字符数据到浏览器"><a href="#2-服务器输出字符数据到浏览器" class="headerlink" title="2. 服务器输出字符数据到浏览器"></a>2. 服务器输出字符数据到浏览器</h4><ul>
+<li>步骤：<ol>
+<li>获取字符输出流</li>
 </ol>
-<h1 id="8-案例：用户登录"><a href="#8-案例：用户登录" class="headerlink" title="8. 案例：用户登录"></a>8. 案例：用户登录</h1><ul>
+</li>
+</ul>
+<ol start="2">
+<li>输出数据</li>
+</ol>
+<ul>
+<li><p>注意：</p>
+<ul>
+<li><p>乱码问题：</p>
+<ol>
+<li><p><code>PrintWriter pw = response.getWriter();</code>获取的流的默认编码是ISO-8859-1</p>
+</li>
+<li><p>设置该流的默认编码</p>
+</li>
+<li><p>告诉浏览器响应体使用的编码（只使用这一行代码即可）</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;response.setContentType(&quot;text&#x2F;html;charset&#x3D;utf-8&quot;);</span><br></pre></td></tr></table></figure>
+<h4 id="3-服务器输出字节数据到浏览器"><a href="#3-服务器输出字节数据到浏览器" class="headerlink" title="3. 服务器输出字节数据到浏览器"></a>3. 服务器输出字节数据到浏览器</h4></li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>步骤：</p>
+<ol>
+<li>获取字节输出流</li>
+<li>输出数据</li>
+</ol>
+</li>
+</ul>
+<h4 id="4-验证码"><a href="#4-验证码" class="headerlink" title="4. 验证码"></a>4. 验证码</h4><ol>
+<li>本质：图片</li>
+<li>目的：防止恶意表单注册</li>
+</ol>
+<h1 id="9-ServletContext对象："><a href="#9-ServletContext对象：" class="headerlink" title="9. ServletContext对象："></a>9. ServletContext对象：</h1><ol>
+<li><p>概念：代表整个web应用，可以和程序的容器(服务器)来通信</p>
+</li>
+<li><p>获取：</p>
+<ol>
+<li>通过request对象获取<br> request.getServletContext();</li>
+<li>通过HttpServlet获取<br> this.getServletContext();</li>
+</ol>
+</li>
+<li><p>功能：</p>
+<ol>
+<li><p>获取MIME类型：</p>
+<ul>
+<li><p>MIME类型:在互联网通信过程中定义的一种文件数据类型</p>
+<ul>
+<li>格式： 大类型/小类型   text/html        image/jpeg</li>
+</ul>
+</li>
+<li><p>获取：String getMimeType(String file)  </p>
+</li>
+</ul>
+</li>
+<li><p>域对象：共享数据</p>
+<ol>
+<li>setAttribute(String name,Object value)</li>
+<li>getAttribute(String name)</li>
+<li>removeAttribute(String name)</li>
+</ol>
+<ul>
+<li>ServletContext对象范围：所有用户所有请求的数据</li>
+</ul>
+</li>
+<li><p>获取文件的真实(服务器)路径</p>
+<ol>
+<li><p>方法：String getRealPath(String path)<br>  String b = context.getRealPath(“/b.txt”);//web目录下资源访问<br>  System.out.println(b);</p>
+<p> String c = context.getRealPath(“/WEB-INF/c.txt”);//WEB-INF目录下的资源访问<br> System.out.println(c);</p>
+<p> String a = context.getRealPath(“/WEB-INF/classes/a.txt”);//src目录下的资源访问<br> System.out.println(a);</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="9-案例：用户登录"><a href="#9-案例：用户登录" class="headerlink" title="9. 案例：用户登录"></a>9. 案例：用户登录</h1><ul>
 <li>用户登录案例需求：<br>1.编写login.html登录页面<pre><code>username &amp; password 两个输入框</code></pre>2.使用Druid数据库连接池技术,操作mysql，day14数据库中user表<br>3.使用JdbcTemplate技术封装JDBC<br>4.登录成功跳转到SuccessServlet展示：登录成功！用户名,欢迎您<br>5.登录失败跳转到FailServlet展示：登录失败，用户名或密码错误</li>
 </ul>
 <p><img src="https://res.cloudinary.com/qujq/image/upload/v1581736724/myPIC/javaWeb/%E7%99%BB%E5%BD%95%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90_peeiqu.png" alt="登录案例分析"></p>
@@ -1067,8 +1326,8 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <li><p>功能：封装数据</p>
 <pre><code>1. 概念：
         成员变量：
-        属性：setter和getter方法截取后的产物
-        例如：getUsername() --&gt; Username--&gt; username
+           属性：setter和getter方法截取后的产物
+           例如：getUsername() --&gt; Username--&gt; username
 
 2. 方法：
   1. setProperty()
@@ -1086,12 +1345,62 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">User user = template.queryForObject(sql,</span><br><span class="line">        <span class="keyword">new</span> BeanPropertyRowMapper&lt;User&gt;(User<span class="class">.<span class="keyword">class</span>),/*自动封装为<span class="title">bean</span>*/</span></span><br><span class="line"><span class="class">        <span class="title">loginUser</span>.<span class="title">getUsername</span>(), <span class="title">loginUser</span>.<span class="title">getpassword</span>())</span>;</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
-<li>sevlet获取网页http的请求参数后，使用BeanUtils中的pupulation方法自动分装为bean</li>
+<li>sevlet获取网页http的请求参数后，使用BeanUtils中的populate方法自动分装为bean</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String[]&gt; parameterMap = req.getParameterMap();</span><br><span class="line"><span class="comment">//创建User对象</span></span><br><span class="line">User loginUser  = <span class="keyword">new</span> User();</span><br><span class="line"><span class="comment">//使用BeanUtils封装</span></span><br><span class="line">BeanUtils.populate(loginUser,parameterMap);<span class="comment">//使用时注意，html中的用户和密码的变量名要和bean中一致</span></span><br></pre></td></tr></table></figure>
+<h1 id="10-案例：下载"><a href="#10-案例：下载" class="headerlink" title="10. 案例：下载"></a>10. 案例：下载</h1><ul>
+<li><p>文件下载需求：</p>
+<ol>
+<li>页面显示超链接</li>
+<li>点击超链接后弹出下载提示框</li>
+<li>完成图片文件下载</li>
+</ol>
+</li>
+<li><p>分析：</p>
+<ol>
+<li>超链接指向的资源如果能够被浏览器解析，则在浏览器中展示，如果不能解析，则弹出下载提示框。不满足需求</li>
+<li>任何资源都必须弹出下载提示框</li>
+<li>使用响应头设置资源的打开方式：<ul>
+<li>content-disposition:attachment;filename=xxx</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>步骤：</p>
+<ol>
+<li>定义页面，编辑超链接href属性，指向Servlet，传递资源名称filename</li>
+<li>定义Servlet<ol>
+<li>获取文件名称</li>
+<li>使用字节输入流加载文件进内存</li>
+<li>指定response的响应头： content-disposition:attachment;filename=xxx</li>
+<li>将数据写出到response输出流</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>问题：</p>
+<ul>
+<li>中文文件问题<ul>
+<li>解决思路：<ol>
+<li>获取客户端使用的浏览器版本信息</li>
+<li>根据不同的版本信息，设置filename的编码方式不同</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>java程序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> site.qujq.web.download;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> site.qujq.web.utils.DownLoadUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletContext;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletOutputStream;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by qjq on 2020/2/16 10:54</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/downloadServlet"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DownloadServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">//1. 获取请求参数：文件名</span></span><br><span class="line">        String filename = req.getParameter(<span class="string">"filename"</span>);</span><br><span class="line">        <span class="comment">//2. 获取真实路径</span></span><br><span class="line">        ServletContext servletContext = <span class="keyword">this</span>.getServletContext();</span><br><span class="line">        String realPath = servletContext.getRealPath(<span class="string">"/img/"</span> + filename);</span><br><span class="line">        <span class="comment">//3. 用字节流关联</span></span><br><span class="line">        FileInputStream fis = <span class="keyword">new</span> FileInputStream(realPath);</span><br><span class="line">        <span class="comment">//4.设置response响应头信息</span></span><br><span class="line">        <span class="comment">//4.1设置响应头 类型：content-type</span></span><br><span class="line">        String mimeType = servletContext.getMimeType(filename);</span><br><span class="line">        resp.setHeader(<span class="string">"content_type"</span>,mimeType);</span><br><span class="line">        <span class="comment">//4.2设置响应头 打开方式：content-disposition</span></span><br><span class="line">        <span class="comment">//5解决中文文件名问题</span></span><br><span class="line">            <span class="comment">//5.1.获取user-agent请求头、</span></span><br><span class="line">        String agent = req.getHeader(<span class="string">"user-agent"</span>);</span><br><span class="line">            <span class="comment">//5.2.使用工具类方法编码文件名即可</span></span><br><span class="line">        filename = DownLoadUtils.getFileName(agent, filename);</span><br><span class="line">        resp.setHeader(<span class="string">"content-disposition"</span>,<span class="string">"attachment;filename="</span>+filename);<span class="comment">//附件方式打开</span></span><br><span class="line">        <span class="comment">//6. 将输入流的数据写到servlet输出流</span></span><br><span class="line">        <span class="keyword">byte</span>[] flush = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>*<span class="number">8</span>];</span><br><span class="line">        <span class="keyword">int</span> len=<span class="number">0</span>;</span><br><span class="line">        ServletOutputStream os = resp.getOutputStream();</span><br><span class="line">        <span class="keyword">while</span>((len = fis.read(flush))!=-<span class="number">1</span>)&#123;</span><br><span class="line">            os.write(flush,<span class="number">0</span>,len);</span><br><span class="line">        &#125;</span><br><span class="line">        fis.close();<span class="comment">//自己创建的最好关闭</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doPost(req,resp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>HTML：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>下载<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--图片名字不要纯数字，上传不到服务器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/response/img/pic.jpg"</span>&gt;</span>图片<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/response/img/视频.mp4"</span>&gt;</span>视频<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/response/downloadServlet?filename=pic.jpg"</span>&gt;</span>下载图片<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/response/downloadServlet?filename=视频.mp4"</span>&gt;</span>下载视频<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-
+<h2 id="案例体会："><a href="#案例体会：" class="headerlink" title="案例体会："></a>案例体会：</h2><ol>
+<li>文件夹的名称最好不要纯数字，出现上传不到服务器的情况，找不到该文件</li>
+<li>解决中文问题时，找不到<code>import sun.misc.BASE64Encoder;</code>就没有用这个。。。</li>
+</ol>
 
       
     </div>
@@ -1305,7 +1614,7 @@ redirectPort=&quot;8445&quot; /&gt;</code></pre></li>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要内容"><span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-web相关概念回顾"><span class="nav-text">1. web相关概念回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-web服务器软件："><span class="nav-text">2.web服务器软件：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-IDEA与tomcat的相关配置"><span class="nav-text">3. IDEA与tomcat的相关配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Servlet初步：-server-applet"><span class="nav-text">4. Servlet初步：  server applet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Servlet进阶"><span class="nav-text">5. Servlet进阶</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-HTTP"><span class="nav-text">6. HTTP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Request："><span class="nav-text">7. Request：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-案例：用户登录"><span class="nav-text">8. 案例：用户登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanUtils工具类，简化数据封装"><span class="nav-text">BeanUtils工具类，简化数据封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例体会"><span class="nav-text">案例体会</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要内容"><span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-web相关概念回顾"><span class="nav-text">1. web相关概念回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-web服务器软件："><span class="nav-text">2.web服务器软件：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-IDEA与tomcat的相关配置"><span class="nav-text">3. IDEA与tomcat的相关配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Servlet初步：-server-applet"><span class="nav-text">4. Servlet初步：  server applet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Servlet进阶"><span class="nav-text">5. Servlet进阶</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-HTTP"><span class="nav-text">6. HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求消息"><span class="nav-text">请求消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应消息"><span class="nav-text">响应消息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Request："><span class="nav-text">7. Request：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#request对象和response对象的原理"><span class="nav-text">request对象和response对象的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#request对象继承体系结构："><span class="nav-text">request对象继承体系结构：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#request功能："><span class="nav-text">request功能：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-获取请求消息数据"><span class="nav-text">1. 获取请求消息数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）-获取请求行数据"><span class="nav-text">1） 获取请求行数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）获取请求头数据"><span class="nav-text">2）获取请求头数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3）获取请求体数据"><span class="nav-text">3）获取请求体数据:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-其他功能："><span class="nav-text">2. 其他功能：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）-获取请求参数通用方式："><span class="nav-text">1） 获取请求参数通用方式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）请求转发：一种在服务器内部的资源跳转方式"><span class="nav-text">2）请求转发：一种在服务器内部的资源跳转方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3）共享数据："><span class="nav-text">3）共享数据：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4）-获取ServletContext："><span class="nav-text">4） 获取ServletContext：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-Response"><span class="nav-text">8.Response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能：设置响应消息"><span class="nav-text">功能：设置响应消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Response学习案例："><span class="nav-text">Response学习案例：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-完成重定向"><span class="nav-text">1. 完成重定向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-服务器输出字符数据到浏览器"><span class="nav-text">2. 服务器输出字符数据到浏览器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-服务器输出字节数据到浏览器"><span class="nav-text">3. 服务器输出字节数据到浏览器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-验证码"><span class="nav-text">4. 验证码</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-ServletContext对象："><span class="nav-text">9. ServletContext对象：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-案例：用户登录"><span class="nav-text">9. 案例：用户登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanUtils工具类，简化数据封装"><span class="nav-text">BeanUtils工具类，简化数据封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例体会"><span class="nav-text">案例体会</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-案例：下载"><span class="nav-text">10. 案例：下载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#案例体会："><span class="nav-text">案例体会：</span></a></li></ol></li></ol></div>
             
 
           </div>
