@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>说明</title>
+    <url>/2020/11/17/%E8%AF%B4%E6%98%8E/</url>
+    <content><![CDATA[<p>年后2月份到现在，博主一直深受干眼症的痛苦，故一直没有更新博客，还望大家见谅。现在刚有些好转，就在这里给大家说一声，抱歉。</p>
+<a id="more"></a>
+
+
+
+]]></content>
+      <categories>
+        <category>说明</category>
+      </categories>
+      <tags>
+        <tag>说明</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Filter&amp;Listener</title>
     <url>/2020/02/23/Filter&amp;Listener/</url>
     <content><![CDATA[<p>JavaWeb的三个核心：Servlet，Filter，Listener</p>
